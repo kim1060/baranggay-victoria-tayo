@@ -1,0 +1,51 @@
+services:
+  web:
+    build: .
+    ports:
+      - '8080:80'
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - database
+    environment:
+      - DB_HOST=database
+      - DB_USER=root
+      - DB_PASSWORD=rootpassword
+      - DB_NAME=appointmate
+    networks:
+      - appointmate-network
+
+  database:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: appointmate
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppassword
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./DATABASE/appointmate.sql:/docker-entrypoint-initdb.d/appointmate.sql
+    networks:
+      - appointmate-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - '8081:80'
+    environment:
+      PMA_HOST: database
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+    depends_on:
+      - database
+    networks:
+      - appointmate-network
+
+networks:
+  appointmate-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
