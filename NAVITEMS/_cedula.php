@@ -57,6 +57,30 @@ function disablePastDates() {
 
 if(isset($_POST["btnSubmit"]))
 {
+    // Check for existing unfinished appointment
+    $userID = $_SESSION['UserID'];
+    $checkSql = "SELECT * FROM _cedula
+                 WHERE UserID = {$userID}
+                 AND AppointmentDate >= CURDATE()
+                 AND Status NOT IN ('CANCELLED', 'REQUEST FOR CANCEL', 'COMPLETED')
+                 LIMIT 1";
+    $mydb->setQuery($checkSql);
+    $existingAppointment = $mydb->loadSingleResult();
+
+    if ($existingAppointment) {
+        echo '<script type="text/javascript">
+        swal({
+            title: "Duplicate Appointment Found!",
+            text: "You have an unfinished appointment for this service. Please go to My List to view and continue your existing appointment.",
+            type: "warning",
+            showConfirmButton: true,
+            confirmButtonText: "Go to My List"
+        },  function () {
+            window.location.href = "index.php?view=mycedulalist";
+        });
+        </script>';
+        return; // Stop execution
+    }
 
 
 
