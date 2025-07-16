@@ -146,14 +146,14 @@ if (isset($_SESSION['UserID'])) {
                                                         <select name="Status" id="Status"
                                                             class="form-select form-control-lg mb-2" required>
                                                             <option value="">Select Status</option>
-                                                            <?php 
+                                                            <?php
                                                                 $sql = "SELECT * FROM `civilstatus`";
                                                                 $mydb->setQuery($sql);
                                                                 $cur = $mydb->loadResultList();
                                                                 foreach ($cur as $res) {
                                                                     # code...
                                                                     echo '<option value='.$res->CivilStatus.'>'.$res->CivilStatus.'</option>';
-                                                                } 
+                                                                }
                                                             ?>
                                                         </select>
                                                     </div>
@@ -276,6 +276,18 @@ if (isset($_SESSION['UserID'])) {
             reader.readAsDataURL(fileInput.files[0]);
         }
     }
+
+    // Function to capitalize input values
+    function capitalizeInput(event) {
+        event.target.value = event.target.value.toUpperCase();
+    }
+
+    // Attach the capitalizeInput function to relevant input fields
+    document.getElementById('Lastname').addEventListener('input', capitalizeInput);
+    document.getElementById('Firstname').addEventListener('input', capitalizeInput);
+    document.getElementById('Middlename').addEventListener('input', capitalizeInput);
+    document.getElementById('Address').addEventListener('input', capitalizeInput);
+    document.getElementById('Citizenship').addEventListener('input', capitalizeInput);
     </script>
 </body>
 
@@ -300,11 +312,11 @@ if (isset($_SESSION['UserID'])) {
 
     // $myfile = fopen("out.txt", "r") or die("Unable to open file!");
     // $laman = fread($myfile,filesize("out.txt"));
-    
+
     // echo fread($myfile,filesize("out.txt"));
 
-    
-   
+
+
   //echo str_replace(" ","",$Address);
 //   $finaladd=str_replace(" ","",$Address);
 //  $f=str_replace(",","",$finaladd);
@@ -339,11 +351,11 @@ if (isset($_SESSION['UserID'])) {
       });
       </script>
       ';
-    } 
+    }
 
     else {
 
-   
+
             $Users = New UserAccount();
             $Users->Lastname         = $_POST['Lastname'];
             $Users->Firstname         = $_POST['Firstname'];
@@ -361,8 +373,8 @@ if (isset($_SESSION['UserID'])) {
             $Users->VerCode      = "";
             $Users->IsVerified      = "0";
             $Users->create();
-      
-      
+
+
             echo '
             <script type="text/javascript">
              swal({
@@ -374,29 +386,29 @@ if (isset($_SESSION['UserID'])) {
               window.location.href = "login.php";
           });
           </script>';
-      
+
            $Code = rand(123654,987456);
-      
+
            $sql = "SELECT MAX(UserID) as lastid from user_account";
            $mydb->setQuery($sql);
            $cur = $mydb->loadResultList();
            foreach ($cur as $result) {
            $lastid=$result->lastid;
            }
-      
+
           $sql = "UPDATE user_account SET VerCode='$Code' WHERE UserID='$lastid'";
           $mydb->setQuery($sql);
           $mydb->executeQuery();
-      
-      
-        
-      
-      
-              // $ch = curl_init(); 
+
+
+
+
+
+              // $ch = curl_init();
               // $parameters = array(
-              //         'apikey' => '06f202f323dc165c1809c5310e339a17', 
+              //         'apikey' => '06f202f323dc165c1809c5310e339a17',
               //         'number' =>  $Mobile,
-              //         'message' => 'DMW: Good day '.$Firstname.' '.$Lastname.' ! Your registration verification code is '.$Code.'. Thank you!', 
+              //         'message' => 'DMW: Good day '.$Firstname.' '.$Lastname.' ! Your registration verification code is '.$Code.'. Thank you!',
               //         'sendername' => 'SEMAPHORE'
               //         );
               //         curl_setopt( $ch, CURLOPT_URL,'https://semaphore.co/api/v4/messages' );
@@ -406,7 +418,7 @@ if (isset($_SESSION['UserID'])) {
               //         curl_setopt( $ch, CURLOPT_POSTFIELDS, http_build_query( $parameters ) );
               //         $result = curl_exec($ch);
               //         curl_close($ch);
-                      
+
           require 'PHPMailer/src/Exception.php';
           require 'PHPMailer/src/PHPMailer.php';
           require 'PHPMailer/src/SMTP.php';
@@ -425,8 +437,8 @@ if (isset($_SESSION['UserID'])) {
           $mail->Body='<HTML>Good day '.$Firstname.' '.$Lastname.' ! Your registration verification code is <strong>'.$Code.'</strong>. Login got to My Account and verify. Thank you!</HTML>';
           $mail->send();
         }
-        
+
     }
-    
-  
+
+
   ?>

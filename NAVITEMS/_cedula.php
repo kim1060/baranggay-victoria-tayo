@@ -50,12 +50,62 @@ function disablePastDates() {
     today = yyyy + '-' + mm + '-' + dd;
     document.getElementById("datetimepicker2").setAttribute("min", today);
 }
+
+function showPolicyModal(event) {
+    event.preventDefault();
+    const modalHtml = `
+        <div class="modal" id="policyModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Appointment Policy</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Please note that failure to attend your appointment on the scheduled date may result in penalties. Refunds are not applicable for missed appointments.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="confirmSubmit">Agree and Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+    const modalElement = document.getElementById('policyModal');
+    $(modalElement).modal('show');
+
+    document.getElementById('confirmSubmit').addEventListener('click', function() {
+        $(modalElement).modal('hide');
+        const form = document.querySelector('form');
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'btnModalSubmit';
+        hiddenInput.value = 'true';
+        form.appendChild(hiddenInput);
+        form.submit();
+    });
+
+    modalElement.querySelector('.close').addEventListener('click', function() {
+        $(modalElement).modal('hide');
+    });
+
+    modalElement.querySelector('.btn-secondary').addEventListener('click', function() {
+        $(modalElement).modal('hide');
+    });
+}
+
+// Attach the modal prompt to the submit button
+const submitButton = document.querySelector('button[name="btnSubmit"]');
+submitButton.addEventListener('click', showPolicyModal);
 </script>
 <?php
 
 
 
-if(isset($_POST["btnSubmit"]))
+if(isset($_POST["btnModalSubmit"]))
 {
     // Check for existing unfinished appointment
     $userID = $_SESSION['UserID'];
