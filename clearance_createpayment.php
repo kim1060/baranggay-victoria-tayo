@@ -8,6 +8,11 @@ $secretKey = "sk_test_gzphsV2CD5uGTPHurg9rETyh";
 //$amount = $_POST['amount'] * 100; // Convert to centavo
 $amount = 100 * 100;
 $ID = $_POST['id'];
+// Get the current domain/base URL
+$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+$host = $_SERVER['HTTP_HOST'];
+$base_url = $protocol . '://' . $host . dirname($_SERVER['REQUEST_URI']);
+
 // Define the data payload for creating a Payment Link
 $data = [
     "data" => [
@@ -16,7 +21,8 @@ $data = [
             "currency" => "PHP",
             "description" => "Barangay Clearance Payment",
             "remarks" => "Barangay Clearance Payment",
-            "checkout_url" => "https://pm.link/appointmate"
+            "success_url" => $base_url . "/clearance_payment_success.php?id=" . $ID . "&status=success",
+            "cancel_url" => $base_url . "/index.php?view=myclearancelist&error=payment_cancelled"
         ]
     ]
 ];
@@ -40,17 +46,16 @@ $response = json_decode($result, true);
 
 // Check if the Payment Link was created successfully
 if (isset($response['data']['attributes']['checkout_url'])) {
-    // Redirect to the checkout URL for payment
- 
+    // Store the payment link reference and set status as payment pending
+    $date = date('Y-m-d H:i:s');
+    $Users = new _clearance();
+    $Users->PaymentReference = $response['data']['attributes']['checkout_url'];
+    $Users->ApprovedDate = $date; // Set approved date to indicate payment link was created
+    // Keep status as 'CONFIRMED' until payment is actually completed
+    $Users->update($ID);
 
+    // Redirect to the checkout URL for payment
     header("Location: " . $response['data']['attributes']['checkout_url']);
-    //echo $response['data']['attributes']['checkout_url'];
-        $date = date('Y-m-d H:i:s');
-        $Users = new _clearance();
-        $Users->ApprovedDate         = $date;
-        $Users->PaymentReference         = $response['data']['attributes']['checkout_url'];
-        $Users->Status         = 'PAID';
-        $Users->update($ID);
     exit();
 } else {
     // Output the error if there was an issue creating the Payment Link

@@ -22,13 +22,13 @@
                     <select class="form-select" name="FirstTimeJob" id="FirstTimeJob"
                         aria-label=".form-select-sm example" required>
                         <option value="">---</option>
-                        <?php 
+                        <?php
                                     $sql = "SELECT * FROM `category`";
                                     $mydb->setQuery($sql);
                                     $cur = $mydb->loadResultList();
                                     foreach ($cur as $res) {
                                     echo '<option value='.$res->Category.'>'.$res->Category.'</option>';
-                                    }                                    
+                                    }
                             ?>
                     </select>
                     <label for="floatingSelect">First Time Job?</label>
@@ -73,10 +73,6 @@ function disablePastDates() {
 
 if(isset($_POST["btnSubmit"]))
 {
-   
-
-        
-
     $date = date('Y-m-d H:i:s');
     $MyClass = new _clearance();
     $MyClass->UserID       = $_SESSION['UserID'];
@@ -85,6 +81,7 @@ if(isset($_POST["btnSubmit"]))
     $MyClass->Date         = $date ;
     $MyClass->AppointmentDate         = $_POST['AppointmentDate'] ;
     $MyClass->FirstTimeJob  = $_POST['FirstTimeJob'] ;
+    $MyClass->Reason = "Default Reason"; // Provide a default value or retrieve from form input
     $MyClass->create();
 
     require 'PHPMailer/src/Exception.php';

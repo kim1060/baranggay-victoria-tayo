@@ -57,9 +57,9 @@ function disablePastDates() {
 
 if(isset($_POST["btnSubmit"]))
 {
-   
 
-        
+
+
 
     $date = date('Y-m-d H:i:s');
     $MyClass = new _cedula();
@@ -68,6 +68,7 @@ if(isset($_POST["btnSubmit"]))
     $MyClass->Status       = 'PENDING';
     $MyClass->Date         = $date ;
     $MyClass->AppointmentDate         = $_POST['AppointmentDate'] ;
+    $MyClass->Reason = 'Default Reason'; // Provide a default value or retrieve from form input
     $MyClass->create();
 
     require 'PHPMailer/src/Exception.php';

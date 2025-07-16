@@ -27,14 +27,14 @@ use PHPMailer\PHPMailer\Exception;
                     <th class="text-center">Action</th>
                 </thead>
                 <tbody>
-                    <?php 
+                    <?php
 					$i = 1;
                     $ID=$_SESSION['UserID'];
-					$sql = "SELECT 
+					$sql = "SELECT
                             a.ID,
                             CONCAT(b.Lastname,', ',b.Firstname,' ',b.Middlename) as Fullname,
                             a.`Status`,
-                            DATE_FORMAT(a.AppointmentDate,'%M %d, %Y') as AppointmentDate, 
+                            DATE_FORMAT(a.AppointmentDate,'%M %d, %Y') as AppointmentDate,
                             DATE_FORMAT(a.ApprovedDate,'%M %d, %Y')  as ApprovedDate,
                             DATE_FORMAT(a.CancelDate,'%M %d, %Y')  as CancelDate,
                             a.Reason,
@@ -50,6 +50,7 @@ use PHPMailer\PHPMailer\Exception;
 						echo '<td class="text-center">'.$i++.'</td>';
                         // echo '<td>'.$result->ID.'</td>';
                         echo '<td>'.$result->Fullname.'</td>';
+                        // Status column
                         if($result->Status=='PENDING')
                         {
                             echo '<td class="text-center"><span class="badge text-bg-secondary">PENDING</span></td>';
@@ -61,6 +62,10 @@ use PHPMailer\PHPMailer\Exception;
                         elseif($result->Status=='APPROVED')
                         {
                             echo '<td class="text-center"><span class="badge text-bg-success">APPROVED</span></td>';
+                        }
+                        elseif($result->Status=='PAID')
+                        {
+                            echo '<td class="text-center"><span class="badge text-bg-success">PAID</span></td>';
                         }
                         elseif($result->Status=='CANCELLED')
                         {
@@ -74,27 +79,39 @@ use PHPMailer\PHPMailer\Exception;
                         }
                         else
                         {
-                            
+                            echo '<td class="text-center"><span class="badge text-bg-warning">'.htmlspecialchars($result->Status).'</span></td>';
                         }
                         echo '<td>'.$result->AppointmentDate.'</td>';
                         echo '<td>'.$result->Dates.'</td>';
-                        
+
+                        // Payment column
                         if($result->Status=='PENDING')
                         {
                             echo '<td class="text-center"><span class="badge text-bg-secondary">WAIT FOR CONFIRMATION</span></td>';
                         }
-                     
                         elseif($result->Status=='CONFIRMED' && $result->ApprovedDate==NULL)
                         {
                             echo '<td class="text-center">
-                            <a href="index.php?view=paymentcedula&id='.$result->ID.'" target="_blank" class="btn btn-sm btn-outline-success"><span class="bi-credit-card"> PROCEED TO PAYMENT</span></a>
+                            <a href="index.php?view=paymentpermit&id='.$result->ID.'" target="_blank" class="btn btn-sm btn-outline-success"><span class="bi-credit-card"> PROCEED TO PAYMENT</span></a>
                             </td>';
                         }
-                        elseif($result->Status=='REQUEST FOR CANCEL')
+                        elseif($result->Status=='CONFIRMED' && $result->ApprovedDate!=NULL)
                         {
-                              echo '<td class="text-center">
-                              <span class="badge text-bg-secondary">REQUEST FOR CANCEL</span>
-                              </td>';
+                            echo '<td class="text-center">
+                            <span class="badge text-bg-warning">PAYMENT PENDING</span><br>
+                            <small>Payment link created, waiting for completion</small><br>
+                            <a href="check_permit_payment_status.php?id='.$result->ID.'" target="_blank" class="btn btn-sm btn-primary mt-2">
+                                <i class="bi-arrow-clockwise"></i> Check Payment Status
+                            </a>
+                            </td>';
+                        }
+                        elseif($result->Status=='PAID')
+                        {
+                            echo '<td class="text-center">
+                            <span class="badge text-bg-success">PAID</span> <br>
+                                <strong>Paid Date: </strong>'.$result->ApprovedDate.' <br>
+                             <strong>Reference: </strong>'.$result->PaymentReference.'
+                            </td>';
                         }
                         elseif($result->Status=='CANCELLED')
                         {
@@ -102,35 +119,34 @@ use PHPMailer\PHPMailer\Exception;
                               <span class="badge text-bg-danger">CANCELLED</span>
                               </td>';
                         }
-                        else
-                        {
-                              echo '<td class="text-center">
-                              <span class="badge text-bg-success">PAID</span> <br>
-                                  <strong>Reason: </strong>'.$result->ApprovedDate.' <br>
-                               <strong>Reference: </strong>'.$result->PaymentReference.'
-                              </td>'; 
-                        }
-
-                         if($result->Status=='CANCELLED')
-                        {
-                              echo '<td class="text-center">
-                             
-                              </td>';
-                        }
                         elseif($result->Status=='REQUEST FOR CANCEL')
                         {
                               echo '<td class="text-center">
                               <span class="badge text-bg-secondary">REQUEST FOR CANCEL</span>
                               </td>';
                         }
-                        else{
+                        else
+                        {
+                              echo '<td class="text-center">
+                              <span class="badge text-bg-info">UNKNOWN STATUS</span><br>
+                              <small>Status: '.$result->Status.'</small>
+                              </td>';
+                        }
+
+                        // Action column
+                        if($result->Status=='CANCELLED' || $result->Status=='REQUEST FOR CANCEL' || $result->Status=='PAID')
+                        {
+                              echo '<td class="text-center">
+                              <span class="badge text-bg-secondary">NO ACTION</span>
+                              </td>';
+                        }
+                        else
+                        {
                             echo '<td class="text-center">
                             <a title="Cancel" data-id='.$result->ID.' data-bs-toggle="modal"
                             data-bs-target="#delete_announcement" class="btn btn-sm btn-outline-danger passID"><i
                                 class="bi-x-circle"></i> CANCEL</a>
                          </td>';
-
-						
                         }
                         echo '</tr>';
 					}
@@ -173,7 +189,7 @@ use PHPMailer\PHPMailer\Exception;
 $(document).on("click", ".passID", function() {
     var itemid = $(this).data('id');
     $("#idkl").val(itemid);
-    $('#appointmentdate').modal('show');
+    $('#delete_announcement').modal('show');
 });
 </script>
 
@@ -200,6 +216,6 @@ if(isset($_POST["btnSubmit"]))
     });
     </script>';
 
-  
+
 }
 ?>

@@ -65,10 +65,6 @@ function disablePastDates() {
 
 if(isset($_POST["btnSubmit"]))
 {
-   
-
-        
-
     $date = date('Y-m-d H:i:s');
     $MyClass = new _court();
     $MyClass->UserID       = $_SESSION['UserID'];
@@ -78,6 +74,7 @@ if(isset($_POST["btnSubmit"]))
     $MyClass->AppointmentDate         = $_POST['AppointmentDate'] ;
     $MyClass->FromTime      = $_POST['FromTime'];
     $MyClass->ToTime      = $_POST['ToTime'];
+    $MyClass->Reason = 'Default Reason'; // Provide a default value or retrieve from form input
     $MyClass->create();
 
     require 'PHPMailer/src/Exception.php';

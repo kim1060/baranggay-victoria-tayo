@@ -1,0 +1,132 @@
+<?php
+require_once("include/initialize.php");
+
+// PayMongo Secret Key
+$secretKey = "sk_test_gzphsV2CD5uGTPHurg9rETyh";
+
+// Check if ID is provided
+if (!isset($_GET['id'])) {
+    die("Payment ID required");
+}
+
+$permit_id = intval($_GET['id']);
+
+// Get the permit record
+$sql = "SELECT * FROM _permit WHERE ID = {$permit_id}";
+$mydb->setQuery($sql);
+$result = $mydb->loadSingleResult();
+
+if (!$result) {
+    die("Permit record not found");
+}
+
+// Extract payment link ID from the PaymentReference
+$payment_link_url = $result->PaymentReference;
+$payment_link_id = basename($payment_link_url);
+
+// Check payment status with PayMongo API
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, "https://api.paymongo.com/v1/links/" . $payment_link_id);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    "Authorization: Basic " . base64_encode($secretKey . ":")
+]);
+
+$api_result = curl_exec($ch);
+$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
+
+$payment_status = "unknown";
+$status_message = "Unable to check payment status";
+
+if ($http_code == 200) {
+    $api_response = json_decode($api_result, true);
+
+    if (isset($api_response['data']['attributes']['status'])) {
+        $payment_status = $api_response['data']['attributes']['status'];
+
+        if ($payment_status === 'paid' && $result->Status !== 'PAID') {
+            // Update the permit status to PAID
+            $date = date('Y-m-d H:i:s');
+            $Users = new _permit();
+            $Users->ApprovedDate = $date;
+            $Users->Status = 'PAID';
+            $Users->update($permit_id);
+
+            $status_message = "Payment confirmed and status updated to PAID!";
+        } elseif ($payment_status === 'paid') {
+            $status_message = "Payment already confirmed and processed.";
+        } elseif ($payment_status === 'unpaid') {
+            $status_message = "Payment is still pending.";
+        } else {
+            $status_message = "Payment status: " . $payment_status;
+        }
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Status Check</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .status {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .paid { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .pending { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            color: white;
+        }
+        .btn-success { background: #28a745; }
+        .btn-primary { background: #007bff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Payment Status Check</h2>
+        <p><strong>Business Permit ID:</strong> <?php echo $permit_id; ?></p>
+        <p><strong>Current Status:</strong> <?php echo $result->Status; ?></p>
+
+        <div class="status <?php echo ($payment_status === 'paid') ? 'paid' : (($payment_status === 'unpaid') ? 'pending' : 'error'); ?>">
+            <?php echo $status_message; ?>
+        </div>
+
+        <div>
+            <a href="index.php?view=mypermitlist" class="btn btn-primary">Back to Permit List</a>
+            <a href="check_permit_payment_status.php?id=<?php echo $permit_id; ?>" class="btn btn-success">Refresh Status</a>
+        </div>
+
+        <hr>
+        <small>
+            <strong>PayMongo Status:</strong> <?php echo $payment_status; ?><br>
+            <strong>HTTP Code:</strong> <?php echo $http_code; ?>
+        </small>
+    </div>
+</body>
+</html>
