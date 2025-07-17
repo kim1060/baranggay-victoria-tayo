@@ -1,8 +1,9 @@
 <?php
-defined('server') ? null : define("server", "db");
-defined('user') ? null : define ("user", "appointmate_user") ;
-defined('pass') ? null : define("pass","appointmate_password");
-defined('database_name') ? null : define("database_name", "appointmate") ;
+// Use Railway's environment variables with fallback values for local development
+defined('server') ? null : define("server", getenv('MYSQLHOST') ?: "db");
+defined('user') ? null : define("user", getenv('MYSQLUSER') ?: "appointmate_user");
+defined('pass') ? null : define("pass", getenv('MYSQLPASSWORD') ?: "appointmate_password");
+defined('database_name') ? null : define("database_name", getenv('MYSQLDATABASE') ?: "appointmate");
 
 
 

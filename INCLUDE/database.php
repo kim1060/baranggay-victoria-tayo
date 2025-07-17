@@ -19,14 +19,19 @@ class Database
 
 	public function open_connection()
 	{
-		$this->conn = mysqli_connect(server, user, pass);
+		$servername = getenv('MYSQLHOST') ?: server;
+		$username = getenv('MYSQLUSER') ?: user;
+		$password = getenv('MYSQLPASSWORD') ?: pass;
+		$database = getenv('MYSQLDATABASE') ?: database_name;
+
+		$this->conn = mysqli_connect($servername, $username, $password);
 
 		if (!$this->conn) {
 			echo "Problem in database connection! Contact administrator!";
 			exit();
 		} else {
 
-			$db_select = mysqli_select_db($this->conn, database_name);
+			$db_select = mysqli_select_db($this->conn, $database);
 			if (!$db_select) {
 				echo "Problem in selecting database! Contact administrator!";
 				exit();
