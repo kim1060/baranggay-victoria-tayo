@@ -1,5 +1,5 @@
-<?php 
-require_once("include/initialize.php");
+<?php
+require_once("INCLUDE/initialize.php");
 $id = 	$_GET['id'];
 $MyClass = New Officials();
 $res = $MyClass->single_data($id);
@@ -101,8 +101,8 @@ function UploadImage(){
     $target_file = $target_dir  . basename($_FILES["image"]["name"]);
     $uploadOk = 1;
     $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-    
-    
+
+
     // if($imageFileType != "jpg" || $imageFileType != "png" || $imageFileType != "jpeg"
     //     || $imageFileType != "gif" || $imageFileType != "docs" || $imageFileType != "mp4") {
          if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
@@ -115,7 +115,7 @@ function UploadImage(){
     //        // echo "File Not Supported";
     //         exit;
 //}
-} 
+}
 
 if(isset($_POST["btnSubmit"]))
 {
@@ -126,7 +126,7 @@ if(isset($_POST["btnSubmit"]))
     $FR->Title         = $_POST['Title'];
     $FR->Details         = $_POST['Details'];
     $FR->update($id);
-    
+
     echo '<script type="text/javascript">
     swal({
         title: "Success!",
@@ -146,7 +146,7 @@ else
     $FR->Details         = $_POST['Details'];
     $FR->Filename      = UploadImage();
     $FR->update($id);
-    
+
     echo '<script type="text/javascript">
     swal({
         title: "Success!",

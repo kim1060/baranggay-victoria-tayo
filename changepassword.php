@@ -1,5 +1,5 @@
 <?php
-require_once("include/initialize.php");
+require_once("INCLUDE/initialize.php");
 $_SESSION['attempt']=0;
 
 // login confirmation
@@ -138,7 +138,7 @@ if (isset($_POST['btnLogin'])) {
   $sql = "SELECT * FROM `user_account` WHERE 1=1 and VerCode ='$VerCode'";
   $mydb->setQuery($sql);
   $row = $mydb->executeQuery();
-  $maxrow = $mydb->num_rows($row);  
+  $maxrow = $mydb->num_rows($row);
 
   if ($maxrow > 0) {
     $sql = "UPDATE user_account SET Password= '$Password' WHERE VerCode ='$VerCode'";
@@ -168,8 +168,8 @@ if (isset($_POST['btnLogin'])) {
         showConfirmButton: true
     });
     </script>';
-    
+
   }
 }
-  
+
 ?>

@@ -1,5 +1,5 @@
 <?php
-require_once("include/initialize.php");
+require_once("INCLUDE/initialize.php");
 
 // PayMongo webhook handler for clearance payments
 $secretKey = "sk_test_gzphsV2CD5uGTPHurg9rETyh";

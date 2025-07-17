@@ -1,5 +1,5 @@
 <?php
-require_once 'include/initialize.php';
+require_once 'INCLUDE/initialize.php';
 // Four steps to closing a session
 // (i.e. logging out)
 
@@ -21,7 +21,7 @@ unset($_SESSION['Email']	);
 unset($_SESSION['Contact']);
 
 unset($_SESSION['Username']);
-unset($_SESSION['Password']);	
+unset($_SESSION['Password']);
 unset($_SESSION['UserType']);
 unset($_SESSION['IsVerified']);
 

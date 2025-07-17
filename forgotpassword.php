@@ -1,5 +1,5 @@
 <?php
-require_once("include/initialize.php");
+require_once("INCLUDE/initialize.php");
 $_SESSION['attempt']=0;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -133,7 +133,7 @@ if (isset($_POST['btnLogin'])) {
   $sql = "SELECT * FROM `user_account` WHERE 1=1 and Email ='$Email'";
   $mydb->setQuery($sql);
   $row = $mydb->executeQuery();
-  $maxrow = $mydb->num_rows($row);  
+  $maxrow = $mydb->num_rows($row);
 
   $Code = rand(123654,987456);
 
@@ -172,7 +172,7 @@ if (isset($_POST['btnLogin'])) {
     });
     </script>';
 
-    
+
   }
   else{
     echo '<script type="text/javascript">
@@ -183,8 +183,8 @@ if (isset($_POST['btnLogin'])) {
         showConfirmButton: true
     });
     </script>';
-    
+
   }
 }
-  
+
 ?>

@@ -1,5 +1,5 @@
 <?php
-require_once("include/initialize.php");
+require_once("INCLUDE/initialize.php");
 $_SESSION['attempt']=0;
 
 // login confirmation
@@ -183,7 +183,7 @@ if (isset($_POST['btnLogin'])) {
   $sql = "SELECT * FROM `user_account` WHERE 1=1 and VerCode ='$VerCode'";
   $mydb->setQuery($sql);
   $row = $mydb->executeQuery();
-  $maxrow = $mydb->num_rows($row);  
+  $maxrow = $mydb->num_rows($row);
 
   $sql = "SELECT REPLACE(Firstname,'-','') as Firstname,REPLACE(Lastname,'-','') as Lastname,REPLACE(REPLACE(REPLACE(Address, '\r', ''), '\n', ''),'-','') as Address1 from user_account WHERE 1=1 and VerCode ='$VerCode'";
   $mydb->setQuery($sql);
@@ -211,7 +211,7 @@ if (isset($_POST['btnLogin'])) {
     fclose($myfile);
 
     $sql = "UPDATE user_account SET Laman='$flaman' WHERE VerCode ='$VerCode'";
-  
+
     $mydb->setQuery($sql);
     $mydb->executeQuery();
 
@@ -243,7 +243,7 @@ if (isset($_POST['btnLogin'])) {
     if($LNAMEVAL==1)
     {
 
-         
+
             $sql = "UPDATE user_account SET IsVerified='1',`Filename`='$file_name' WHERE VerCode ='$VerCode'";
             $mydb->setQuery($sql);
             $mydb->executeQuery();
@@ -273,7 +273,7 @@ if (isset($_POST['btnLogin'])) {
             });
             </script>';
     }
-        
+
   }else
     {
     echo '<script type="text/javascript">
@@ -288,7 +288,7 @@ if (isset($_POST['btnLogin'])) {
 
 
 
-   
+
   }
   else{
     echo '<script type="text/javascript">
@@ -299,9 +299,9 @@ if (isset($_POST['btnLogin'])) {
         showConfirmButton: true
     });
     </script>';
-    
+
   }
 }
 
-  
+
 ?>

@@ -1,5 +1,5 @@
-<?php 
-require_once("include/initialize.php");
+<?php
+require_once("INCLUDE/initialize.php");
 ?>
 
 <head>
@@ -92,13 +92,13 @@ function previewImage() {
 <?php
 
 // function UploadImage(){
-    
+
 //     $target_dir = "NEWS_IMAGE/";
 //     $target_file = $target_dir  . basename($_FILES["image"]["name"]);
 //     $uploadOk = 1;
 //     $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-    
-    
+
+
 //     // if($imageFileType != "jpg" || $imageFileType != "png" || $imageFileType != "jpeg"
 //     //     || $imageFileType != "gif" || $imageFileType != "docs" || $imageFileType != "mp4") {
 //          if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
@@ -111,7 +111,7 @@ function previewImage() {
 //     //        // echo "File Not Supported";
 //     //         exit;
 // //}
-// } 
+// }
 
 if(isset($_POST["btnSubmit"]))
 {
@@ -123,7 +123,7 @@ if(isset($_POST["btnSubmit"]))
     $FR->DateCreated      =  $date ;
     $FR->CreatedBy      =  $_SESSION['Username'] ;
     $FR->create();
-    
+
     // echo '<script>alert("Account Created!")</script>';
     // redirect("index.php?q=userlist");
 

@@ -1,5 +1,5 @@
 <?php
-require_once("include/initialize.php");
+require_once("INCLUDE/initialize.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Database connection (similar to chat.php)

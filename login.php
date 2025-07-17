@@ -1,5 +1,5 @@
 <?php
-require_once("include/initialize.php");
+require_once("INCLUDE/initialize.php");
 $_SESSION['attempt']=0;
 
 // login confirmation
@@ -168,7 +168,7 @@ if (isset($_POST['btnLogin'])) {
   $h_upass = sha1($upass);
   $_SESSION['last_time'] = time();
 
-  
+
     //it creates a new objects of member
     $Users = new UserAccount();
     //make use of the static function, and we passed to parameters
@@ -176,12 +176,12 @@ if (isset($_POST['btnLogin'])) {
     if ($res == true) {
         session_start();
       $_SESSION['attempts'] = 3;
-  
+
       redirect("index.php?view=home");
       echo $_SESSION['UserID'];
       }
       else {
-     
+
         echo '
         <script type="text/javascript">
          swal({
@@ -195,5 +195,5 @@ if (isset($_POST['btnLogin'])) {
       }
 
     }
-  
+
 ?>

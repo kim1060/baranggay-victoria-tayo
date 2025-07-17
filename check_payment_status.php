@@ -1,5 +1,5 @@
 <?php
-require_once("include/initialize.php");
+require_once("INCLUDE/initialize.php");
 
 // PayMongo Secret Key
 $secretKey = "sk_test_gzphsV2CD5uGTPHurg9rETyh";

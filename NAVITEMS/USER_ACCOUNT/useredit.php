@@ -1,5 +1,5 @@
-<?php 
-require_once("include/initialize.php");
+<?php
+require_once("INCLUDE/initialize.php");
 $id = 	$_GET['id'];
 $MyClass = New UserAccount();
 $res = $MyClass->single_data($id);
@@ -34,22 +34,22 @@ $UserType = $res->UserType;
                     <select class="form-select" name="UserType" id="UserType" aria-label=".form-select-sm example"
                         value="" required>
 
-                        <?php 
+                        <?php
                                 $sql = "SELECT * FROM `usertype` where UserType='$UserType'";
                                 $mydb->setQuery($sql);
                                 $cur = $mydb->loadResultList();
                                 foreach ($cur as $res) {
                                     # code...
                                     echo '<option value='.$res->UserType.'>'.$res->UserType.'</option>';
-                                } 
+                                }
                             ?>
-                        <?php 
+                        <?php
                                    $sql = "SELECT * FROM `usertype` where UserType<>'$UserType'";
                                     $mydb->setQuery($sql);
                                     $cur = $mydb->loadResultList();
                                     foreach ($cur as $res) {
                                     echo '<option value='.$res->UserType.'>'.$res->UserType.'</option>';
-                                    }                                    
+                                    }
                             ?>
                     </select>
                     <label for="floatingSelect">User Type</label>
@@ -141,7 +141,7 @@ if(isset($_POST["btnSubmit"]))
         $Users->Fullname         = $_POST['Fullname'];
         $Users->UserType         = $_POST['UserType'];
         $Users->update($UserID);
-        
+
         // echo '<script>alert("Account Updated!")</script>';
         // redirect("index.php?q=userlist");
 
@@ -169,7 +169,7 @@ if(isset($_POST["btnSubmit"]))
         // $Users->MobileNumber         = $_POST['MobileNumber'];
         // $Users->Address         = $_POST['Address'];
         $Users->update($UserID);
-        
+
         // echo '<script>alert("Account Updated!")</script>';
         // redirect("index.php?q=userlist");
 

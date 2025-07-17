@@ -1,5 +1,5 @@
 <?php
-require_once("include/initialize.php");
+require_once("INCLUDE/initialize.php");
 $id = $_POST['id'];
 
 $AppDate="";
@@ -33,7 +33,7 @@ $Filename = $res->Filename;
 $sql = "SELECT DATE_FORMAT(NOW(),'%W, %b %d, %Y' ) as IssuedDate";
 $mydb->setQuery($sql);
 $cur = $mydb->loadResultList();
-foreach ($cur as $result) 
+foreach ($cur as $result)
 {
     $IssuedDate = $result->IssuedDate;
 }
@@ -42,7 +42,7 @@ foreach ($cur as $result)
 // $query = "SELECT UserID, COUNT(*) as TOTALRESPONDENTS FROM surveysubmit WHERE Category='$Category' GROUP BY UserID";
 // $mydb->setQuery($query);
 // $row = $mydb->executeQuery();
-// $TOTALRESPONDENTS = $mydb->num_rows($row);  
+// $TOTALRESPONDENTS = $mydb->num_rows($row);
 
 
 ?>

@@ -1,5 +1,5 @@
-<?php 
-require_once("include/initialize.php");
+<?php
+require_once("INCLUDE/initialize.php");
 ?>
 
 <div class="container">
@@ -24,13 +24,13 @@ require_once("include/initialize.php");
                     <select class="form-select" name="UserType" id="UserType" aria-label=".form-select-sm example"
                         value="" required>
                         <option value="">Select User Type</option>
-                        <?php 
+                        <?php
                                     $sql = "SELECT * FROM `usertype`";
                                     $mydb->setQuery($sql);
                                     $cur = $mydb->loadResultList();
                                     foreach ($cur as $res) {
                                     echo '<option value='.$res->UserType.'>'.$res->UserType.'</option>';
-                                    }                                    
+                                    }
                             ?>
                     </select>
                     <label for="floatingSelect">User Type</label>
@@ -105,7 +105,7 @@ if(isset($_POST["btnSubmit"]))
     $Users->Password      = sha1($_POST['Password']);
     $Users->UserType         = $_POST['UserType'];
     $Users->create();
-    
+
     // echo '<script>alert("Account Created!")</script>';
     // redirect("index.php?q=userlist");
 

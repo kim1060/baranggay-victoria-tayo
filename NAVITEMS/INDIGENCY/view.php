@@ -1,5 +1,5 @@
-<?php 
-require_once("include/initialize.php");
+<?php
+require_once("INCLUDE/initialize.php");
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 $id = 	$_GET['id'];
@@ -90,22 +90,22 @@ $Filename = $res->Filename;
                                         <select class="form-select" name="Status" id="Status"
                                             aria-label=".form-select-sm example" required>
 
-                                            <?php 
+                                            <?php
                                         $sql = "SELECT * FROM `civilstatus` where CivilStatus='$Status'";
                                         $mydb->setQuery($sql);
                                         $cur = $mydb->loadResultList();
                                         foreach ($cur as $res) {
                                             # code...
                                             echo '<option value='.$res->CivilStatus.'>'.$res->CivilStatus.'</option>';
-                                        } 
+                                        }
                                     ?>
-                                            <?php 
+                                            <?php
                                         $sql = "SELECT * FROM `civilstatus` where CivilStatus<>'$Status'";
                                         $mydb->setQuery($sql);
                                         $cur = $mydb->loadResultList();
                                         foreach ($cur as $res) {
                                         echo '<option value='.$res->CivilStatus.'>'.$res->CivilStatus.'</option>';
-                                        }                                    
+                                        }
                                     ?>
                                         </select>
                                         <label for="floatingSelect">Status</label>
@@ -168,30 +168,30 @@ $Filename = $res->Filename;
 
         <div class="row g-1 mb-4 text-center">
             <div class="col-12">
-                <?php 
+                <?php
                 if($_SESSION['UserType']=='ADMIN'){
                 ?>
 
-                <?php 
+                <?php
                     if($DocStatus=='CONFIRMED' && $AppointmentDate==NULL){
                 ?>
-                <?php 
+                <?php
                     }elseif($DocStatus=='CONFIRMED' && $AppointmentDate!==NULL){
                 ?>
-                <?php 
+                <?php
                     }elseif($DocStatus=='REQUEST FOR CANCEL'){
                 ?>
                 <button type="submit" name="btnCancel" class="btn btn-outline-secondary btn-sm "><span
                         class="bi-arrow-up-right-circle-fill"></span> Confirm Cancel</button>
-                <?php 
-                    }elseif($DocStatus=='PENDING'){      
+                <?php
+                    }elseif($DocStatus=='PENDING'){
                 ?>
                 <button type="submit" name="btnSubmit" class="btn btn-outline-success btn-sm "><span
                         class="bi-arrow-up-right-circle-fill"></span> Confirm</button>
                 <?php }?>
                 <a href="index.php?view=indigencylist"><button type="button" class="btn btn-outline-danger btn-sm"><span
                             class="bi-arrow-left"></span> Back</button></a>
-                <?php 
+                <?php
                 }else{
                 ?>
                 <a href="index.php?view=myindigencylist"><button type="button"
@@ -220,7 +220,7 @@ if(isset($_POST["btnSubmit"]))
         $Users->Status         = "CONFIRMED";
         $Users->ConfirmDate         = $date;
         $Users->update($ID);
-        
+
 
         require 'PHPMailer/src/Exception.php';
         require 'PHPMailer/src/PHPMailer.php';
@@ -250,8 +250,8 @@ if(isset($_POST["btnSubmit"]))
             window.location.href = "index.php?view=indigencylist";
         });
         </script>';
-  
-  
+
+
 }
 
 if(isset($_POST["btnSubmitApproved"]))
@@ -261,7 +261,7 @@ if(isset($_POST["btnSubmitApproved"]))
         $Users->Status         = "APPROVED";
         $Users->ApprovedDate         = $date;
         $Users->update($ID);
-        
+
 
         require 'PHPMailer/src/Exception.php';
         require 'PHPMailer/src/PHPMailer.php';
@@ -291,8 +291,8 @@ if(isset($_POST["btnSubmitApproved"]))
             window.location.href = "index.php?view=indigencylist";
         });
         </script>';
-  
-  
+
+
 }
 
 if(isset($_POST["btnCancel"]))

@@ -1,5 +1,5 @@
 <?php
-require_once("include/initialize.php");
+require_once("INCLUDE/initialize.php");
 
 $PlaceOrderID = $_POST['PlaceOrderID'];
 

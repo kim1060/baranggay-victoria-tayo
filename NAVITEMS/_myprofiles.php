@@ -1,5 +1,5 @@
 <?php
-require_once("include/initialize.php");
+require_once("INCLUDE/initialize.php");
 $id = 	$_SESSION['UserID'];
 $MyClass = New UserAccount();
 $res = $MyClass->single_data($id);

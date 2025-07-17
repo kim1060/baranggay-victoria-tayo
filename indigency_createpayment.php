@@ -1,5 +1,5 @@
 <?php
-require_once("include/initialize.php");
+require_once("INCLUDE/initialize.php");
 
 // Replace with your PayMongo Secret Key
 $secretKey = "sk_test_gzphsV2CD5uGTPHurg9rETyh";
@@ -41,7 +41,7 @@ $response = json_decode($result, true);
 // Check if the Payment Link was created successfully
 if (isset($response['data']['attributes']['checkout_url'])) {
     // Redirect to the checkout URL for payment
- 
+
 
     header("Location: " . $response['data']['attributes']['checkout_url']);
     //echo $response['data']['attributes']['checkout_url'];

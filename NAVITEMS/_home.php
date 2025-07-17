@@ -4,11 +4,11 @@
     </div>
 </div> -->
 <?php
-    // $ch = curl_init(); 
+    // $ch = curl_init();
 	// $parameters = array(
-	// 		'apikey' => '06f202f323dc165c1809c5310e339a17', 
+	// 		'apikey' => '06f202f323dc165c1809c5310e339a17',
 	// 		'number' => '09159205929',
-	// 		'message' => 'TEST MESSAGE', 
+	// 		'message' => 'TEST MESSAGE',
 	// 		'sendername' => 'SEMAPHORE'
 	// 		);
 	// 		curl_setopt( $ch, CURLOPT_URL,'https://semaphore.co/api/v4/messages' );
@@ -18,21 +18,21 @@
 
     //         //Send the parameters set above with the request
     //         curl_setopt( $ch, CURLOPT_POSTFIELDS, http_build_query( $parameters ) );
-            
+
     //         $result = curl_exec($ch);
-          
+
     //         print_r($result);
     //         if (curl_errno($ch)) {
     //            $error_msg = curl_error($ch);
     //            print_r($error_msg);
     //         }
-          
+
     //         curl_close($ch);
-   require_once("include/initialize.php");
+   require_once("INCLUDE/initialize.php");
 if(isset($_SESSION['UserID'])){
 $UserID=$_SESSION['UserID'];
 }
-   
+
 // use PHPMailer\PHPMailer\PHPMailer;
 // use PHPMailer\PHPMailer\Exception;
 
@@ -59,8 +59,8 @@ $UserID=$_SESSION['UserID'];
 
 
     <div class="row mt-3" data-aos="fade-left " data-aos-duration="2500">
-        <?php 
-    
+        <?php
+
             if(isset($_SESSION['UserID'])){
                 if($_SESSION['UserType']=="ADMIN"){
         ?>
@@ -72,25 +72,25 @@ $UserID=$_SESSION['UserID'];
                     <div class="card-body">
                         <h2><span class="bi-card-checklist"></span></h2>
                         <h5 class="card-title">Barangay Clearance</h5>
-                        <?php 
+                        <?php
                         $sql = "SELECT coalesce(count(*),0) as count from _clearance where AppointmentDate IS NOT NULL";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Pending = $result->count;
                         }
                         $sql = "SELECT coalesce(count(*),0) as count from _clearance where ConfirmDate IS NOT NULL";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Confirmed = $result->count;
                         }
                         $sql = "SELECT coalesce(count(*),0) as count from _clearance where ApprovedDate IS NOT NULL";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Done = $result->count;
                         }
@@ -130,25 +130,25 @@ $UserID=$_SESSION['UserID'];
                     <div class="card-body">
                         <h2><span class="bi-card-checklist"></span></h2>
                         <h5 class="card-title">Cedula</h5>
-                        <?php 
+                        <?php
                         $sql = "SELECT coalesce(count(*),0) as count from _cedula where AppointmentDate IS NOT NULL";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Pending = $result->count;
                         }
                         $sql = "SELECT coalesce(count(*),0) as count from _cedula where ConfirmDate IS NOT NULL";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Confirmed = $result->count;
                         }
                         $sql = "SELECT coalesce(count(*),0) as count from _cedula where ApprovedDate IS NOT NULL";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Done = $result->count;
                         }
@@ -188,25 +188,25 @@ $UserID=$_SESSION['UserID'];
                     <div class="card-body">
                         <h2><span class="bi-card-checklist"></span></h2>
                         <h5 class="card-title">Certificate of Indigency</h5>
-                        <?php 
+                        <?php
                         $sql = "SELECT coalesce(count(*),0) as count from _indigency where AppointmentDate IS NOT NULL";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Pending = $result->count;
                         }
                         $sql = "SELECT coalesce(count(*),0) as count from _indigency where ConfirmDate IS NOT NULL";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Confirmed = $result->count;
                         }
                         $sql = "SELECT coalesce(count(*),0) as count from _indigency where ApprovedDate IS NOT NULL";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Done = $result->count;
                         }
@@ -246,25 +246,25 @@ $UserID=$_SESSION['UserID'];
                     <div class="card-body">
                         <h2><span class="bi-card-checklist"></span></h2>
                         <h5 class="card-title">Business Permit</h5>
-                        <?php 
+                        <?php
                         $sql = "SELECT coalesce(count(*),0) as count from _permit where AppointmentDate IS NOT NULL";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Pending = $result->count;
                         }
                         $sql = "SELECT coalesce(count(*),0) as count from _permit where ConfirmDate IS NOT NULL";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Confirmed = $result->count;
                         }
                         $sql = "SELECT coalesce(count(*),0) as count from _permit where ApprovedDate IS NOT NULL";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Done = $result->count;
                         }
@@ -304,25 +304,25 @@ $UserID=$_SESSION['UserID'];
                     <div class="card-body">
                         <h2><span class="bi-card-checklist"></span></h2>
                         <h5 class="card-title">Court Booking</h5>
-                        <?php 
+                        <?php
                         $sql = "SELECT coalesce(count(*),0) as count from _court where AppointmentDate IS NOT NULL";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Pending = $result->count;
                         }
                         $sql = "SELECT coalesce(count(*),0) as count from _court where ConfirmDate IS NOT NULL";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Confirmed = $result->count;
                         }
                         $sql = "SELECT coalesce(count(*),0) as count from _court where ApprovedDate IS NOT NULL";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Done = $result->count;
                         }
@@ -362,7 +362,7 @@ $UserID=$_SESSION['UserID'];
     </div>
     <?php }}?>
     <div class="row mt-3">
-        <?php 
+        <?php
             if(isset($_SESSION['UserID'])){
                 if($_SESSION['UserType']=="USER"){
         ?>
@@ -374,25 +374,25 @@ $UserID=$_SESSION['UserID'];
                     <div class="card-body">
                         <h2><span class="bi-card-checklist"></span></h2>
                         <h5 class="card-title">Barangay Clearance</h5>
-                        <?php 
+                        <?php
                         $sql = "SELECT coalesce(count(*),0) as count from _clearance where AppointmentDate IS NOT NULL AND UserID='$UserID'";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Pending = $result->count;
                         }
                         $sql = "SELECT coalesce(count(*),0) as count from _clearance where ConfirmDate IS NOT NULL AND UserID='$UserID'";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Confirmed = $result->count;
                         }
                         $sql = "SELECT coalesce(count(*),0) as count from _clearance where ApprovedDate IS NOT NULL AND UserID='$UserID'";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Done = $result->count;
                         }
@@ -432,25 +432,25 @@ $UserID=$_SESSION['UserID'];
                     <div class="card-body">
                         <h2><span class="bi-card-checklist"></span></h2>
                         <h5 class="card-title">Cedula</h5>
-                        <?php 
+                        <?php
                         $sql = "SELECT coalesce(count(*),0) as count from _cedula where AppointmentDate IS NOT NULL AND UserID='$UserID'";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Pending = $result->count;
                         }
                         $sql = "SELECT coalesce(count(*),0) as count from _cedula where ConfirmDate IS NOT NULL AND UserID='$UserID'";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Confirmed = $result->count;
                         }
                         $sql = "SELECT coalesce(count(*),0) as count from _cedula where ApprovedDate IS NOT NULL AND UserID='$UserID'";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Done = $result->count;
                         }
@@ -490,25 +490,25 @@ $UserID=$_SESSION['UserID'];
                     <div class="card-body">
                         <h2><span class="bi-card-checklist"></span></h2>
                         <h5 class="card-title">Certificate of Indigency</h5>
-                        <?php 
+                        <?php
                         $sql = "SELECT coalesce(count(*),0) as count from _indigency where AppointmentDate IS NOT NULL AND UserID='$UserID'";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Pending = $result->count;
                         }
                         $sql = "SELECT coalesce(count(*),0) as count from _indigency where ConfirmDate IS NOT NULL AND UserID='$UserID'";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Confirmed = $result->count;
                         }
                         $sql = "SELECT coalesce(count(*),0) as count from _indigency where ApprovedDate IS NOT NULL AND UserID='$UserID'";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Done = $result->count;
                         }
@@ -548,25 +548,25 @@ $UserID=$_SESSION['UserID'];
                     <div class="card-body">
                         <h2><span class="bi-card-checklist"></span></h2>
                         <h5 class="card-title">Business Permit</h5>
-                        <?php 
+                        <?php
                         $sql = "SELECT coalesce(count(*),0) as count from _permit where AppointmentDate IS NOT NULL AND UserID='$UserID'";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Pending = $result->count;
                         }
                         $sql = "SELECT coalesce(count(*),0) as count from _permit where ConfirmDate IS NOT NULL AND UserID='$UserID'";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Confirmed = $result->count;
                         }
                         $sql = "SELECT coalesce(count(*),0) as count from _permit where ApprovedDate IS NOT NULL AND UserID='$UserID'";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Done = $result->count;
                         }
@@ -606,25 +606,25 @@ $UserID=$_SESSION['UserID'];
                     <div class="card-body">
                         <h2><span class="bi-card-checklist"></span></h2>
                         <h5 class="card-title">Court Booking</h5>
-                        <?php 
+                        <?php
                         $sql = "SELECT coalesce(count(*),0) as count from _court where AppointmentDate IS NOT NULL AND UserID='$UserID'";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Pending = $result->count;
                         }
                         $sql = "SELECT coalesce(count(*),0) as count from _court where ConfirmDate IS NOT NULL AND UserID='$UserID'";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Confirmed = $result->count;
                         }
                         $sql = "SELECT coalesce(count(*),0) as count from _court where ApprovedDate IS NOT NULL AND UserID='$UserID'";
                         $mydb->setQuery($sql);
                         $cur = $mydb->loadResultList();
-                        foreach ($cur as $result) 
+                        foreach ($cur as $result)
                         {
                             $Done = $result->count;
                         }
