@@ -1,5 +1,5 @@
 <?php
-   require_once("include/initialize.php");
+   require_once("INCLUDE/initialize.php");
 if(isset($_SESSION['UserID'])){
 $UserID=$_SESSION['UserID'];
 }
