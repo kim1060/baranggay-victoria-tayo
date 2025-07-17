@@ -183,5 +183,29 @@ class Database
 			unset($this->conn);
 		}
 	}
+
+	// Helper function to parse address components
+	public static function parseAddress($address) {
+		$addressParts = explode('|', $address);
+		return [
+			'street' => isset($addressParts[0]) ? $addressParts[0] : '',
+			'barangay' => isset($addressParts[1]) ? $addressParts[1] : '',
+			'city' => isset($addressParts[2]) ? $addressParts[2] : '',
+			'postal_code' => isset($addressParts[3]) ? $addressParts[3] : ''
+		];
+	}
+
+	// Helper function to format address for display
+	public static function formatAddress($address) {
+		$parts = self::parseAddress($address);
+		$formatted = [];
+
+		if (!empty($parts['street'])) $formatted[] = $parts['street'];
+		if (!empty($parts['barangay'])) $formatted[] = $parts['barangay'];
+		if (!empty($parts['city'])) $formatted[] = $parts['city'];
+		if (!empty($parts['postal_code'])) $formatted[] = $parts['postal_code'];
+
+		return implode(', ', $formatted);
+	}
 }
 $mydb = new Database();

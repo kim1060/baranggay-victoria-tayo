@@ -123,14 +123,40 @@ if (isset($_SESSION['UserID'])) {
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <div class="form-outline mb-2">
-                                                    <input type="text" id="Address" name="Address"
+                                                    <input type="text" id="Street" name="Street"
+                                                        class="form-control form-control-lg" placeholder="House No., Street Name" required />
+                                                    <label class="form-label" for="Street">Street Address</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-outline mb-2">
+                                                    <input type="text" id="Barangay" name="Barangay"
                                                         class="form-control form-control-lg" required />
-                                                    <label class="form-label" for="form2Example17">Address</label>
+                                                    <label class="form-label" for="Barangay">Barangay</label>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-outline mb-2">
+                                                    <input type="text" id="City" name="City"
+                                                        class="form-control form-control-lg" required />
+                                                    <label class="form-label" for="City">City/Municipality</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-outline mb-2">
+                                                    <input type="text" id="PostalCode" name="PostalCode"
+                                                        class="form-control form-control-lg" maxlength="4"
+                                                        oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
+                                                    <label class="form-label" for="PostalCode">Postal Code</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Hidden field to store concatenated address -->
+                                        <input type="hidden" id="Address" name="Address" />
 
                                         <div class="row">
                                             <div class="col-md-6">
@@ -282,12 +308,45 @@ if (isset($_SESSION['UserID'])) {
         event.target.value = event.target.value.toUpperCase();
     }
 
+    function concatenateAddress() {
+        const street = document.getElementById('Street').value;
+        const barangay = document.getElementById('Barangay').value;
+        const city = document.getElementById('City').value;
+        const postalCode = document.getElementById('PostalCode').value;
+
+        // Concatenate with separators for easy parsing later
+        const fullAddress = `${street}|${barangay}|${city}|${postalCode}`;
+        document.getElementById('Address').value = fullAddress;
+    }
+
+    // Add event listener to form submission
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form[method="post"]');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                concatenateAddress();
+            });
+        }
+
+        // Also update address when fields change for preview
+        ['Street', 'Barangay', 'City', 'PostalCode'].forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('input', concatenateAddress);
+            }
+        });
+    });
+
     // Attach the capitalizeInput function to relevant input fields
-    document.getElementById('Lastname').addEventListener('input', capitalizeInput);
-    document.getElementById('Firstname').addEventListener('input', capitalizeInput);
-    document.getElementById('Middlename').addEventListener('input', capitalizeInput);
-    document.getElementById('Address').addEventListener('input', capitalizeInput);
-    document.getElementById('Citizenship').addEventListener('input', capitalizeInput);
+    document.addEventListener('DOMContentLoaded', function() {
+        const fieldsToCapitalize = ['Lastname', 'Firstname', 'Middlename', 'Street', 'Barangay', 'City', 'Citizenship'];
+        fieldsToCapitalize.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('input', capitalizeInput);
+            }
+        });
+    });
     </script>
 </body>
 
