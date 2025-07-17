@@ -17,7 +17,7 @@ if (isset($_SESSION['UserID'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
-    <link rel="icon" type="image/x-icon" href="img/APP_LOGO.PNG">
+    <link rel="icon" type="image/x-icon" href="img/baranggay-victoria.jpg">
     <!-- Font Awesome -->
     <!-- bootstrap 5 css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -45,6 +45,25 @@ if (isset($_SESSION['UserID'])) {
         background-size: 55% 100vh;
         position: relative;
         opacity: 97%;
+    }
+
+    .password-requirements {
+        margin-top: 5px;
+        padding-left: 10px;
+    }
+
+    .password-requirements .requirement {
+        margin: 2px 0;
+        transition: color 0.3s ease;
+    }
+
+    .password-requirements .requirement.valid {
+        color: #28a745 !important;
+        font-weight: bold;
+    }
+
+    .password-requirements .requirement.invalid {
+        color: #dc3545 !important;
     }
 
     #image-preview {
@@ -79,12 +98,24 @@ if (isset($_SESSION['UserID'])) {
 
     /* Extra large devices (large laptops and desktops, 1200px and up) */
     @media only screen and (min-width: 1200px) {}
+
+    /* Enhanced Form Styling */
+    .card-body {
+        background: #fff;
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .col-xl-8 {
+        max-width: 720px;
+    }
     </style>
 </head>
 
 <body>
     <!-- Section: Design Block -->
-    <section class="vh-100" style=" background-color:#16445e;">
+    <!-- Registration Form -->
+    <section class="vh-100" style="background-color:#16445e;">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col col-xl-8">
@@ -93,168 +124,138 @@ if (isset($_SESSION['UserID'])) {
                             <div class="col-md-12 d-flex align-items-center">
                                 <div class="card-body p-4 p-lg-5 text-black">
                                     <form method="post" enctype="multipart/form-data" autocomplete="off">
-                                        <!-- <div class="align-items-center mb-3 pb-1 text-center">
-                                            <img src="img/DMW_LOGO.png" alt="login form" class="img-fluid"
-                                                style="border-radius: 25px; width:20%;" />
-                                        </div> -->
                                         <h5 class="fw-normal mb-3 pb-3 text-center" style="letter-spacing: 1px;">Account
                                             Registration</h5>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-outline mb-2">
-                                                    <input type="text" id="Lastname" name="Lastname"
-                                                        class="form-control form-control-lg" required />
-                                                    <label class="form-label" for="form2Example17">Last Name</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-outline mb-2">
-                                                    <input type="text" id="Firstname" name="Firstname"
-                                                        class="form-control form-control-lg" required />
-                                                    <label class="form-label" for="form2Example17">First Name</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-outline mb-2">
-                                                    <input type="text" id="Middlename" name="Middlename"
-                                                        class="form-control form-control-lg" />
-                                                    <label class="form-label" for="form2Example17">Middle Name</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-outline mb-2">
-                                                    <input type="text" id="Street" name="Street"
-                                                        class="form-control form-control-lg" placeholder="House No., Street Name" required />
-                                                    <label class="form-label" for="Street">Street Address</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-outline mb-2">
-                                                    <input type="text" id="Barangay" name="Barangay"
-                                                        class="form-control form-control-lg" required />
-                                                    <label class="form-label" for="Barangay">Barangay</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-outline mb-2">
-                                                    <input type="text" id="City" name="City"
-                                                        class="form-control form-control-lg" required />
-                                                    <label class="form-label" for="City">City/Municipality</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-outline mb-2">
-                                                    <input type="text" id="PostalCode" name="PostalCode"
-                                                        class="form-control form-control-lg" maxlength="4"
-                                                        oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
-                                                    <label class="form-label" for="PostalCode">Postal Code</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Hidden field to store concatenated address -->
-                                        <input type="hidden" id="Address" name="Address" />
 
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <div class="form-outline mb-2">
-                                                            <input type="text" id="Age" name="Age"
-                                                                class="form-control form-control-lg" required />
-                                                            <label class="form-label" for="form2Example17">Age</label>
+                                        <!-- Contact Info Section -->
+                                        <fieldset class="mb-3">
+                                            <legend class="text-muted">Contact Info</legend>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-outline mb-3">
+                                                        <input type="email" id="Email" name="Email"
+                                                            class="form-control form-control-lg" required />
+                                                        <label class="form-label" for="Email"><i
+                                                                class="bi bi-envelope"></i> Email</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-outline mb-3">
+                                                        <input type="tel" id="Mobile" name="Mobile"
+                                                            class="form-control form-control-lg" maxlength="11"
+                                                            required />
+                                                        <label class="form-label" for="Mobile"><i
+                                                                class="bi bi-phone"></i> Mobile #</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+
+                                        <!-- Address Section -->
+                                        <fieldset class="mb-3">
+                                            <legend class="text-muted">Address</legend>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-outline mb-3">
+                                                        <input type="text" id="Street" name="Street"
+                                                            class="form-control form-control-lg" required />
+                                                        <label class="form-label" for="Street">Street Address</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-outline mb-3">
+                                                        <input type="text" id="Barangay" name="Barangay"
+                                                            class="form-control form-control-lg" required />
+                                                        <label class="form-label" for="Barangay">Barangay</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-outline mb-3">
+                                                        <input type="text" id="City" name="City"
+                                                            class="form-control form-control-lg" required />
+                                                        <label class="form-label" for="City">City/Municipality</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-outline mb-3">
+                                                        <input type="number" id="PostalCode" name="PostalCode"
+                                                            class="form-control form-control-lg" maxlength="4"
+                                                            required />
+                                                        <label class="form-label" for="PostalCode">Postal Code</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+
+                                        <!-- Credentials Section -->
+                                        <fieldset class="mb-3">
+                                            <legend class="text-muted">Credentials</legend>
+                                            <div class="form-outline mb-3">
+                                                <input type="text" id="Username" name="Username"
+                                                    class="form-control form-control-lg" required />
+                                                <label class="form-label" for="Username"><i
+                                                        class="bi bi-person"></i> User Name</label>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-outline mb-3">
+                                                        <input type="password" id="Password" name="Password"
+                                                            class="form-control form-control-lg" required minlength="8" />
+                                                        <label class="form-label" for="Password"><i
+                                                                class="bi bi-lock"></i> Password</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-outline mb-3">
+                                                        <input type="password" id="ConfirmPassword" name="ConfirmPassword"
+                                                            class="form-control form-control-lg" required />
+                                                        <label class="form-label" for="ConfirmPassword"><i
+                                                                class="bi bi-lock-fill"></i> Confirm Password</label>
+                                                    </div>
+                                                    <!-- Password Match Indicator -->
+                                                    <small id="match-text" class="text-muted"></small>
+                                                </div>
+                                            </div>
+                                            <div>
+                                              <!-- Password Requirements -->
+                                                    <div class="password-requirements w-100">
+                                                        <div id="length" class="requirement invalid">At least 8
+                                                            characters
+                                                        </div>
+                                                        <div id="uppercase" class="requirement invalid">At least one
+                                                            uppercase letter
+                                                        </div>
+                                                        <div id="lowercase" class="requirement invalid">At least one
+                                                            lowercase letter
+                                                        </div>
+                                                        <div id="number" class="requirement invalid">At least one
+                                                            number
+                                                        </div>
+                                                        <div id="special" class="requirement invalid">At least one
+                                                            special character (@$!%*?&)
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-8">
-                                                        <select name="Status" id="Status"
-                                                            class="form-select form-control-lg mb-2" required>
-                                                            <option value="">Select Status</option>
-                                                            <?php
-                                                                $sql = "SELECT * FROM `civilstatus`";
-                                                                $mydb->setQuery($sql);
-                                                                $cur = $mydb->loadResultList();
-                                                                foreach ($cur as $res) {
-                                                                    # code...
-                                                                    echo '<option value='.$res->CivilStatus.'>'.$res->CivilStatus.'</option>';
-                                                                }
-                                                            ?>
-                                                        </select>
+                                                    <!-- Password Strength Bar -->
+                                                    <div class="progress mt-2">
+                                                        <div id="strength-bar" class="progress-bar" role="progressbar"
+                                                            style="width: 0%;"></div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-outline mb-2">
-                                                            <input type="text" id="Citizenship" name="Citizenship"
-                                                                class="form-control form-control-lg" required />
-                                                            <label class="form-label"
-                                                                for="form2Example17">Citizenship</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                    <small id="strength-text" class="text-muted">Very Weak</small>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-outline mb-2">
-                                                    <input type="email" id="Email" name="Email"
-                                                        class="form-control form-control-lg" required />
-                                                    <label class="form-label" for="form2Example17">Email</label>
-                                                </div>
-                                                <div class="form-outline mb-2">
-                                                    <input type="text" id="Mobile" name="Mobile"
-                                                        class="form-control form-control-lg" maxlength="11"
-                                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
-                                                    <label class="form-label" for="form2Example17">Mobile #</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-outline mb-2">
-                                                    <input type="text" id="Username" name="Username"
-                                                        class="form-control form-control-lg" required />
-                                                    <label class="form-label" for="form2Example17">User Name</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-outline mb-2">
-                                                    <input type="password" id="Password" name="Password"
-                                                        class="form-control form-control-lg" required />
-                                                    <label class="form-label" for="form2Example27">Password</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-outline mb-2">
-                                                    <input type="password" id="ConfirmPassword" name="ConfirmPassword"
-                                                        class="form-control form-control-lg" required />
-                                                    <label class="form-label" for="form2Example27">Re-enter
-                                                        Password</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <input type="checkbox" onclick="ShowPass()" class="align-start">
-                                            Show
-                                            Password
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="pt-1 mb-4">
-                                                    <button class="btn btn-success btn-lg btn-block" type="submit"
-                                                        name="btnRegister" id="btnRegister">NEXT</button>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                            </div>
+                                        </fieldset>
+
+                                        <!-- Submit Button -->
+                                        <div class="text-center">
+                                            <button class="btn btn-success w-100" type="submit"
+                                                name="btnRegister" id="btnRegister">
+                                                <i class="bi bi-arrow-right-circle"></i> Next
+                                            </button>
                                         </div>
 
-
-
-
-                                        <a class="fw-bold text-success" href="login.php">Log in here!</a>
+                                        <a class="fw-bold text-success mt-3 d-block text-center" href="login.php">Log in
+                                            here!</a>
                                     </form>
 
                                 </div>
@@ -308,6 +309,96 @@ if (isset($_SESSION['UserID'])) {
         event.target.value = event.target.value.toUpperCase();
     }
 
+    // Password validation function
+    function validatePassword() {
+        const password = document.getElementById('Password').value;
+        const requirements = {
+            length: password.length >= 8,
+            uppercase: /[A-Z]/.test(password),
+            lowercase: /[a-z]/.test(password),
+            number: /\d/.test(password),
+            special: /[@$!%*?&]/.test(password)
+        };
+
+        // Update requirement indicators
+        Object.keys(requirements).forEach(req => {
+            const element = document.getElementById(req);
+            if (element) {
+                element.className = requirements[req] ? 'requirement valid' : 'requirement invalid';
+            }
+        });
+
+        // Calculate password strength
+        const validRequirements = Object.values(requirements).filter(req => req).length;
+        const strengthBar = document.getElementById('strength-bar');
+        const strengthText = document.getElementById('strength-text');
+
+        if (strengthBar && strengthText) {
+            let strength = 0;
+            let strengthLabel = 'Very Weak';
+            let strengthColor = '#dc3545';
+
+            if (validRequirements >= 5) {
+                strength = 100;
+                strengthLabel = 'Strong';
+                strengthColor = '#28a745';
+            } else if (validRequirements >= 4) {
+                strength = 80;
+                strengthLabel = 'Good';
+                strengthColor = '#ffc107';
+            } else if (validRequirements >= 3) {
+                strength = 60;
+                strengthLabel = 'Fair';
+                strengthColor = '#fd7e14';
+            } else if (validRequirements >= 2) {
+                strength = 40;
+                strengthLabel = 'Weak';
+                strengthColor = '#dc3545';
+            }
+
+            strengthBar.style.width = strength + '%';
+            strengthBar.style.backgroundColor = strengthColor;
+            strengthText.textContent = strengthLabel;
+            strengthText.style.color = strengthColor;
+        }
+
+        return Object.values(requirements).every(req => req);
+    }
+
+    // Enhanced password matching validation
+    function validatePasswordMatch() {
+        const password = document.getElementById('Password').value;
+        const confirmPassword = document.getElementById('ConfirmPassword').value;
+        const confirmField = document.getElementById('ConfirmPassword');
+        const matchText = document.getElementById('match-text');
+
+        if (!confirmPassword) {
+            if (matchText) {
+                matchText.textContent = 'Enter password above first';
+                matchText.style.color = '#6c757d';
+            }
+            confirmField.setCustomValidity('');
+            confirmField.style.borderColor = '#ced4da';
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            confirmField.setCustomValidity('Passwords do not match');
+            confirmField.style.borderColor = '#dc3545';
+            if (matchText) {
+                matchText.textContent = '✗ Passwords do not match';
+                matchText.style.color = '#dc3545';
+            }
+        } else {
+            confirmField.setCustomValidity('');
+            confirmField.style.borderColor = '#28a745';
+            if (matchText) {
+                matchText.textContent = '✓ Passwords match';
+                matchText.style.color = '#28a745';
+            }
+        }
+    }
+
     function concatenateAddress() {
         const street = document.getElementById('Street').value;
         const barangay = document.getElementById('Barangay').value;
@@ -346,6 +437,59 @@ if (isset($_SESSION['UserID'])) {
                 element.addEventListener('input', capitalizeInput);
             }
         });
+
+        // Add password validation event listeners
+        const passwordField = document.getElementById('Password');
+        const confirmPasswordField = document.getElementById('ConfirmPassword');
+        const form = document.querySelector('form[method="post"]');
+
+        if (passwordField) {
+            passwordField.addEventListener('input', validatePassword);
+            passwordField.addEventListener('keyup', validatePassword);
+        }
+
+        if (confirmPasswordField) {
+            confirmPasswordField.addEventListener('input', validatePasswordMatch);
+            confirmPasswordField.addEventListener('keyup', validatePasswordMatch);
+        }
+
+        // Enhanced form submission validation
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                const isPasswordValid = validatePassword();
+                const password = document.getElementById('Password').value;
+                const confirmPassword = document.getElementById('ConfirmPassword').value;
+
+                if (!isPasswordValid) {
+                    e.preventDefault();
+                    swal({
+                        title: "Invalid Password!",
+                        text: "Password must meet all security requirements.",
+                        type: "error",
+                        showConfirmButton: true
+                    });
+                    return false;
+                }
+
+                if (password !== confirmPassword) {
+                    e.preventDefault();
+                    swal({
+                        title: "Password Mismatch!",
+                        text: "Passwords do not match. Please check and try again.",
+                        type: "error",
+                        showConfirmButton: true
+                    });
+                    return false;
+                }
+
+                // If validation passes, concatenate address
+                concatenateAddress();
+                return true;
+            });
+        }
+
+        // Initial validation on page load
+        validatePassword();
     });
     </script>
 </body>
