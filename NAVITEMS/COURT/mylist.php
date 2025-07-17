@@ -15,7 +15,7 @@ use PHPMailer\PHPMailer\Exception;
     <hr>
     <div class="row">
         <div class="table-responsive">
-            <table id="example" class="table table-bordered table-sm table-hover">
+            <table id="court-mylist-table" class="table table-bordered table-sm table-hover datatable-auto">
                 <thead class="table-dark">
                     <th class="text-center">#</th>
                     <!-- <th>ID</th> -->
@@ -29,14 +29,14 @@ use PHPMailer\PHPMailer\Exception;
                     <th class="text-center">Action</th>
                 </thead>
                 <tbody>
-                    <?php 
+                    <?php
 					$i = 1;
                     $ID=$_SESSION['UserID'];
-					$sql = "SELECT 
+					$sql = "SELECT
                             a.ID,
                             CONCAT(b.Lastname,', ',b.Firstname,' ',b.Middlename) as Fullname,
                             a.`Status`,
-                            DATE_FORMAT(a.AppointmentDate,'%M %d, %Y') as AppointmentDate, 
+                            DATE_FORMAT(a.AppointmentDate,'%M %d, %Y') as AppointmentDate,
                             DATE_FORMAT(a.ApprovedDate,'%M %d, %Y')  as ApprovedDate,
                             REPLACE(a.PaymentReference,'https://pm.link/Appointmate/test/','') as PaymentReference,
                             TIME_FORMAT(a.FromTime, '%h:%i %p') as TimeFrom,
@@ -74,10 +74,10 @@ use PHPMailer\PHPMailer\Exception;
                               echo '<td class="text-center">
                               <span class="badge text-bg-secondary">REQUEST FOR CANCEL</span>
                               </td>';
-                        }                       
+                        }
                         else
                         {
-                            
+
                         }
                         echo '<td>'.$result->AppointmentDate.'</td>';
                         echo '<td>'.$result->TimeFrom.'</td>';
@@ -87,7 +87,7 @@ use PHPMailer\PHPMailer\Exception;
                         {
                             echo '<td class="text-center"><span class="badge text-bg-secondary">WAIT FOR CONFIRMATION</span></td>';
                         }
-                     
+
                         elseif($result->Status=='CONFIRMED' && $result->ApprovedDate==NULL)
                         {
                             echo '<td class="text-center">
@@ -108,11 +108,11 @@ use PHPMailer\PHPMailer\Exception;
                                <strong>Reference: </strong>'.$result->PaymentReference.'
                               </td>';
                         }
-						
+
                          if($result->Status=='CANCELLED')
                         {
                               echo '<td class="text-center">
-                             
+
                               </td>';
                         }
                         elseif($result->Status=='REQUEST FOR CANCEL')
@@ -128,7 +128,7 @@ use PHPMailer\PHPMailer\Exception;
                                 class="bi-x-circle"></i> CANCEL</a>
                          </td>';
 
-						
+
                         }
                         echo '</tr>';
 					}
@@ -196,6 +196,6 @@ if(isset($_POST["btnSubmit"]))
         window.location.href = "index.php?view=mycourtlist";
     });
     </script>';
-  
+
 }
 ?>

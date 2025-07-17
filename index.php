@@ -27,8 +27,13 @@ $content = 'home.php';
 $view = (isset($_GET['view']) && $_GET['view'] != '') ? $_GET['view'] : '';
 
 switch ($view) {
-   
-    
+
+    // ADMIN DASHBOARD
+    case 'admin_dashboard':
+        $title = "Admin Dashboard";
+        $content = 'NAVITEMS/admin_dashboard.php';
+    break;
+
     //USER ACCOUNT
     case 'userlist':
         $title = "User Accounts";
@@ -57,7 +62,7 @@ switch ($view) {
         $title = "Edit";
         $content = 'NAVITEMS/ANNOUNCEMENT/announcementedit.php';
     break;
-    
+
     //MONTHLY
     case 'monthlydueslist':
         $title = "Monthly Dues";
@@ -204,7 +209,7 @@ switch ($view) {
         $content = 'NAVITEMS/_myprofile.php';
     break;
 
-    
+
     case 'myprofiles':
         $title = "My Account";
         $content = 'NAVITEMS/_myprofiles.php';
@@ -215,11 +220,16 @@ switch ($view) {
         $content = 'NAVITEMS/_chat.php';
     break;
 
+    case 'consolidatedlist':
+        $title = "Consolidated Report";
+        $content = 'NAVITEMS/_consolidatedlist.php';
+    break;
 
-    
+
+
     case 'home':
         $title = "Home";
-        $content = 'NAVITEMS/_home.php';
+        $content = 'NAVITEMS/_home_improved.php';
     break;
 
         case 'verification':
@@ -230,7 +240,7 @@ switch ($view) {
 
     default:
     $title = "Home";
-    $content    = 'NAVITEMS/_home.php';
+    $content    = 'NAVITEMS/_home_improved.php';
     //$content    = 'NAVITEMS/_home.php';
 }
 

@@ -28,7 +28,7 @@
                 <button type="button" class="btn btn-sm btn-primary"><span class="bi-plus-circle"></span> Add
                     New</button>
             </div>
-            <table id="example" class="table table-striped" style="width:100%">
+            <table id="admin-example-table" class="table table-striped datatable-auto" style="width:100%">
                 <thead class="navbar-custom text-white">
                     <tr>
                         <th>Name</th>

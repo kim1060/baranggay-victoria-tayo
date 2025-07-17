@@ -6,14 +6,14 @@
     <hr>
     <div class="row">
         <div class="table-responsive">
-            <table id="example" class="table table-bordered table-sm table-hover">
+            <table id="downloadable-table" class="table table-bordered table-sm table-hover datatable-auto">
                 <thead class="table-dark">
                     <th class="text-center">#</th>
                     <th>Filename</th>
                     <th class="text-center">Action</th>
                 </thead>
                 <tbody>
-                    <?php 
+                    <?php
 					$i = 1;
 					$sql = "SELECT ID  ,Concat('REF ', LPAD(ID  ,10,0)) as Reference,
 							Filename
@@ -25,13 +25,13 @@
 						echo '<tr>';
 						echo '<td class="text-center">'.$i++.'</td>';
                         echo '<td>'.$result->Filename.'</td>';
-                     
+
                             echo '<td class="text-center">
                             <!--<a href="index.php?view=frbudgetedit&id='.$result->ID.'" class="btn btn-sm btn-outline-primary"><i class="bi-pencil"></i></a>-->
                             <a href="./FILE_DOWNLOADABLE/'.$result->Filename.'" class="btn btn-outline-primary btn-sm" download><i class="bi-download"></i></a>
                             <!--<a data-id="'.$result->ID.'" class="btn btn-sm btn-outline-danger delete_user"><i class="bi-trash"></i></a>-->
                             </td>';
-    
+
 
 						echo '</tr>';
 					}
@@ -81,7 +81,7 @@ if(isset($_POST["btnSubmit"]))
     $sql = "SELECT * FROM `downloadablefile` WHERE ID=$id ";
     $mydb->setQuery($sql);
     $cur = $mydb->loadResultList();
-    
+
     foreach ($cur as $result) {
     unlink("FILE_DOWNLOADABLE/$result->Filename") ;
     }

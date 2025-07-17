@@ -10,7 +10,7 @@
     <hr>
     <div class="row">
         <div class="table-responsive">
-            <table id="example" class="table table-bordered table-sm table-hover">
+            <table id="court-list-table" class="table table-bordered table-sm table-hover datatable-auto">
                 <thead class="table-dark">
                     <th class="text-center">#</th>
                     <!-- <th>ID</th> -->
@@ -23,14 +23,14 @@
                     <th class="text-center">Action</th>
                 </thead>
                 <tbody>
-                    <?php 
+                    <?php
 					$i = 1;
                     $ID=$_SESSION['UserID'];
-					$sql = "SELECT 
+					$sql = "SELECT
                             a.ID,
                             CONCAT(b.Lastname,', ',b.Firstname,' ',b.Middlename) as Fullname,
                             a.`Status`,
-                            DATE_FORMAT(a.AppointmentDate,'%M %d, %Y') as AppointmentDate, 
+                            DATE_FORMAT(a.AppointmentDate,'%M %d, %Y') as AppointmentDate,
                             TIME_FORMAT(a.FromTime, '%h:%i %p') as TimeFrom,
                             TIME_FORMAT(a.ToTime, '%h:%i %p') as TimeTo,
                             DATE_FORMAT(a.Date,'%M %d, %Y') as Dates
@@ -59,14 +59,14 @@
                             elseif($result->Status=='CANCELLED')
                             {
                                 echo '<td class="text-center"><span class="badge text-bg-danger">CANCELLED</span></td>';
-                            }  
+                            }
                             elseif($result->Status=='REQUEST FOR CANCEL')
                             {
                                 echo '<td class="text-center"><span class="badge text-bg-secondary">REQUEST FOR CANCEL</span></td>';
-                            }                          
+                            }
                             else
                             {
-                                
+
                             }
                             echo '<td>'.$result->AppointmentDate.'</td>';
                             echo '<td>'.$result->TimeFrom.'</td>';

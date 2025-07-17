@@ -10,7 +10,7 @@
     <hr>
     <div class="row">
         <div class="table-responsive">
-            <table id="example" class="table table-bordered table-sm table-hover">
+            <table id="cedula-list-table" class="table table-bordered table-sm table-hover datatable-auto">
                 <thead class="table-dark">
                     <th class="text-center">#</th>
                     <!-- <th>ID</th> -->
@@ -21,13 +21,13 @@
                     <th class="text-center">Action</th>
                 </thead>
                 <tbody>
-                    <?php 
+                    <?php
 					$i = 1;
-					$sql = "SELECT 
+					$sql = "SELECT
                             a.ID,
                             CONCAT(b.Lastname,', ',b.Firstname,' ',b.Middlename) as Fullname,
                             a.`Status`,
-                            DATE_FORMAT(a.AppointmentDate,'%M %d, %Y') as AppointmentDate, 
+                            DATE_FORMAT(a.AppointmentDate,'%M %d, %Y') as AppointmentDate,
                             DATE_FORMAT(a.Date,'%M %d, %Y') as Dates
 							FROM _cedula a
                             JOIN user_account b on b.UserID=a.UserID ";
@@ -61,7 +61,7 @@
                             }
                             else
                             {
-                                
+
                             }
                             echo '<td>'.$result->AppointmentDate.'</td>';
                             echo '<td>'.$result->Dates.'</td>';

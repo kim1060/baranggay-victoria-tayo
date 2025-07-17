@@ -46,6 +46,29 @@ class Database
 		return $result;
 	}
 
+	function executeQuerySafe()
+	{
+		// Check if query contains table references and validate table existence
+		if (preg_match('/FROM\s+([a-zA-Z_][a-zA-Z0-9_]*)/i', $this->sql_string, $matches)) {
+			$tableName = $matches[1];
+			if (!$this->tableExists($tableName)) {
+				// Return empty result set for non-existent tables
+				return false;
+			}
+		}
+
+		$result = mysqli_query($this->conn, $this->sql_string);
+		$this->confirm_query($result);
+		return $result;
+	}
+
+	function tableExists($tableName)
+	{
+		$sql = "SHOW TABLES LIKE '" . $this->escape_value($tableName) . "'";
+		$result = mysqli_query($this->conn, $sql);
+		return mysqli_num_rows($result) > 0;
+	}
+
 	private function confirm_query($result)
 	{
 		if (!$result) {
@@ -76,11 +99,28 @@ class Database
 	{
 		$cur = $this->executeQuery();
 
+		if (!$cur) {
+			// Return empty object if query failed
+			$emptyResult = new stdClass();
+			$emptyResult->count = 0;
+			$emptyResult->total = 0;
+			$emptyResult->pending = 0;
+			$emptyResult->approved = 0;
+			return $emptyResult;
+		}
+
 		while ($row = mysqli_fetch_object($cur)) {
 			return $data = $row;
 		}
 		mysqli_free_result($cur);
-		//=return $data;
+
+		// Return empty object if no results
+		$emptyResult = new stdClass();
+		$emptyResult->count = 0;
+		$emptyResult->total = 0;
+		$emptyResult->pending = 0;
+		$emptyResult->approved = 0;
+		return $emptyResult;
 	}
 
 	function getFieldsOnOneTable($tbl_name)
@@ -101,7 +141,7 @@ class Database
 	{
 		return mysqli_fetch_array($result);
 	}
-	//gets the number or rows	
+	//gets the number or rows
 	public function num_rows($result_set)
 	{
 		return mysqli_num_rows($result_set);

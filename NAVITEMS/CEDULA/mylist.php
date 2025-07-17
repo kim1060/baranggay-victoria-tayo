@@ -15,7 +15,7 @@ use PHPMailer\PHPMailer\Exception;
     <hr>
     <div class="row">
         <div class="table-responsive">
-            <table id="example" class="table table-bordered table-sm table-hover">
+            <table id="cedula-mylist-table" class="table table-bordered table-sm table-hover datatable-auto">
                 <thead class="table-dark">
                     <th class="text-center">#</th>
                     <!-- <th>ID</th> -->
@@ -27,14 +27,14 @@ use PHPMailer\PHPMailer\Exception;
                     <th class="text-center">Action</th>
                 </thead>
                 <tbody>
-                    <?php 
+                    <?php
 					$i = 1;
                     $ID=$_SESSION['UserID'];
-					$sql = "SELECT 
+					$sql = "SELECT
                             a.ID,
                             CONCAT(b.Lastname,', ',b.Firstname,' ',b.Middlename) as Fullname,
                             a.`Status`,
-                            DATE_FORMAT(a.AppointmentDate,'%M %d, %Y') as AppointmentDate, 
+                            DATE_FORMAT(a.AppointmentDate,'%M %d, %Y') as AppointmentDate,
                             DATE_FORMAT(a.ApprovedDate,'%M %d, %Y')  as ApprovedDate,
                             DATE_FORMAT(a.CancelDate,'%M %d, %Y')  as CancelDate,
                             a.Reason,
@@ -74,16 +74,16 @@ use PHPMailer\PHPMailer\Exception;
                         }
                         else
                         {
-                            
+
                         }
                         echo '<td>'.$result->AppointmentDate.'</td>';
                         echo '<td>'.$result->Dates.'</td>';
-                        
+
                         if($result->Status=='PENDING')
                         {
                             echo '<td class="text-center"><span class="badge text-bg-secondary">WAIT FOR CONFIRMATION</span></td>';
                         }
-                     
+
                         elseif($result->Status=='CONFIRMED' && $result->ApprovedDate==NULL)
                         {
                             echo '<td class="text-center">
@@ -108,13 +108,13 @@ use PHPMailer\PHPMailer\Exception;
                               <span class="badge text-bg-success">PAID</span> <br>
                                   <strong>Reason: </strong>'.$result->ApprovedDate.' <br>
                                <strong>Reference: </strong>'.$result->PaymentReference.'
-                              </td>'; 
+                              </td>';
                         }
 
                         if($result->Status=='CANCELLED')
                         {
                               echo '<td class="text-center">
-                             
+
                               </td>';
                         }
                         elseif($result->Status=='REQUEST FOR CANCEL')
@@ -199,6 +199,6 @@ if(isset($_POST["btnSubmit"]))
     });
     </script>';
 
-  
+
 }
 ?>

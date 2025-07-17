@@ -15,7 +15,7 @@ use PHPMailer\PHPMailer\Exception;
     <hr>
     <div class="row">
         <div class="table-responsive">
-            <table id="example" class="table table-bordered table-sm table-hover">
+            <table class="table table-bordered table-sm table-hover">
                 <thead class="table-dark">
                     <th class="text-center">#</th>
                     <th>Fullname</th>
@@ -24,78 +24,58 @@ use PHPMailer\PHPMailer\Exception;
                     <th>Transaction Type</th>
                 </thead>
                 <tbody>
-                    <?php 
+                    <?php
 					$i = 1;
                     $ID=$_SESSION['UserID'];
-					$sql = "SELECT 
-                            a.ID,
-                            CONCAT(b.Lastname,', ',b.Firstname,' ',b.Middlename) as Fullname,
-                            a.`Status`,
-                            DATE_FORMAT(a.Date,'%M %d, %Y') as Dates,
-                            'CERTIFICATION' as TransactionType
-							FROM _certificationdocument a
-                            JOIN user_account b on b.UserID=a.UserID WHERE a.`Status`='APPROVED'
-                            UNION
-                            SELECT 
-                            a.ID,
-                            CONCAT(b.Lastname,', ',b.Firstname,' ',b.Middlename) as Fullname,
-                            a.`Status`,
-                            DATE_FORMAT(a.Date,'%M %d, %Y') as Dates,
-                            'NOTARIAL SERVICE' as TransactionType
-							FROM _notarialservices a
-                            JOIN user_account b on b.UserID=a.UserID WHERE a.`Status`='APPROVED'
-                            UNION
-                            SELECT 
-                            a.ID,
-                            CONCAT(b.Lastname,', ',b.Firstname,' ',b.Middlename) as Fullname,
-                            a.`Status`,
-                            DATE_FORMAT(a.Date,'%M %d, %Y') as Dates,
-                            'OTHER SERVICE' as TransactionType
-							FROM _otherservices a
-                            JOIN user_account b on b.UserID=a.UserID WHERE a.`Status`='APPROVED'
-                            UNION
-                            SELECT 
-                            a.ID,
-                            CONCAT(b.Lastname,', ',b.Firstname,' ',b.Middlename) as Fullname,
-                            a.`Status`,
-                            DATE_FORMAT(a.Date,'%M %d, %Y') as Dates,
-                            'RENEWAL OF PASSPORT' as TransactionType
-							FROM _renewalofpassport a
-                            JOIN user_account b on b.UserID=a.UserID WHERE a.`Status`='APPROVED'
-                            UNION
-                            SELECT 
-                            a.ID,
-                            CONCAT(b.Lastname,', ',b.Firstname,' ',b.Middlename) as Fullname,
-                            a.`Status`,
-                            DATE_FORMAT(a.Date,'%M %d, %Y') as Dates,
-                            'REPORT OF BIRTH' as TransactionType
-							FROM _reportofbirth a
-                            JOIN user_account b on b.UserID=a.UserID WHERE a.`Status`='APPROVED'
-                            UNION
-                            SELECT 
-                            a.ID,
-                            CONCAT(b.Lastname,', ',b.Firstname,' ',b.Middlename) as Fullname,
-                            a.`Status`,
-                            DATE_FORMAT(a.Date,'%M %d, %Y') as Dates,
-                            'REPORT OF MARRIAGE' as TransactionType
-							FROM _reportofmarriage a
-                            JOIN user_account b on b.UserID=a.UserID WHERE a.`Status`='APPROVED'
-                            UNION
-                            SELECT 
-                            a.ID,
-                            CONCAT(b.Lastname,', ',b.Firstname,' ',b.Middlename) as Fullname,
-                            a.`Status`,
-                            DATE_FORMAT(a.Date,'%M %d, %Y') as Dates,
-                            'VISA SERVICE' as TransactionType
-							FROM _visaservices a
-                            JOIN user_account b on b.UserID=a.UserID WHERE a.`Status`='APPROVED'
-                            ";
-					$mydb->setQuery($sql);
-					$cur = $mydb->loadResultList();
+
+					// Check which tables exist
+					$existingTables = [];
+					$tablesToCheck = [
+						'_clearance' => 'CLEARANCE',
+						'_certificationdocument' => 'CERTIFICATION',
+						'_notarialservices' => 'NOTARIAL SERVICE',
+						'_otherservices' => 'OTHER SERVICE',
+						'_renewalofpassport' => 'RENEWAL OF PASSPORT',
+						'_reportofbirth' => 'REPORT OF BIRTH',
+						'_reportofmarriage' => 'REPORT OF MARRIAGE',
+						'_visaservices' => 'VISA SERVICE'
+					];
+
+					foreach($tablesToCheck as $table => $label) {
+						$tableCheck = "SHOW TABLES LIKE '$table'";
+						$mydb->setQuery($tableCheck);
+						$tableExists = $mydb->loadSingleResult();
+						if ($tableExists) {
+							$existingTables[$table] = $label;
+						}
+					}
+
+					// Build dynamic SQL query only for existing tables
+					$sqlParts = [];
+					foreach($existingTables as $table => $label) {
+						$sqlParts[] = "SELECT
+							a.ID,
+							CONCAT(b.Lastname,', ',b.Firstname,' ',b.Middlename) as Fullname,
+							a.`Status`,
+							DATE_FORMAT(a.Date,'%M %d, %Y') as Dates,
+							a.Date as SortDate,
+							'$label' as TransactionType
+							FROM $table a
+							JOIN user_account b on b.UserID=a.UserID";
+					}
+
+					if (!empty($sqlParts)) {
+						$sql = implode(' UNION ALL ', $sqlParts) . " ORDER BY SortDate DESC";
+						$mydb->setQuery($sql);
+						$cur = $mydb->loadResultList();
+					} else {
+						$cur = [];
+					}
+
 					foreach ($cur as $result) {
 						# code...
 						echo '<tr>';
-                        echo '<td>'.$result->ID.'</td>';
+                        echo '<td class="text-center">'.$i++.'</td>';
                         echo '<td>'.$result->Fullname.'</td>';
                         if($result->Status=='PENDING')
                         {
@@ -109,13 +89,31 @@ use PHPMailer\PHPMailer\Exception;
                         {
                             echo '<td class="text-center"><span class="badge text-bg-success">APPROVED</span></td>';
                         }
+                        elseif($result->Status=='PAID')
+                        {
+                            echo '<td class="text-center"><span class="badge text-bg-success">PAID</span></td>';
+                        }
+                        elseif($result->Status=='CANCELLED')
+                        {
+                            echo '<td class="text-center"><span class="badge text-bg-danger">CANCELLED</span></td>';
+                        }
                         else
                         {
-                            
+                            // Show the actual status for any unhandled cases
+                            echo '<td class="text-center"><span class="badge text-bg-warning">'.htmlspecialchars($result->Status).'</span></td>';
                         }
                         echo '<td>'.$result->Dates.'</td>';
                         echo '<td>'.$result->TransactionType.'</td>';
 						echo '</tr>';
+					}
+
+					// Show message if no transactions found
+					if (empty($cur)) {
+						echo '<tr class="empty-message"><td colspan="5" class="text-center text-muted py-4">
+							<i class="bi bi-inbox" style="font-size: 2rem;"></i><br>
+							No transactions found.<br>
+							<small class="text-muted">Available tables: ' . implode(', ', array_keys($existingTables)) . '</small>
+						</td></tr>';
 					}
 					?>
                 </tbody>
@@ -164,18 +162,35 @@ function disablePastDates() {
     today = yyyy + '-' + mm + '-' + dd;
     document.getElementById("datetimepicker2").setAttribute("min", today);
 }
+
+// Prevent DataTables auto-initialization on tables without id="example"
+$(document).ready(function() {
+    // Only initialize DataTables if the table has content and proper structure
+    if ($('table tbody tr').length > 1 || ($('table tbody tr').length === 1 && !$('table tbody tr').hasClass('empty-message'))) {
+        // Table has data, can safely initialize DataTables if needed
+        console.log('Table ready for DataTables');
+    }
+});
 </script>
 
 <?php
 
 if(isset($_POST["btnSubmit"]))
 {
-
     $d=$_POST['AppointmentDates'];
-    $sql = "SELECT * FROM `_certificationdocument` WHERE 1=1 and AppointmentDate ='$d'";
-    $mydb->setQuery($sql);
-    $row = $mydb->executeQuery();
-    $maxrow = $mydb->num_rows($row);  
+
+    // Only check _certificationdocument table if it exists
+    $tableCheck = "SHOW TABLES LIKE '_certificationdocument'";
+    $mydb->setQuery($tableCheck);
+    $tableExists = $mydb->loadSingleResult();
+
+    $maxrow = 0;
+    if ($tableExists) {
+        $sql = "SELECT * FROM `_certificationdocument` WHERE 1=1 and AppointmentDate ='$d'";
+        $mydb->setQuery($sql);
+        $row = $mydb->executeQuery();
+        $maxrow = $mydb->num_rows($row);
+    }
 
     if ($maxrow > 2) {
         echo '<script type="text/javascript">
@@ -187,44 +202,53 @@ if(isset($_POST["btnSubmit"]))
             timer: 2500
         });
         </script>';
-    } 
+    }
     else{
+        // Only proceed if table exists
+        if ($tableExists) {
+            $MyClass = new _certificationdocument();
+            $id         = $_POST['idkl'];
+            $MyClass->AppointmentDate = $_POST['AppointmentDates'];
+            $MyClass->update($id);
 
+            require 'PHPMailer/src/Exception.php';
+            require 'PHPMailer/src/PHPMailer.php';
+            require 'PHPMailer/src/SMTP.php';
+            $mail = new PHPMailer(true);
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'thesiswebsite2024@gmail.com';
+            $mail->Password = 'ylku vutf rqsi jzfy';
+            $mail->SMTPSecured = 'ssl';
+            $mail->Port = 587;
+            $mail->setFrom('thesiswebsite2024@gmail.com');
+            $mail->addAddress($_SESSION['Email']);
+            $mail->isHTML(true);
+            $mail->Subject='SYSTEM NOTIFICATION: CERTIFICATION';
+            $mail->Body='<HTML>Hi, Good Day! You have just scheduled an appointment at '.$_POST['AppointmentDates'].' at exactly 8am. Please kindly bring necessary documents. Thank you!</HTML>';
+            $mail->send();
 
-
-    $MyClass = new _certificationdocument();
-    $id         = $_POST['idkl'];
-    $MyClass->AppointmentDate = $_POST['AppointmentDates'];
-    $MyClass->update($id);
-
-    require 'PHPMailer/src/Exception.php';
-    require 'PHPMailer/src/PHPMailer.php';
-    require 'PHPMailer/src/SMTP.php';
-    $mail = new PHPMailer(true);
-    $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';
-    $mail->SMTPAuth = true;
-    $mail->Username = 'thesiswebsite2024@gmail.com';
-    $mail->Password = 'ylku vutf rqsi jzfy';
-    $mail->SMTPSecured = 'ssl';
-    $mail->Port = 587;
-    $mail->setFrom('thesiswebsite2024@gmail.com');
-    $mail->addAddress($_SESSION['Email']);
-    $mail->isHTML(true);
-    $mail->Subject='SYSTEM NOTIFICATION: CERTIFICATION';
-    $mail->Body='<HTML>Hi, Good Day! You have just scheduled an appointment at '.$_POST['AppointmentDates'].' at exactly 8am. Please kindly bring necessary documents. Thank you!</HTML>';
-    $mail->send();
-
-    echo '<script type="text/javascript">
-    swal({
-        title: "Appointmet Submitted!",
-        text: "Congratulations you have now scheduled an appointment at the immigration office at Alradeef St, Al Safarat, Riyadh 12512, Saudi Arabia on '.$_POST['AppointmentDates'].' 8:00 am. For further questions you may contact the office at the following number: TEL: (0096611) 482-3559. Fax: (0096611) 488-3945",
-        type: "success",
-        showConfirmButton: true
-    },  function () {
-        window.location.href = "index.php?view=mycertificationlist";
-    });
-    </script>';
+            echo '<script type="text/javascript">
+            swal({
+                title: "Appointment Submitted!",
+                text: "Your appointment has been scheduled successfully.",
+                type: "success",
+                showConfirmButton: true
+            },  function () {
+                window.location.href = "index.php?view=consolidatedlist";
+            });
+            </script>';
+        } else {
+            echo '<script type="text/javascript">
+            swal({
+                title: "Service Unavailable",
+                text: "This service is currently not available.",
+                type: "warning",
+                showConfirmButton: true
+            });
+            </script>';
+        }
     }
 }
 ?>

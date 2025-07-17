@@ -10,7 +10,7 @@
     <hr>
     <div class="row">
         <div class="table-responsive">
-            <table id="example" class="table table-bordered table-sm table-hover">
+            <table id="userlist-table" class="table table-bordered table-sm table-hover datatable-auto">
                 <thead class="table-dark">
                     <th class="text-center">#</th>
                     <th>Reference</th>
@@ -20,7 +20,7 @@
                     <th class="text-center">Action</th>
                 </thead>
                 <tbody>
-                    <?php 
+                    <?php
 					$i = 1;
 					$sql = "SELECT UserID  ,Concat('REF ', LPAD(UserID  ,10,0)) as Reference,
 							UserType,

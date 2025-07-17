@@ -11,7 +11,7 @@
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
     <!--FOR CUSTOM CSS -->
-    <link rel="stylesheet" type="text/css" href="CSS/mystyle.css">
+    <link rel="stylesheet" type="text/css" href="CSS/mystyle.css?v=<?php echo time(); ?>">
 
 
     <!--FOR AOS CSS ANIMATION -->
@@ -78,7 +78,6 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script>
-    new DataTable("#example");
     AOS.init();
     </script>
 

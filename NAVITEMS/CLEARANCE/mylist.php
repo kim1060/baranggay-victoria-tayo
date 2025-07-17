@@ -15,7 +15,7 @@ use PHPMailer\PHPMailer\Exception;
     <hr>
     <div class="row">
         <div class="table-responsive">
-            <table id="example" class="table table-bordered table-sm table-hover">
+            <table id="clearance-mylist-table" class="table table-bordered table-sm table-hover datatable-auto">
                 <thead class="table-dark">
                     <th class="text-center">#</th>
                     <!-- <th>ID</th> -->
