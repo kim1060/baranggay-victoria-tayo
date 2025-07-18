@@ -32,13 +32,10 @@ use PHPMailer\PHPMailer\Exception;
 					$existingTables = [];
 					$tablesToCheck = [
 						'_clearance' => 'CLEARANCE',
-						'_certificationdocument' => 'CERTIFICATION',
-						'_notarialservices' => 'NOTARIAL SERVICE',
-						'_otherservices' => 'OTHER SERVICE',
-						'_renewalofpassport' => 'RENEWAL OF PASSPORT',
-						'_reportofbirth' => 'REPORT OF BIRTH',
-						'_reportofmarriage' => 'REPORT OF MARRIAGE',
-						'_visaservices' => 'VISA SERVICE'
+						'_cedula' => 'CEDULA',
+						'_court' => 'COURT',
+						'_indigency' => 'INDIGENCY',
+						'_permit' => 'BUSINESS PERMIT'
 					];
 
 					foreach($tablesToCheck as $table => $label) {
@@ -179,24 +176,28 @@ if(isset($_POST["btnSubmit"]))
 {
     $d=$_POST['AppointmentDates'];
 
-    // Only check _certificationdocument table if it exists
-    $tableCheck = "SHOW TABLES LIKE '_certificationdocument'";
-    $mydb->setQuery($tableCheck);
-    $tableExists = $mydb->loadSingleResult();
-
+    // Check appointment count across all existing tables
     $maxrow = 0;
-    if ($tableExists) {
-        $sql = "SELECT * FROM `_certificationdocument` WHERE 1=1 and AppointmentDate ='$d'";
-        $mydb->setQuery($sql);
-        $row = $mydb->executeQuery();
-        $maxrow = $mydb->num_rows($row);
+    $existingTables = ['_clearance', '_cedula', '_court', '_indigency', '_permit'];
+
+    foreach($existingTables as $table) {
+        $tableCheck = "SHOW TABLES LIKE '$table'";
+        $mydb->setQuery($tableCheck);
+        $tableExists = $mydb->loadSingleResult();
+
+        if ($tableExists) {
+            $sql = "SELECT * FROM `$table` WHERE AppointmentDate ='$d'";
+            $mydb->setQuery($sql);
+            $row = $mydb->executeQuery();
+            $maxrow += $mydb->num_rows($row);
+        }
     }
 
-    if ($maxrow > 2) {
+    if ($maxrow > 10) {
         echo '<script type="text/javascript">
         swal({
             title:"Maximum appointment reach!",
-            text: "Maximum of 3 number of appointment per day.",
+            text: "Maximum appointments per day reached.",
             type: "warning",
             showConfirmButton: false,
             timer: 2500
@@ -204,51 +205,14 @@ if(isset($_POST["btnSubmit"]))
         </script>';
     }
     else{
-        // Only proceed if table exists
-        if ($tableExists) {
-            $MyClass = new _certificationdocument();
-            $id         = $_POST['idkl'];
-            $MyClass->AppointmentDate = $_POST['AppointmentDates'];
-            $MyClass->update($id);
-
-            require 'PHPMailer/src/Exception.php';
-            require 'PHPMailer/src/PHPMailer.php';
-            require 'PHPMailer/src/SMTP.php';
-            $mail = new PHPMailer(true);
-            $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
-            $mail->SMTPAuth = true;
-            $mail->Username = 'thesiswebsite2024@gmail.com';
-            $mail->Password = 'ylku vutf rqsi jzfy';
-            $mail->SMTPSecured = 'ssl';
-            $mail->Port = 587;
-            $mail->setFrom('thesiswebsite2024@gmail.com');
-            $mail->addAddress($_SESSION['Email']);
-            $mail->isHTML(true);
-            $mail->Subject='SYSTEM NOTIFICATION: CERTIFICATION';
-            $mail->Body='<HTML>Hi, Good Day! You have just scheduled an appointment at '.$_POST['AppointmentDates'].' at exactly 8am. Please kindly bring necessary documents. Thank you!</HTML>';
-            $mail->send();
-
-            echo '<script type="text/javascript">
-            swal({
-                title: "Appointment Submitted!",
-                text: "Your appointment has been scheduled successfully.",
-                type: "success",
-                showConfirmButton: true
-            },  function () {
-                window.location.href = "index.php?view=consolidatedlist";
-            });
-            </script>';
-        } else {
-            echo '<script type="text/javascript">
-            swal({
-                title: "Service Unavailable",
-                text: "This service is currently not available.",
-                type: "warning",
-                showConfirmButton: true
-            });
-            </script>';
-        }
+        echo '<script type="text/javascript">
+        swal({
+            title: "Date Available!",
+            text: "This date is available for appointment scheduling.",
+            type: "success",
+            showConfirmButton: true
+        });
+        </script>';
     }
 }
 ?>
