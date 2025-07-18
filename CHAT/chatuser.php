@@ -25,7 +25,7 @@ if (isset($_GET['user'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>APPOINTMATE - MESSAGES</title>
-    <link rel="icon" type="image/x-icon" href="IMG/APP_LOGO.PNG">
+    <link rel="icon" type="image/x-icon" href="IMG/baranggay-victoria.jpg">
     <link href="style.css" rel="stylesheet">
 
 </head>
@@ -41,7 +41,7 @@ if (isset($_GET['user'])) {
                 <ul>
 
                     <?php
-          
+
             $qry1 = mysqli_query($conn, "SELECT sender, count(`read`) as Meron FROM chat_messages where receiver='$username' and `read`=0 group by receiver,sender");
             while ($row = $qry1->fetch_assoc()) :
                 $bilang = $row['Meron'];
@@ -60,7 +60,7 @@ if (isset($_GET['user'])) {
                 <h2>Message History</h2>
                 <ul>
                     <?php
-          
+
           $qry1 = mysqli_query($conn, "SELECT sender, count(`read`) as Meron FROM chat_messages where receiver='$username' and `read`=1 group by receiver,sender");
           while ($row = $qry1->fetch_assoc()) :
               $bilang = $row['Meron'];

@@ -25,7 +25,7 @@ if (isset($_GET['user'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>APPOINTMATE - MESSAGES</title>
-    <link rel="icon" type="image/x-icon" href="IMG/APP_LOGO.PNG">
+    <link rel="icon" type="image/x-icon" href="IMG/baranggay-victoria.jpg">
     <link href="style.css" rel="stylesheet">
 
 </head>
@@ -40,11 +40,11 @@ if (isset($_GET['user'])) {
                 <h2>Select an Admin to Chat With:</h2>
                 <ul>
                     <?php
-          
+
                 $qry = mysqli_query($conn, "SELECT Username FROM user_account WHERE UserType = 'ADMIN'");
                 while ($row = $qry->fetch_assoc()) :
                 $user = $row['Username'];
-    
+
             ?>
 
                     <li><a href='chatadmin.php?user=<?php echo $user ?>'><?php echo $user ?></a></li>
