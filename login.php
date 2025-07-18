@@ -68,7 +68,7 @@ if (isset($_SESSION['UserID'])) {
 
 <body>
     <!-- Section: Design Block -->
-    <section class="vh-100" style="background-color:#16445e;">
+    <section class="vh-100" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col col-xl-6">
@@ -84,7 +84,7 @@ if (isset($_SESSION['UserID'])) {
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="align-items-center mb-2 pb-1 text-center">
-                                                    <img src="img/APP_LOGO.png" alt="login form" class="img-fluid"
+                                                    <img src="IMG/APP_LOGO.png" alt="login form" class="img-fluid"
                                                         style="border-radius: 1rem 0 0 1rem; width:250px;" />
                                                 </div>
                                                 <h5 class="text-center">A WEB-BASED APPOINTMENT SYSTEM

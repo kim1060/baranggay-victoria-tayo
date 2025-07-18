@@ -115,7 +115,7 @@ if (isset($_SESSION['UserID'])) {
 <body>
     <!-- Section: Design Block -->
     <!-- Registration Form -->
-    <section class="vh-100" style="background-color:#16445e;">
+    <section class="vh-100" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col col-xl-8">
