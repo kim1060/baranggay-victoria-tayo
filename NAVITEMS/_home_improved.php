@@ -133,7 +133,7 @@ $UserID=$_SESSION['UserID'];
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6" data-aos="fade-right" data-aos-duration="1000">
-                    <h1 class="display-4 fw-bold mb-4">Welcome to AppointMate</h1>
+                    <h1 class="display-4 fw-bold mb-4">Welcome to Baranggay Victoria Tayo</h1>
                     <p class="lead mb-4">Your one-stop solution for barangay appointments and services. Schedule your appointments online and track your applications easily.</p>
                     <div class="d-flex gap-3">
                         <a href="login.php" class="btn btn-light btn-lg px-4">Get Started</a>
@@ -141,7 +141,7 @@ $UserID=$_SESSION['UserID'];
                     </div>
                 </div>
                 <div class="col-lg-6" data-aos="fade-left" data-aos-duration="1000">
-                    <img src="IMG/APP_LOGO.PNG" alt="AppointMate Logo" class="img-fluid" style="max-height: 300px;">
+                    <img src="IMG/baranggay-victoria.jpg" alt="AppointMate Logo" class="img-fluid" style="max-height: 300px;">
                 </div>
             </div>
         </div>
