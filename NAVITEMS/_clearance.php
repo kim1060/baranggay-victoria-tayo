@@ -125,18 +125,25 @@ if(isset($_POST["btnModalSubmit"]))
 {
     // Check for existing active appointment (prevent spam)
     $userID = $_SESSION['UserID'];
+
+    // Simple check: Only prevent booking if there's an existing appointment with a future date
     $checkSql = "SELECT * FROM _clearance
                  WHERE UserID = {$userID}
+                 AND DATE(AppointmentDate) >= CURDATE()
                  AND (Status = 'PENDING' OR Status = 'CONFIRMED' OR Status = 'APPROVED')
+                 ORDER BY AppointmentDate DESC
                  LIMIT 1";
+
     $mydb->setQuery($checkSql);
     $existingAppointment = $mydb->loadSingleResult();
 
-    if ($existingAppointment) {
+    // Only block if there's a future appointment
+    if ($existingAppointment && isset($existingAppointment->ID)) {
+        $existingDate = $existingAppointment->AppointmentDate;
         echo '<script type="text/javascript">
         swal({
             title: "Active Appointment Found!",
-            text: "You already have an active appointment for this service. Please wait for it to be completed or cancelled before booking a new one. Check My List to view your current appointment.",
+            text: "You have a pending clearance appointment on ' . $existingDate . '. Please wait for it to be processed or let the appointment date pass before booking a new one.",
             type: "warning",
             showConfirmButton: true,
             confirmButtonText: "Go to My List"

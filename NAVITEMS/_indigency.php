@@ -61,16 +61,19 @@ if(isset($_POST["btnModalSubmit"]))
     $userID = $_SESSION['UserID'];
     $checkSql = "SELECT * FROM _indigency
                  WHERE UserID = {$userID}
+                 AND DATE(AppointmentDate) >= CURDATE()
                  AND (Status = 'PENDING' OR Status = 'CONFIRMED' OR Status = 'APPROVED')
+                 ORDER BY AppointmentDate DESC
                  LIMIT 1";
     $mydb->setQuery($checkSql);
     $existingAppointment = $mydb->loadSingleResult();
 
-    if ($existingAppointment) {
+    if ($existingAppointment && isset($existingAppointment->ID)) {
+        $existingDate = $existingAppointment->AppointmentDate;
         echo '<script type="text/javascript">
         swal({
             title: "Active Appointment Found!",
-            text: "You already have an active appointment for this service. Please wait for it to be completed or cancelled before booking a new one. Check My List to view your current appointment.",
+            text: "You have a pending indigency appointment on ' . $existingDate . '. Please wait for it to be processed or let the appointment date pass before booking a new one.",
             type: "warning",
             showConfirmButton: true,
             confirmButtonText: "Go to My List"
