@@ -12,15 +12,15 @@ if (!isset($_GET['id'])) {
     die("Payment ID required");
 }
 
-$permit_id = intval($_GET['id']);
+$cedula_id = intval($_GET['id']);
 
-// Get the permit record
-$sql = "SELECT * FROM _permit WHERE ID = {$permit_id}";
+// Get the cedula record
+$sql = "SELECT * FROM _cedula WHERE ID = {$cedula_id}";
 $mydb->setQuery($sql);
 $result = $mydb->loadSingleResult();
 
 if (!$result) {
-    die("Permit record not found");
+    die("Cedula record not found");
 }
 
 // Extract payment link ID from the PaymentReference
@@ -49,22 +49,22 @@ if ($http_code == 200) {
         $payment_status = $api_response['data']['attributes']['status'];
 
         if ($payment_status === 'paid' && $result->Status !== 'PAID') {
-            // Update the permit status to PAID
+            // Update the cedula status to PAID
             $date = date('Y-m-d H:i:s');
-            $Users = new _permit();
+            $Users = new _cedula();
             $Users->ApprovedDate = $date;
             $Users->Status = 'PAID';
-            $Users->update($permit_id);
+            $Users->update($cedula_id);
 
             // Send email notification
             try {
                 // Get user details
-                $user_sql = "SELECT ua.fname, ua.lname, ua.email_add, p.PurposeOfPermit, p.EstablishmentName, p.EstablishmentAddress, p.BusinessPermitNumber, p.NatureOfBusiness
-                            FROM _permit p
-                            JOIN user_account ua ON p.UserID = ua.user_id
-                            WHERE p.ID = ?";
+                $user_sql = "SELECT ua.fname, ua.lname, ua.email_add, c.CedulaNumber, c.Age, c.PlaceOfBirth, c.Occupation, c.TIN
+                            FROM _cedula c
+                            JOIN user_account ua ON c.UserID = ua.user_id
+                            WHERE c.ID = ?";
                 $user_stmt = $conn->prepare($user_sql);
-                $user_stmt->bind_param("i", $permit_id);
+                $user_stmt->bind_param("i", $cedula_id);
                 $user_stmt->execute();
                 $user_result = $user_stmt->get_result();
 
@@ -87,7 +87,7 @@ if ($http_code == 200) {
                     $mail->addAddress($user_data['email_add'], $user_data['fname'] . ' ' . $user_data['lname']);
 
                     $mail->isHTML(true);
-                    $mail->Subject = 'Business Permit Payment Confirmation - Barangay Victoria Tayo';
+                    $mail->Subject = 'Cedula Payment Confirmation - Barangay Victoria Tayo';
 
                     $emailBody = '
                     <!DOCTYPE html>
@@ -114,16 +114,16 @@ if ($http_code == 200) {
                                 <p class="success">✓ Your payment has been successfully processed!</p>
 
                                 <div class="details">
-                                    <h3>Business Permit Details:</h3>
-                                    <p><strong>Purpose of Permit:</strong> ' . htmlspecialchars($user_data['PurposeOfPermit']) . '</p>
-                                    <p><strong>Establishment Name:</strong> ' . htmlspecialchars($user_data['EstablishmentName']) . '</p>
-                                    <p><strong>Establishment Address:</strong> ' . htmlspecialchars($user_data['EstablishmentAddress']) . '</p>
-                                    <p><strong>Business Permit Number:</strong> ' . htmlspecialchars($user_data['BusinessPermitNumber']) . '</p>
-                                    <p><strong>Nature of Business:</strong> ' . htmlspecialchars($user_data['NatureOfBusiness']) . '</p>
+                                    <h3>Cedula Details:</h3>
+                                    <p><strong>Cedula Number:</strong> ' . htmlspecialchars($user_data['CedulaNumber']) . '</p>
+                                    <p><strong>Age:</strong> ' . htmlspecialchars($user_data['Age']) . '</p>
+                                    <p><strong>Place of Birth:</strong> ' . htmlspecialchars($user_data['PlaceOfBirth']) . '</p>
+                                    <p><strong>Occupation:</strong> ' . htmlspecialchars($user_data['Occupation']) . '</p>
+                                    <p><strong>TIN:</strong> ' . htmlspecialchars($user_data['TIN']) . '</p>
                                     <p><strong>Payment Status:</strong> <span class="success">PAID</span></p>
                                 </div>
 
-                                <p>Your business permit request is now being processed. You will be notified once your permit is ready for collection.</p>
+                                <p>Your cedula request is now being processed. You will be notified once your cedula is ready for collection.</p>
 
                                 <p>If you have any questions, please don\'t hesitate to contact us.</p>
 
@@ -201,7 +201,7 @@ if ($http_code == 200) {
 <body>
     <div class="container">
         <h2>Payment Status Check</h2>
-        <p><strong>Business Permit ID:</strong> <?php echo $permit_id; ?></p>
+        <p><strong>Cedula ID:</strong> <?php echo $cedula_id; ?></p>
         <p><strong>Current Status:</strong> <?php echo $result->Status; ?></p>
 
         <div class="status <?php echo ($payment_status === 'paid') ? 'paid' : (($payment_status === 'unpaid') ? 'pending' : 'error'); ?>">
@@ -209,8 +209,8 @@ if ($http_code == 200) {
         </div>
 
         <div>
-            <a href="index.php?view=mypermitlist" class="btn btn-primary">Back to Permit List</a>
-            <a href="check_permit_payment_status.php?id=<?php echo $permit_id; ?>" class="btn btn-success">Refresh Status</a>
+            <a href="index.php?view=mycedulalist" class="btn btn-primary">Back to Cedula List</a>
+            <a href="check_cedula_payment_status.php?id=<?php echo $cedula_id; ?>" class="btn btn-success">Refresh Status</a>
         </div>
 
         <hr>

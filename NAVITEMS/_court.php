@@ -2,14 +2,7 @@
  use PHPMailer\PHPMailer\PHPMailer;
  use PHPMailer\PHPMailer\Exception;
 ?>
-<div class="container" data-aos=    // Check for existing active appointment (prevent spam)
-    $userID = $_SESSION['UserID'];
-    $checkSql = "SELECT * FROM _court
-                 WHERE UserID = {$userID}
-                 AND (Status = 'PENDING' OR Status = 'CONFIRMED' OR Status = 'APPROVED')
-                 LIMIT 1";
-    $mydb->setQuery($checkSql);
-    $existingAppointment = $mydb->loadSingleResult();up">
+<div class="container" data-aos="zoom-out-up">
     <div class="row mt-3">
         <h4 class="text-center"><span class="bi-journal-check"></span> <?php echo $title;?></h4>
     </div>
