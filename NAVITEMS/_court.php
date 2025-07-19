@@ -2,7 +2,14 @@
  use PHPMailer\PHPMailer\PHPMailer;
  use PHPMailer\PHPMailer\Exception;
 ?>
-<div class="container" data-aos="zoom-out-up">
+<div class="container" data-aos=    // Check for existing active appointment (prevent spam)
+    $userID = $_SESSION['UserID'];
+    $checkSql = "SELECT * FROM _court
+                 WHERE UserID = {$userID}
+                 AND (Status = 'PENDING' OR Status = 'CONFIRMED' OR Status = 'APPROVED')
+                 LIMIT 1";
+    $mydb->setQuery($checkSql);
+    $existingAppointment = $mydb->loadSingleResult();up">
     <div class="row mt-3">
         <h4 class="text-center"><span class="bi-journal-check"></span> <?php echo $title;?></h4>
     </div>
@@ -115,11 +122,12 @@ submitButton.addEventListener('click', showPolicyModal);
 
 if(isset($_POST["btnModalSubmit"]))
 {
-    // Check for existing unfinished appointment
+    // Check for existing unfinished appointment on the same date
     $userID = $_SESSION['UserID'];
+    $appointmentDate = $_POST['AppointmentDate'];
     $checkSql = "SELECT * FROM _court
                  WHERE UserID = {$userID}
-                 AND AppointmentDate >= CURDATE()
+                 AND AppointmentDate = '{$appointmentDate}'
                  AND Status NOT IN ('CANCELLED', 'REQUEST FOR CANCEL', 'COMPLETED')
                  LIMIT 1";
     $mydb->setQuery($checkSql);
@@ -128,8 +136,8 @@ if(isset($_POST["btnModalSubmit"]))
     if ($existingAppointment) {
         echo '<script type="text/javascript">
         swal({
-            title: "Duplicate Appointment Found!",
-            text: "You have an unfinished appointment for this service. Please go to My List to view and continue your existing appointment.",
+            title: "Active Appointment Found!",
+            text: "You already have an active appointment for this service. Please wait for it to be completed or cancelled before booking a new one. Check My List to view your current appointment.",
             type: "warning",
             showConfirmButton: true,
             confirmButtonText: "Go to My List"
