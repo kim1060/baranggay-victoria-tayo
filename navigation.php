@@ -6,9 +6,9 @@
                 <i class="bi bi-grid-3x3-gap me-2"></i>
                 <?php if(isset($_SESSION['UserID'])): ?>
                     <span class="d-none d-md-inline">Welcome <?php echo $_SESSION['Firstname']; ?>!</span>
-                    <span class="d-md-none">AppMate</span>
+                    <span class="d-md-none">BrgyVictoriaTayo</span>
                 <?php else: ?>
-                    AppMate
+                    BrgyVictoriaTayo
                 <?php endif; ?>
             </a>
         </div>

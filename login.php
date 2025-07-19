@@ -84,10 +84,10 @@ if (isset($_SESSION['UserID'])) {
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="align-items-center mb-2 pb-1 text-center">
-                                                    <img src="IMG/APP_LOGO.png" alt="login form" class="img-fluid"
+                                                    <img src="IMG/baranggay-victoria.jpg" alt="login form" class="img-fluid"
                                                         style="border-radius: 1rem 0 0 1rem; width:250px;" />
                                                 </div>
-                                                <h5 class="text-center">A WEB-BASED APPOINTMENT SYSTEM
+                                                <h5 class="text-center">Barangay Victoria Tayo
                                                 </h5>
                                             </div>
                                             <div class="col-6">
