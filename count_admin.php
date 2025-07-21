@@ -1,6 +1,6 @@
 <?php
 require_once("INCLUDE/initialize.php");
-$Username=$_SESSION['Username'];
+$Username = isset($_SESSION['Username']) ? $_SESSION['Username'] : '';
 
 // Use Railway MySQL env vars first, fallback to Docker/local
 $servername = getenv('MYSQLHOST') ?: "db";
@@ -8,7 +8,8 @@ $username = getenv('MYSQLUSER') ?: "appointmate_user";
 $password = getenv('MYSQLPASSWORD') ?: "appointmate_password";
 $database = getenv('MYSQLDATABASE') ?: "appointmate";
 
-$con = mysqli_connect($servername, $username, $password, $database);ire_once("INCLUDE/initialize.php");
+$con = mysqli_connect($servername, $username, $password, $database);
+require_once("INCLUDE/initialize.php");
 $Username=$_SESSION['Username'];
 
 // Use Railway MySQL env vars first, fallback to Docker/local
