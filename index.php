@@ -17,9 +17,74 @@ if ($conn->connect_error) {
         */
 ?>
 
-
-
 <?php
+// Maintenance mode check
+$maintenance = getenv('MAINTENANCE_MODE');
+if ($maintenance === 'true') {
+    http_response_code(503);
+    echo '<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Under Maintenance</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            font-family: "Roboto", Arial, sans-serif;
+            color: #222;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .maintenance-container {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+            padding: 48px 32px;
+            max-width: 400px;
+            text-align: center;
+        }
+        .maintenance-container h1 {
+            font-size: 2.2em;
+            margin-bottom: 0.5em;
+            color: #2563eb;
+        }
+        .maintenance-container p {
+            font-size: 1.1em;
+            margin-bottom: 1.5em;
+        }
+        .maintenance-icon {
+            font-size: 3em;
+            margin-bottom: 0.5em;
+            color: #f59e42;
+        }
+        @media (max-width: 500px) {
+            .maintenance-container {
+                padding: 32px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="maintenance-container">
+        <div class="maintenance-icon">🔧</div>
+        <h1>Site Under Maintenance</h1>
+        <p>We are currently performing scheduled maintenance.<br>
+        Please check back later.<br><br>
+        Thank you for your patience!</p>
+    </div>
+</body>
+</html>';
+    exit;
+}
+
+
+
 require_once("INCLUDE/initialize.php");
 
 
