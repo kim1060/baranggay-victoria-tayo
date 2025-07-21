@@ -17,13 +17,29 @@ $totalUsers = $result->count ?? 0;
 
     <!-- Charts Section -->
     <div class="row mb-4">
-        <div class="col-lg-8">
-            <div class="card border-0 shadow-sm">
+        <div class="col-lg-8 mb-4">
+            <div class="card border-0 shadow-sm mb-4">
                 <div class="card-header bg-white border-0 pb-0">
-                    <h5 class="card-title mb-0"><i class="bi bi-graph-up"></i> Appointment Trends</h5>
+                    <h5 class="card-title mb-0"><i class="bi bi-graph-up"></i> Monthly Appointment Trends</h5>
                 </div>
                 <div class="card-body">
                     <canvas id="appointmentChart" height="100"></canvas>
+                </div>
+            </div>
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-white border-0 pb-0">
+                    <h5 class="card-title mb-0"><i class="bi bi-graph-up"></i> Weekly Appointment Trends</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="weeklyAppointmentChart" height="100"></canvas>
+                </div>
+            </div>
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0 pb-0">
+                    <h5 class="card-title mb-0"><i class="bi bi-graph-up"></i> Daily Appointment Trends</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="dailyAppointmentChart" height="100"></canvas>
                 </div>
             </div>
         </div>
@@ -181,6 +197,45 @@ for ($i = 6; $i >= 0; $i--) {
 
     $monthlyData[] = $monthlyCount;
     $monthLabels[] = $monthLabel;
+}
+
+// Weekly appointment data (last 7 weeks)
+$weeklyData = [];
+$weekLabels = [];
+for ($i = 6; $i >= 0; $i--) {
+    $weekStart = date('Y-m-d', strtotime("monday -$i week"));
+    $weekEnd = date('Y-m-d', strtotime("sunday -$i week"));
+    $weekLabel = date('M d', strtotime($weekStart)) . ' - ' . date('M d', strtotime($weekEnd));
+
+    $weeklyCount = 0;
+    foreach($appointmentTables as $table) {
+        $sql = "SELECT COUNT(*) as count FROM {$table} WHERE Date >= '$weekStart' AND Date <= '$weekEnd'";
+        $mydb->setQuery($sql);
+        $result = $mydb->loadSingleResult();
+        $weeklyCount += $result->count ?? 0;
+    }
+
+    $weeklyData[] = $weeklyCount;
+    $weekLabels[] = $weekLabel;
+}
+
+// Daily appointment data (last 7 days)
+$dailyData = [];
+$dayLabels = [];
+for ($i = 6; $i >= 0; $i--) {
+    $day = date('Y-m-d', strtotime("-$i days"));
+    $dayLabel = date('M d', strtotime($day));
+
+    $dailyCount = 0;
+    foreach($appointmentTables as $table) {
+        $sql = "SELECT COUNT(*) as count FROM {$table} WHERE Date = '$day'";
+        $mydb->setQuery($sql);
+        $result = $mydb->loadSingleResult();
+        $dailyCount += $result->count ?? 0;
+    }
+
+    $dailyData[] = $dailyCount;
+    $dayLabels[] = $dayLabel;
 }
 ?>
 
@@ -525,17 +580,93 @@ for ($i = 6; $i >= 0; $i--) {
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-// Appointment Trends Chart
+// Monthly Appointment Trends Chart
 const appointmentCtx = document.getElementById('appointmentChart').getContext('2d');
 const appointmentChart = new Chart(appointmentCtx, {
     type: 'line',
     data: {
         labels: [<?php echo "'" . implode("','", $monthLabels) . "'"; ?>],
         datasets: [{
-            label: 'Total Appointments',
+            label: 'Total Appointments (Monthly)',
             data: [<?php echo implode(',', $monthlyData); ?>],
             borderColor: 'rgb(13, 110, 253)',
             backgroundColor: 'rgba(13, 110, 253, 0.1)',
+            tension: 0.4,
+            fill: true
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: {
+                    color: 'rgba(0,0,0,0.1)'
+                }
+            },
+            x: {
+                grid: {
+                    color: 'rgba(0,0,0,0.1)'
+                }
+            }
+        }
+    }
+});
+
+// Weekly Appointment Trends Chart
+const weeklyAppointmentCtx = document.getElementById('weeklyAppointmentChart').getContext('2d');
+const weeklyAppointmentChart = new Chart(weeklyAppointmentCtx, {
+    type: 'line',
+    data: {
+        labels: [<?php echo "'" . implode("','", $weekLabels) . "'"; ?>],
+        datasets: [{
+            label: 'Total Appointments (Weekly)',
+            data: [<?php echo implode(',', $weeklyData); ?>],
+            borderColor: 'rgb(253, 110, 13)',
+            backgroundColor: 'rgba(253, 110, 13, 0.1)',
+            tension: 0.4,
+            fill: true
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: {
+                    color: 'rgba(0,0,0,0.1)'
+                }
+            },
+            x: {
+                grid: {
+                    color: 'rgba(0,0,0,0.1)'
+                }
+            }
+        }
+    }
+});
+
+// Daily Appointment Trends Chart
+const dailyAppointmentCtx = document.getElementById('dailyAppointmentChart').getContext('2d');
+const dailyAppointmentChart = new Chart(dailyAppointmentCtx, {
+    type: 'line',
+    data: {
+        labels: [<?php echo "'" . implode("','", $dayLabels) . "'"; ?>],
+        datasets: [{
+            label: 'Total Appointments (Daily)',
+            data: [<?php echo implode(',', $dailyData); ?>],
+            borderColor: 'rgb(13, 253, 110)',
+            backgroundColor: 'rgba(13, 253, 110, 0.1)',
             tension: 0.4,
             fill: true
         }]
