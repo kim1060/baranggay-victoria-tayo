@@ -178,8 +178,8 @@ if (count($addressParts) == 1 && !empty($Address)) {
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-floating mb-2 text-start">
-                                <input type="text" class="form-control" value="<?php echo $Username ?>" name="Username"
-                                    id="floatingInput" placeholder="Username" required>
+<input type="text" class="form-control" value="<?php echo $Username ?>" name="Username"
+    id="floatingInput" placeholder="Username" required oninput="this.value = this.value.toUpperCase();">
                                 <label for="floatingInput">Username</label>
                             </div>
                         </div>

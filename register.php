@@ -193,8 +193,8 @@ if (isset($_SESSION['UserID'])) {
                                         <fieldset class="mb-3">
                                             <legend class="text-muted">Credentials</legend>
                                             <div class="form-outline mb-3">
-                                                <input type="text" id="Username" name="Username"
-                                                    class="form-control form-control-lg" required />
+<input type="text" id="Username" name="Username"
+    class="form-control form-control-lg" required oninput="this.value = this.value.toUpperCase();" />
                                                 <label class="form-label" for="Username"><i
                                                         class="bi bi-person"></i> User Name</label>
                                             </div>
