@@ -19,9 +19,19 @@
                     <label for="floatingInput">Appointment Date</label>
                 </div>
                 <div class="form-floating mb-2">
-                    <textarea class="form-control" placeholder="Purpose" name="Remarks" id="floatingTextarea2"
-                        style="height: 100px"></textarea>
-                    <label for="floatingTextarea2">Purpose</label>
+                    <select class="form-select" name="PurposeType" id="PurposeType" required>
+                        <option value="">Select Purpose</option>
+                        <option value="Job Requirement">Job Requirement</option>
+                        <option value="Business Permit">Business Permit</option>
+                        <option value="Police Clearance">Police Clearance</option>
+                        <option value="Legal Requirement">Legal Requirement</option>
+                        <option value="Etc... or specify">Etc... or specify</option>
+                    </select>
+                    <label for="PurposeType">Purpose</label>
+                </div>
+                <div class="form-floating mb-2" id="customPurposeDiv" style="display: none;">
+                    <input type="text" class="form-control" name="CustomPurpose" id="CustomPurpose" placeholder="Specify your purpose">
+                    <label for="CustomPurpose">Specify Purpose</label>
                 </div>
             </div>
             <div class="col-md-4">
@@ -50,6 +60,21 @@ function disablePastDates() {
     today = yyyy + '-' + mm + '-' + dd;
     document.getElementById("datetimepicker2").setAttribute("min", today);
 }
+
+// Handle purpose dropdown change
+document.getElementById('PurposeType').addEventListener('change', function() {
+    const customPurposeDiv = document.getElementById('customPurposeDiv');
+    const customPurposeInput = document.getElementById('CustomPurpose');
+
+    if (this.value === 'Etc... or specify') {
+        customPurposeDiv.style.display = 'block';
+        customPurposeInput.required = true;
+    } else {
+        customPurposeDiv.style.display = 'none';
+        customPurposeInput.required = false;
+        customPurposeInput.value = '';
+    }
+});
 
 function showPolicyModal(event) {
     event.preventDefault();
@@ -140,7 +165,12 @@ if(isset($_POST["btnModalSubmit"]))
     $date = date('Y-m-d H:i:s');
     $MyClass = new _cedula();
     $MyClass->UserID       = $_SESSION['UserID'];
-    $MyClass->Comment      = $_POST['Remarks'];
+    // Determine the purpose based on selection
+    $purpose = $_POST['PurposeType'];
+    if ($purpose === 'Etc... or specify') {
+        $purpose = $_POST['CustomPurpose'];
+    }
+    $MyClass->Comment      = $purpose;
     $MyClass->Status       = 'PENDING';
     $MyClass->Date         = $date ;
     $MyClass->AppointmentDate         = $_POST['AppointmentDate'] ;

@@ -80,7 +80,7 @@ foreach ($cur as $result)
         <div class="text-center">
             <h5>Republic of the Philippines</h5>
             <h5>BARANGAY VICTORIA REYES</h5>
-            <h5> Dasmariñas, Cavite</h5>
+            <h5>City of Dasmariñas, Cavite</h5>
             <br>
             <h3>BARANGAY CLEARANCE</h3>
         </div>
@@ -116,7 +116,7 @@ foreach ($cur as $result)
 
 
             <p>
-                Given this <?php echo $IssuedDate?> at Barangay Victoria Reyes, Dasmariñas, Cavite.
+                Given this <?php echo $IssuedDate?> at Barangay Victoria Reyes, City of Dasmariñas, Cavite.
             </p>
             <br>
             <div class="text-end mt-4">

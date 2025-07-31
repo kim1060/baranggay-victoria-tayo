@@ -127,7 +127,7 @@ if (isset($_SESSION['UserID'])) {
                                             account
                                             here!</a><br> -->
                                         <a class="fw-bold text-primary text-start" href="forgotpassword.php">Forgot your
-                                            Password? Click me.</a>
+                                            Password?</a>
                                     </form>
 
                                 </div>
