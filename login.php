@@ -46,7 +46,44 @@ if (isset($_SESSION['UserID'])) {
         opacity: 97%;
     }
 
+    /* Custom button styling */
+    .btn-gradient {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+        transition: all 0.3s ease;
+    }
 
+    .btn-gradient:hover {
+        background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .btn-gradient:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    /* Link styling */
+    .link-primary {
+        color: #667eea !important;
+        transition: color 0.3s ease;
+    }
+
+    .link-primary:hover {
+        color: #5a6fd8 !important;
+    }
+
+    .link-secondary {
+        color: #764ba2 !important;
+        transition: color 0.3s ease;
+    }
+
+    .link-secondary:hover {
+        color: #6a4190 !important;
+    }
 
     /* Small devices (portrait tablets and large phones, 600px and up) */
     @media only screen and (min-width: 600px) {
@@ -111,14 +148,14 @@ if (isset($_SESSION['UserID'])) {
                                                     Password
                                                 </div>
                                                 <div class="pt-1 mb-4">
-                                                    <button class="btn btn-success btn-lg btn-block" type="submit"
+                                                    <button class="btn btn-lg btn-block btn-gradient" type="submit"
                                                         name="btnLogin" id="btnLogin">Login</button>
                                                 </div>
 
 
-                                                <a class="fw-bold text-success" href="index.php">Go to Website</a>
+                                                <a class="fw-bold link-primary" href="index.php">Go to Website</a>
                                                 <br>
-                                                <a class="fw-bold text-danger" href="register.php">Register here!</a>
+                                                <a class="fw-bold link-secondary" href="register.php">Register here!</a>
                                             </div>
                                         </div>
 
@@ -126,7 +163,7 @@ if (isset($_SESSION['UserID'])) {
                                         <!-- <a class="fw-bold text-primary text-end" href="verification.php">Verify your
                                             account
                                             here!</a><br> -->
-                                        <a class="fw-bold text-primary text-start" href="forgotpassword.php">Forgot your
+                                        <a class="fw-bold text-start link-primary" href="forgotpassword.php">Forgot your
                                             Password?</a>
                                     </form>
 
@@ -162,7 +199,7 @@ if (isset($_SESSION['UserID'])) {
 
 <?php
 
-if (isset($_POST['btnLogin'])) {
+if (isset($_POST['btnc'])) {
   $email = trim($_POST['Email']);
   $upass  = trim($_POST['Password']);
   $h_upass = sha1($upass);

@@ -109,6 +109,175 @@ if (isset($_SESSION['UserID'])) {
     .col-xl-8 {
         max-width: 720px;
     }
+
+    /* Form Input Styling */
+    .form-outline {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-control, .form-select {
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 12px 16px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        background-color: #fff;
+        box-shadow: none;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        outline: none;
+    }
+
+    .form-control-lg, .form-select.form-control-lg {
+        height: 50px;
+        font-size: 16px;
+    }
+
+    .form-label {
+        position: absolute;
+        top: -10px;
+        left: 12px;
+        background: #fff;
+        padding: 0 8px;
+        font-size: 14px;
+        color: #6c757d;
+        font-weight: 500;
+        z-index: 1;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus + .form-label,
+    .form-select:focus + .form-label,
+    .form-control:not(:placeholder-shown) + .form-label,
+    .form-select:not([value=""]) + .form-label {
+        color: #667eea;
+        font-weight: 600;
+        transform: translateY(-5px) scale(0.85);
+    }
+
+    /* Ensure labels are properly positioned when input has value */
+    .form-control:not(:placeholder-shown) + .form-label,
+    .form-select:not([value=""]) + .form-label {
+        top: -15px;
+    }
+
+    /* Fieldset Styling */
+    fieldset {
+        border: 2px solid #f8f9fa;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 25px;
+        background: #fafbfc;
+    }
+
+    legend {
+        font-size: 18px;
+        font-weight: 600;
+        color: #495057;
+        padding: 0 15px;
+        margin-bottom: 0;
+    }
+
+    /* Row and Column Spacing */
+    .row {
+        margin-left: -10px;
+        margin-right: -10px;
+    }
+
+    .col-md-4, .col-md-6 {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    /* Button Styling */
+    .btn {
+        border-radius: 8px;
+        font-weight: 600;
+        padding: 12px 24px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-success {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        border: none;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    }
+
+    .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+    }
+
+    /* Card Styling */
+    .card {
+        border: none;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+    }
+
+    /* Progress Bar Styling */
+    .progress {
+        height: 8px;
+        border-radius: 4px;
+        background-color: #e9ecef;
+    }
+
+    .progress-bar {
+        border-radius: 4px;
+        transition: width 0.3s ease;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .card-body {
+            padding: 20px !important;
+        }
+
+        fieldset {
+            padding: 15px;
+        }
+
+        .form-control-lg, .form-select.form-control-lg {
+            height: 45px;
+        }
+
+        .col-md-4, .col-md-6 {
+            margin-bottom: 10px;
+        }
+    }
+
+    /* Ensure proper spacing between form sections */
+    .form-outline {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Fix for select dropdown styling */
+    .form-select {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 6 7 7 7-7'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 16px 12px;
+    }
+
+    /* Address preview field styling */
+    #AddressPreview {
+        background-color: #f8f9fa !important;
+        border-color: #dee2e6 !important;
+        color: #6c757d !important;
+        font-style: italic;
+    }
+
+    /* Password match indicator */
+    #match-text {
+        font-size: 12px;
+        font-weight: 500;
+        margin-top: 5px;
+        display: block;
+    }
     </style>
 </head>
 
@@ -128,29 +297,29 @@ if (isset($_SESSION['UserID'])) {
                                             Registration</h5>
 
                                         <!-- Personal Information Section -->
-                                        <fieldset class="mb-3">
+                                        <fieldset class="mb-4">
                                             <legend class="text-muted">Personal Information</legend>
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <div class="form-outline mb-3">
+                                                    <div class="form-outline">
                                                         <input type="text" id="Lastname" name="Lastname"
-                                                            class="form-control form-control-lg" required />
+                                                            class="form-control form-control-lg" placeholder=" " required />
                                                         <label class="form-label" for="Lastname"><i
                                                                 class="bi bi-person"></i> Last Name</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <div class="form-outline mb-3">
+                                                    <div class="form-outline">
                                                         <input type="text" id="Firstname" name="Firstname"
-                                                            class="form-control form-control-lg" required />
+                                                            class="form-control form-control-lg" placeholder=" " required />
                                                         <label class="form-label" for="Firstname"><i
                                                                 class="bi bi-person"></i> First Name</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <div class="form-outline mb-3">
+                                                    <div class="form-outline">
                                                         <input type="text" id="Middlename" name="Middlename"
-                                                            class="form-control form-control-lg" />
+                                                            class="form-control form-control-lg" placeholder=" " />
                                                         <label class="form-label" for="Middlename"><i
                                                                 class="bi bi-person"></i> Middle Name</label>
                                                     </div>
@@ -158,15 +327,15 @@ if (isset($_SESSION['UserID'])) {
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <div class="form-outline mb-3">
+                                                    <div class="form-outline">
                                                         <input type="number" id="Age" name="Age"
-                                                            class="form-control form-control-lg" min="1" max="120" required />
+                                                            class="form-control form-control-lg" min="1" max="120" placeholder=" " required />
                                                         <label class="form-label" for="Age"><i
                                                                 class="bi bi-calendar"></i> Age</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <div class="form-outline mb-3">
+                                                    <div class="form-outline">
                                                         <select class="form-select form-control-lg" id="Status" name="Status" required>
                                                             <option value="">Select Status</option>
                                                             <option value="Single">Single</option>
@@ -179,9 +348,9 @@ if (isset($_SESSION['UserID'])) {
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <div class="form-outline mb-3">
+                                                    <div class="form-outline">
                                                         <input type="text" id="Citizenship" name="Citizenship"
-                                                            class="form-control form-control-lg" required />
+                                                            class="form-control form-control-lg" placeholder=" " required />
                                                         <label class="form-label" for="Citizenship"><i
                                                                 class="bi bi-flag"></i> Citizenship</label>
                                                     </div>
@@ -190,22 +359,22 @@ if (isset($_SESSION['UserID'])) {
                                         </fieldset>
 
                                         <!-- Contact Info Section -->
-                                        <fieldset class="mb-3">
+                                        <fieldset class="mb-4">
                                             <legend class="text-muted">Contact Info</legend>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <div class="form-outline mb-3">
+                                                    <div class="form-outline">
                                                         <input type="email" id="Email" name="Email"
-                                                            class="form-control form-control-lg" required />
+                                                            class="form-control form-control-lg" placeholder=" " required />
                                                         <label class="form-label" for="Email"><i
                                                                 class="bi bi-envelope"></i> Email</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <div class="form-outline mb-3">
+                                                    <div class="form-outline">
                                                         <input type="tel" id="Mobile" name="Mobile"
                                                             class="form-control form-control-lg" maxlength="11"
-                                                            required />
+                                                            placeholder=" " required />
                                                         <label class="form-label" for="Mobile"><i
                                                                 class="bi bi-phone"></i> Mobile #</label>
                                                     </div>
@@ -214,37 +383,37 @@ if (isset($_SESSION['UserID'])) {
                                         </fieldset>
 
                                         <!-- Address Section -->
-                                        <fieldset class="mb-3">
+                                        <fieldset class="mb-4">
                                             <legend class="text-muted">Address</legend>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <div class="form-outline mb-3">
+                                                    <div class="form-outline">
                                                         <input type="text" id="Street" name="Street"
-                                                            class="form-control form-control-lg" required />
+                                                            class="form-control form-control-lg" placeholder=" " required />
                                                         <label class="form-label" for="Street">Street Address</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <div class="form-outline mb-3">
+                                                    <div class="form-outline">
                                                         <input type="text" id="Barangay" name="Barangay"
-                                                            class="form-control form-control-lg" required />
+                                                            class="form-control form-control-lg" placeholder=" " required />
                                                         <label class="form-label" for="Barangay">Barangay</label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <div class="form-outline mb-3">
+                                                    <div class="form-outline">
                                                         <input type="text" id="City" name="City"
-                                                            class="form-control form-control-lg" required />
+                                                            class="form-control form-control-lg" placeholder=" " required />
                                                         <label class="form-label" for="City">City/Municipality</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <div class="form-outline mb-3">
+                                                    <div class="form-outline">
                                                         <input type="number" id="PostalCode" name="PostalCode"
                                                             class="form-control form-control-lg" maxlength="4"
-                                                            required />
+                                                            placeholder=" " required />
                                                         <label class="form-label" for="PostalCode">Postal Code</label>
                                                     </div>
                                                 </div>
@@ -252,34 +421,34 @@ if (isset($_SESSION['UserID'])) {
                                             <!-- Hidden field to store concatenated address -->
                                             <input type="hidden" id="Address" name="Address" />
                                             <!-- Address Preview -->
-                                            <div class="form-outline mb-3">
-                                                <input type="text" id="AddressPreview" class="form-control form-control-lg" readonly style="background-color: #f8f9fa;" />
+                                            <div class="form-outline">
+                                                <input type="text" id="AddressPreview" class="form-control form-control-lg" readonly placeholder=" " />
                                                 <label class="form-label" for="AddressPreview"><i class="bi bi-eye"></i> Address Preview</label>
                                             </div>
                                         </fieldset>
 
                                         <!-- Credentials Section -->
-                                        <fieldset class="mb-3">
+                                        <fieldset class="mb-4">
                                             <legend class="text-muted">Credentials</legend>
-                                            <div class="form-outline mb-3">
-<input type="text" id="Username" name="Username"
-    class="form-control form-control-lg" required oninput="this.value = this.value.toUpperCase();" />
+                                            <div class="form-outline">
+                                                <input type="text" id="Username" name="Username"
+                                                    class="form-control form-control-lg" placeholder=" " required oninput="this.value = this.value.toUpperCase();" />
                                                 <label class="form-label" for="Username"><i
                                                         class="bi bi-person"></i> User Name</label>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <div class="form-outline mb-3">
+                                                    <div class="form-outline">
                                                         <input type="password" id="Password" name="Password"
-                                                            class="form-control form-control-lg" required minlength="8" />
+                                                            class="form-control form-control-lg" placeholder=" " required minlength="8" />
                                                         <label class="form-label" for="Password"><i
                                                                 class="bi bi-lock"></i> Password</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <div class="form-outline mb-3">
+                                                    <div class="form-outline">
                                                         <input type="password" id="ConfirmPassword" name="ConfirmPassword"
-                                                            class="form-control form-control-lg" required />
+                                                            class="form-control form-control-lg" placeholder=" " required />
                                                         <label class="form-label" for="ConfirmPassword"><i
                                                                 class="bi bi-lock-fill"></i> Confirm Password</label>
                                                     </div>
