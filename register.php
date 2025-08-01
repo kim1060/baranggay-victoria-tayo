@@ -38,7 +38,6 @@ if (isset($_SESSION['UserID'])) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
     <style>
     body {
-        /* background-image: url("img/DILG_LOGO.png"); */
         background-repeat: no-repeat;
         background-attachment: fixed;
         background-position: center;
@@ -68,13 +67,10 @@ if (isset($_SESSION['UserID'])) {
 
     #image-preview {
         width: 450px;
-        /* Fixed width */
         height: 250px;
-        /* Fixed height */
         border: 1px solid #ccc;
         margin: auto;
         overflow: hidden;
-        /* To ensure the image does not overflow */
     }
 
     #image-preview img {
@@ -90,15 +86,6 @@ if (isset($_SESSION['UserID'])) {
         }
     }
 
-    /* Medium devices (landscape tablets, 768px and up) */
-    @media only screen and (min-width: 768px) {}
-
-    /* Large devices (laptops/desktops, 992px and up) */
-    @media only screen and (min-width: 992px) {}
-
-    /* Extra large devices (large laptops and desktops, 1200px and up) */
-    @media only screen and (min-width: 1200px) {}
-
     /* Enhanced Form Styling */
     .card-body {
         background: #fff;
@@ -110,20 +97,14 @@ if (isset($_SESSION['UserID'])) {
         max-width: 720px;
     }
 
-    /* Form Input Styling */
-    .form-outline {
-        position: relative;
-        margin-bottom: 1.5rem;
-    }
-
+    /* Simple Form Input Styling */
     .form-control, .form-select {
-        border: 2px solid #e0e0e0;
-        border-radius: 8px;
-        padding: 12px 16px;
-        font-size: 16px;
-        transition: all 0.3s ease;
+        border: 1px solid #ced4da;
+        border-radius: 6px;
+        padding: 10px 12px;
+        font-size: 14px;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         background-color: #fff;
-        box-shadow: none;
     }
 
     .form-control:focus, .form-select:focus {
@@ -133,69 +114,55 @@ if (isset($_SESSION['UserID'])) {
     }
 
     .form-control-lg, .form-select.form-control-lg {
-        height: 50px;
+        height: 45px;
         font-size: 16px;
+        padding: 12px 16px;
     }
 
     .form-label {
-        position: absolute;
-        top: -10px;
-        left: 12px;
-        background: #fff;
-        padding: 0 8px;
-        font-size: 14px;
-        color: #6c757d;
         font-weight: 500;
-        z-index: 1;
-        transition: all 0.3s ease;
-    }
-
-    .form-control:focus + .form-label,
-    .form-select:focus + .form-label,
-    .form-control:not(:placeholder-shown) + .form-label,
-    .form-select:not([value=""]) + .form-label {
-        color: #667eea;
-        font-weight: 600;
-        transform: translateY(-5px) scale(0.85);
-    }
-
-    /* Ensure labels are properly positioned when input has value */
-    .form-control:not(:placeholder-shown) + .form-label,
-    .form-select:not([value=""]) + .form-label {
-        top: -15px;
+        color: #495057;
+        margin-bottom: 8px;
+        display: block;
     }
 
     /* Fieldset Styling */
     fieldset {
-        border: 2px solid #f8f9fa;
-        border-radius: 12px;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
         padding: 20px;
         margin-bottom: 25px;
-        background: #fafbfc;
+        background: #f8f9fa;
     }
 
     legend {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 600;
         color: #495057;
-        padding: 0 15px;
-        margin-bottom: 0;
+        padding: 0 10px;
+        margin-bottom: 15px;
+        width: auto;
     }
 
     /* Row and Column Spacing */
     .row {
-        margin-left: -10px;
-        margin-right: -10px;
+        margin-left: -8px;
+        margin-right: -8px;
     }
 
     .col-md-4, .col-md-6 {
-        padding-left: 10px;
-        padding-right: 10px;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    /* Form Group Spacing */
+    .form-outline {
+        margin-bottom: 20px;
     }
 
     /* Button Styling */
     .btn {
-        border-radius: 8px;
+        border-radius: 6px;
         font-weight: 600;
         padding: 12px 24px;
         transition: all 0.3s ease;
@@ -204,31 +171,39 @@ if (isset($_SESSION['UserID'])) {
     .btn-success {
         background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
         border: none;
-        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        box-shadow: 0 2px 10px rgba(40, 167, 69, 0.3);
     }
 
     .btn-success:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
     }
 
     /* Card Styling */
     .card {
         border: none;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        border-radius: 20px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
     }
 
     /* Progress Bar Styling */
     .progress {
-        height: 8px;
-        border-radius: 4px;
+        height: 6px;
+        border-radius: 3px;
         background-color: #e9ecef;
     }
 
     .progress-bar {
-        border-radius: 4px;
+        border-radius: 3px;
         transition: width 0.3s ease;
+    }
+
+    /* Password match indicator */
+    #match-text {
+        font-size: 12px;
+        font-weight: 500;
+        margin-top: 5px;
+        display: block;
     }
 
     /* Responsive adjustments */
@@ -248,35 +223,6 @@ if (isset($_SESSION['UserID'])) {
         .col-md-4, .col-md-6 {
             margin-bottom: 10px;
         }
-    }
-
-    /* Ensure proper spacing between form sections */
-    .form-outline {
-        margin-bottom: 1.5rem;
-    }
-
-    /* Fix for select dropdown styling */
-    .form-select {
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 6 7 7 7-7'/%3e%3c/svg%3e");
-        background-repeat: no-repeat;
-        background-position: right 0.75rem center;
-        background-size: 16px 12px;
-    }
-
-    /* Address preview field styling */
-    #AddressPreview {
-        background-color: #f8f9fa !important;
-        border-color: #dee2e6 !important;
-        color: #6c757d !important;
-        font-style: italic;
-    }
-
-    /* Password match indicator */
-    #match-text {
-        font-size: 12px;
-        font-weight: 500;
-        margin-top: 5px;
-        display: block;
     }
     </style>
 </head>
@@ -302,40 +248,42 @@ if (isset($_SESSION['UserID'])) {
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-outline">
-                                                        <input type="text" id="Lastname" name="Lastname"
-                                                            class="form-control form-control-lg" placeholder=" " required />
                                                         <label class="form-label" for="Lastname"><i
                                                                 class="bi bi-person"></i> Last Name</label>
+                                                        <input type="text" id="Lastname" name="Lastname"
+                                                            class="form-control form-control-lg" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-outline">
-                                                        <input type="text" id="Firstname" name="Firstname"
-                                                            class="form-control form-control-lg" placeholder=" " required />
                                                         <label class="form-label" for="Firstname"><i
                                                                 class="bi bi-person"></i> First Name</label>
+                                                        <input type="text" id="Firstname" name="Firstname"
+                                                            class="form-control form-control-lg" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-outline">
-                                                        <input type="text" id="Middlename" name="Middlename"
-                                                            class="form-control form-control-lg" placeholder=" " />
                                                         <label class="form-label" for="Middlename"><i
                                                                 class="bi bi-person"></i> Middle Name</label>
+                                                        <input type="text" id="Middlename" name="Middlename"
+                                                            class="form-control form-control-lg" />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-outline">
-                                                        <input type="number" id="Age" name="Age"
-                                                            class="form-control form-control-lg" min="1" max="120" placeholder=" " required />
                                                         <label class="form-label" for="Age"><i
                                                                 class="bi bi-calendar"></i> Age</label>
+                                                        <input type="number" id="Age" name="Age"
+                                                            class="form-control form-control-lg" min="1" max="120" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-outline">
+                                                        <label class="form-label" for="Status"><i
+                                                                class="bi bi-heart"></i> Civil Status</label>
                                                         <select class="form-select form-control-lg" id="Status" name="Status" required>
                                                             <option value="">Select Status</option>
                                                             <option value="Single">Single</option>
@@ -343,16 +291,14 @@ if (isset($_SESSION['UserID'])) {
                                                             <option value="Widowed">Widowed</option>
                                                             <option value="Divorced">Divorced</option>
                                                         </select>
-                                                        <label class="form-label" for="Status"><i
-                                                                class="bi bi-heart"></i> Civil Status</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-outline">
-                                                        <input type="text" id="Citizenship" name="Citizenship"
-                                                            class="form-control form-control-lg" placeholder=" " required />
                                                         <label class="form-label" for="Citizenship"><i
                                                                 class="bi bi-flag"></i> Citizenship</label>
+                                                        <input type="text" id="Citizenship" name="Citizenship"
+                                                            class="form-control form-control-lg" required />
                                                     </div>
                                                 </div>
                                             </div>
@@ -364,19 +310,19 @@ if (isset($_SESSION['UserID'])) {
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-outline">
-                                                        <input type="email" id="Email" name="Email"
-                                                            class="form-control form-control-lg" placeholder=" " required />
                                                         <label class="form-label" for="Email"><i
                                                                 class="bi bi-envelope"></i> Email</label>
+                                                        <input type="email" id="Email" name="Email"
+                                                            class="form-control form-control-lg" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-outline">
-                                                        <input type="tel" id="Mobile" name="Mobile"
-                                                            class="form-control form-control-lg" maxlength="11"
-                                                            placeholder=" " required />
                                                         <label class="form-label" for="Mobile"><i
                                                                 class="bi bi-phone"></i> Mobile #</label>
+                                                        <input type="tel" id="Mobile" name="Mobile"
+                                                            class="form-control form-control-lg" maxlength="11"
+                                                            required />
                                                     </div>
                                                 </div>
                                             </div>
@@ -388,69 +334,64 @@ if (isset($_SESSION['UserID'])) {
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-outline">
-                                                        <input type="text" id="Street" name="Street"
-                                                            class="form-control form-control-lg" placeholder=" " required />
                                                         <label class="form-label" for="Street">Street Address</label>
+                                                        <input type="text" id="Street" name="Street"
+                                                            class="form-control form-control-lg" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-outline">
-                                                        <input type="text" id="Barangay" name="Barangay"
-                                                            class="form-control form-control-lg" placeholder=" " required />
                                                         <label class="form-label" for="Barangay">Barangay</label>
+                                                        <input type="text" id="Barangay" name="Barangay"
+                                                            class="form-control form-control-lg" required />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-outline">
-                                                        <input type="text" id="City" name="City"
-                                                            class="form-control form-control-lg" placeholder=" " required />
                                                         <label class="form-label" for="City">City/Municipality</label>
+                                                        <input type="text" id="City" name="City"
+                                                            class="form-control form-control-lg" required />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-outline">
+                                                        <label class="form-label" for="PostalCode">Postal Code</label>
                                                         <input type="number" id="PostalCode" name="PostalCode"
                                                             class="form-control form-control-lg" maxlength="4"
-                                                            placeholder=" " required />
-                                                        <label class="form-label" for="PostalCode">Postal Code</label>
+                                                            required />
                                                     </div>
                                                 </div>
                                             </div>
                                             <!-- Hidden field to store concatenated address -->
                                             <input type="hidden" id="Address" name="Address" />
-                                            <!-- Address Preview -->
-                                            <div class="form-outline">
-                                                <input type="text" id="AddressPreview" class="form-control form-control-lg" readonly placeholder=" " />
-                                                <label class="form-label" for="AddressPreview"><i class="bi bi-eye"></i> Address Preview</label>
-                                            </div>
                                         </fieldset>
 
                                         <!-- Credentials Section -->
                                         <fieldset class="mb-4">
                                             <legend class="text-muted">Credentials</legend>
                                             <div class="form-outline">
-                                                <input type="text" id="Username" name="Username"
-                                                    class="form-control form-control-lg" placeholder=" " required oninput="this.value = this.value.toUpperCase();" />
                                                 <label class="form-label" for="Username"><i
                                                         class="bi bi-person"></i> User Name</label>
+                                                <input type="text" id="Username" name="Username"
+                                                    class="form-control form-control-lg" required oninput="this.value = this.value.toUpperCase();" />
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-outline">
-                                                        <input type="password" id="Password" name="Password"
-                                                            class="form-control form-control-lg" placeholder=" " required minlength="8" />
                                                         <label class="form-label" for="Password"><i
                                                                 class="bi bi-lock"></i> Password</label>
+                                                        <input type="password" id="Password" name="Password"
+                                                            class="form-control form-control-lg" required minlength="8" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-outline">
-                                                        <input type="password" id="ConfirmPassword" name="ConfirmPassword"
-                                                            class="form-control form-control-lg" placeholder=" " required />
                                                         <label class="form-label" for="ConfirmPassword"><i
                                                                 class="bi bi-lock-fill"></i> Confirm Password</label>
+                                                        <input type="password" id="ConfirmPassword" name="ConfirmPassword"
+                                                            class="form-control form-control-lg" required />
                                                     </div>
                                                     <!-- Password Match Indicator -->
                                                     <small id="match-text" class="text-muted"></small>
@@ -646,12 +587,6 @@ if (isset($_SESSION['UserID'])) {
         // Concatenate with commas as requested
         const fullAddress = `${street}, ${barangay}, ${city}, ${postalCode}`;
         document.getElementById('Address').value = fullAddress;
-
-        // Update the preview field
-        const addressPreview = document.getElementById('AddressPreview');
-        if (addressPreview) {
-            addressPreview.value = fullAddress;
-        }
     }
 
     // Add event listener to form submission
@@ -663,7 +598,7 @@ if (isset($_SESSION['UserID'])) {
             });
         }
 
-        // Also update address when fields change for preview
+        // Update address when fields change
         ['Street', 'Barangay', 'City', 'PostalCode'].forEach(id => {
             const element = document.getElementById(id);
             if (element) {

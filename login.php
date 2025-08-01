@@ -153,9 +153,9 @@ if (isset($_SESSION['UserID'])) {
                                                 </div>
 
 
-                                                <a class="fw-bold link-primary" href="index.php">Go to Website</a>
+                                                <a href="index.php">Go to Website</a>
                                                 <br>
-                                                <a class="fw-bold link-secondary" href="register.php">Register here!</a>
+                                                <a href="register.php">Register here!</a>
                                             </div>
                                         </div>
 
