@@ -19,19 +19,36 @@ $Username = $res->Username;
 $Password = $res->Password;
 $Filename = $res->Filename;
 
-// Parse address into components
-$addressParts = explode('|', $Address);
-$Street = isset($addressParts[0]) ? $addressParts[0] : '';
-$Barangay = isset($addressParts[1]) ? $addressParts[1] : '';
-$City = isset($addressParts[2]) ? $addressParts[2] : '';
-$PostalCode = isset($addressParts[3]) ? $addressParts[3] : '';
+// Parse address into components - handle both old (pipe) and new (comma) formats
+$Street = '';
+$Barangay = '';
+$City = '';
+$PostalCode = '';
 
-// If address doesn't contain separators (old format), put everything in Street
-if (count($addressParts) == 1 && !empty($Address)) {
-    $Street = $Address;
-    $Barangay = '';
-    $City = '';
-    $PostalCode = '';
+if (!empty($Address)) {
+    // Try comma format first (new format)
+    if (strpos($Address, ',') !== false) {
+        $addressParts = array_map('trim', explode(',', $Address));
+        $Street = isset($addressParts[0]) ? $addressParts[0] : '';
+        $Barangay = isset($addressParts[1]) ? $addressParts[1] : '';
+        $City = isset($addressParts[2]) ? $addressParts[2] : '';
+        $PostalCode = isset($addressParts[3]) ? $addressParts[3] : '';
+    }
+    // Try pipe format (old format)
+    elseif (strpos($Address, '|') !== false) {
+        $addressParts = explode('|', $Address);
+        $Street = isset($addressParts[0]) ? $addressParts[0] : '';
+        $Barangay = isset($addressParts[1]) ? $addressParts[1] : '';
+        $City = isset($addressParts[2]) ? $addressParts[2] : '';
+        $PostalCode = isset($addressParts[3]) ? $addressParts[3] : '';
+    }
+    // If no separators found, put everything in Street
+    else {
+        $Street = $Address;
+        $Barangay = '';
+        $City = '';
+        $PostalCode = '';
+    }
 }
 ?>
 
@@ -250,8 +267,8 @@ function concatenateAddress() {
     const city = document.getElementById('City').value;
     const postalCode = document.getElementById('PostalCode').value;
 
-    // Concatenate with separators for easy parsing later
-    const fullAddress = `${street}|${barangay}|${city}|${postalCode}`;
+    // Concatenate with commas as requested
+    const fullAddress = `${street}, ${barangay}, ${city}, ${postalCode}`;
     document.getElementById('Address').value = fullAddress;
 }
 

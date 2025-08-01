@@ -189,14 +189,44 @@ class Database
 		}
 	}
 
-	// Helper function to parse address components
+	// Helper function to parse address components - handle both old (pipe) and new (comma) formats
 	public static function parseAddress($address) {
-		$addressParts = explode('|', $address);
+		$street = '';
+		$barangay = '';
+		$city = '';
+		$postal_code = '';
+
+		if (!empty($address)) {
+			// Try comma format first (new format)
+			if (strpos($address, ',') !== false) {
+				$addressParts = array_map('trim', explode(',', $address));
+				$street = isset($addressParts[0]) ? $addressParts[0] : '';
+				$barangay = isset($addressParts[1]) ? $addressParts[1] : '';
+				$city = isset($addressParts[2]) ? $addressParts[2] : '';
+				$postal_code = isset($addressParts[3]) ? $addressParts[3] : '';
+			}
+			// Try pipe format (old format)
+			elseif (strpos($address, '|') !== false) {
+				$addressParts = explode('|', $address);
+				$street = isset($addressParts[0]) ? $addressParts[0] : '';
+				$barangay = isset($addressParts[1]) ? $addressParts[1] : '';
+				$city = isset($addressParts[2]) ? $addressParts[2] : '';
+				$postal_code = isset($addressParts[3]) ? $addressParts[3] : '';
+			}
+			// If no separators found, put everything in street
+			else {
+				$street = $address;
+				$barangay = '';
+				$city = '';
+				$postal_code = '';
+			}
+		}
+
 		return [
-			'street' => isset($addressParts[0]) ? $addressParts[0] : '',
-			'barangay' => isset($addressParts[1]) ? $addressParts[1] : '',
-			'city' => isset($addressParts[2]) ? $addressParts[2] : '',
-			'postal_code' => isset($addressParts[3]) ? $addressParts[3] : ''
+			'street' => $street,
+			'barangay' => $barangay,
+			'city' => $city,
+			'postal_code' => $postal_code
 		];
 	}
 

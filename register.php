@@ -127,6 +127,68 @@ if (isset($_SESSION['UserID'])) {
                                         <h5 class="fw-normal mb-3 pb-3 text-center" style="letter-spacing: 1px;">Account
                                             Registration</h5>
 
+                                        <!-- Personal Information Section -->
+                                        <fieldset class="mb-3">
+                                            <legend class="text-muted">Personal Information</legend>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-outline mb-3">
+                                                        <input type="text" id="Lastname" name="Lastname"
+                                                            class="form-control form-control-lg" required />
+                                                        <label class="form-label" for="Lastname"><i
+                                                                class="bi bi-person"></i> Last Name</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-outline mb-3">
+                                                        <input type="text" id="Firstname" name="Firstname"
+                                                            class="form-control form-control-lg" required />
+                                                        <label class="form-label" for="Firstname"><i
+                                                                class="bi bi-person"></i> First Name</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-outline mb-3">
+                                                        <input type="text" id="Middlename" name="Middlename"
+                                                            class="form-control form-control-lg" />
+                                                        <label class="form-label" for="Middlename"><i
+                                                                class="bi bi-person"></i> Middle Name</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-outline mb-3">
+                                                        <input type="number" id="Age" name="Age"
+                                                            class="form-control form-control-lg" min="1" max="120" required />
+                                                        <label class="form-label" for="Age"><i
+                                                                class="bi bi-calendar"></i> Age</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-outline mb-3">
+                                                        <select class="form-select form-control-lg" id="Status" name="Status" required>
+                                                            <option value="">Select Status</option>
+                                                            <option value="Single">Single</option>
+                                                            <option value="Married">Married</option>
+                                                            <option value="Widowed">Widowed</option>
+                                                            <option value="Divorced">Divorced</option>
+                                                        </select>
+                                                        <label class="form-label" for="Status"><i
+                                                                class="bi bi-heart"></i> Civil Status</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-outline mb-3">
+                                                        <input type="text" id="Citizenship" name="Citizenship"
+                                                            class="form-control form-control-lg" required />
+                                                        <label class="form-label" for="Citizenship"><i
+                                                                class="bi bi-flag"></i> Citizenship</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+
                                         <!-- Contact Info Section -->
                                         <fieldset class="mb-3">
                                             <legend class="text-muted">Contact Info</legend>
@@ -186,6 +248,13 @@ if (isset($_SESSION['UserID'])) {
                                                         <label class="form-label" for="PostalCode">Postal Code</label>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <!-- Hidden field to store concatenated address -->
+                                            <input type="hidden" id="Address" name="Address" />
+                                            <!-- Address Preview -->
+                                            <div class="form-outline mb-3">
+                                                <input type="text" id="AddressPreview" class="form-control form-control-lg" readonly style="background-color: #f8f9fa;" />
+                                                <label class="form-label" for="AddressPreview"><i class="bi bi-eye"></i> Address Preview</label>
                                             </div>
                                         </fieldset>
 
@@ -405,9 +474,15 @@ if (isset($_SESSION['UserID'])) {
         const city = document.getElementById('City').value;
         const postalCode = document.getElementById('PostalCode').value;
 
-        // Concatenate with separators for easy parsing later
-        const fullAddress = `${street}|${barangay}|${city}|${postalCode}`;
+        // Concatenate with commas as requested
+        const fullAddress = `${street}, ${barangay}, ${city}, ${postalCode}`;
         document.getElementById('Address').value = fullAddress;
+
+        // Update the preview field
+        const addressPreview = document.getElementById('AddressPreview');
+        if (addressPreview) {
+            addressPreview.value = fullAddress;
+        }
     }
 
     // Add event listener to form submission
@@ -505,7 +580,11 @@ if (isset($_SESSION['UserID'])) {
     $Email = $_POST['Email'];
     $Lastname         = $_POST['Lastname'];
     $Firstname         = $_POST['Firstname'];
-    $Address         = $_POST['Address'];
+    $Middlename       = $_POST['Middlename'];
+    $Address          = $_POST['Address'];
+    $Age              = $_POST['Age'];
+    $Status           = $_POST['Status'];
+    $Citizenship      = $_POST['Citizenship'];
 
     // $file_name = $_FILES['image']['name'];
     // $file_tmp =$_FILES['image']['tmp_name'];
@@ -571,7 +650,7 @@ if (isset($_SESSION['UserID'])) {
             $Users->Contact         = $_POST['Mobile'];
             $Users->Username         = $_POST['Username'];
             $Users->Password      = sha1($_POST['Password']);
-            $Users->Laman      = $_POST['Laman'];
+            $Users->Laman      = ""; // Default empty value for Laman field
             $Users->UserType      = "USER";
             $Users->VerCode      = "";
             $Users->IsVerified      = "0";
