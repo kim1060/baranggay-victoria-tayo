@@ -37,173 +37,153 @@ if (isset($_SESSION['UserID'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
     <style>
-    body {
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-position: center;
-        background-size: 55% 100vh;
-        position: relative;
-        opacity: 97%;
+    /* Override Bootstrap styles with simple, clean styling */
+    .form-outline {
+        margin-bottom: 20px !important;
     }
 
+    .form-control, .form-select {
+        border: 2px solid #e1e5e9 !important;
+        border-radius: 8px !important;
+        padding: 12px 15px !important;
+        font-size: 16px !important;
+        transition: all 0.3s ease !important;
+        background: white !important;
+        box-sizing: border-box !important;
+    }
+
+    .form-control:focus, .form-select:focus {
+        outline: none !important;
+        border-color: #667eea !important;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+    }
+
+    .form-control-lg, .form-select.form-control-lg {
+        height: auto !important;
+        padding: 12px 15px !important;
+    }
+
+    .form-label {
+        display: block !important;
+        margin-bottom: 8px !important;
+        color: #555 !important;
+        font-weight: 500 !important;
+        font-size: 14px !important;
+    }
+
+    .form-label i {
+        margin-right: 5px;
+        color: #667eea;
+    }
+
+    /* Fieldset styling */
+    fieldset {
+        border: 1px solid #dee2e6 !important;
+        border-radius: 8px !important;
+        padding: 25px !important;
+        margin-bottom: 25px !important;
+        background: #f8f9fa !important;
+    }
+
+    legend {
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        color: #495057 !important;
+        padding: 0 10px !important;
+        margin-bottom: 15px !important;
+        width: auto !important;
+        border-bottom: 2px solid #667eea !important;
+        padding-bottom: 5px !important;
+    }
+
+    /* Row and column spacing */
+    .row {
+        margin-left: -10px !important;
+        margin-right: -10px !important;
+    }
+
+    .col-md-4, .col-md-6 {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        margin-bottom: 10px !important;
+    }
+
+    /* Button styling */
+    .btn {
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        padding: 15px 24px !important;
+        transition: all 0.3s ease !important;
+        border: none !important;
+    }
+
+    .btn-success {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%) !important;
+        color: white !important;
+        box-shadow: 0 2px 10px rgba(40, 167, 69, 0.3) !important;
+    }
+
+    .btn-success:hover {
+        background: linear-gradient(135deg, #218838 0%, #1ea085 100%) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4) !important;
+        color: white !important;
+    }
+
+    /* Card styling */
+    .card {
+        border: none !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+        border-radius: 15px !important;
+    }
+
+    .card-body {
+        padding: 30px !important;
+    }
+
+    /* Password requirements */
     .password-requirements {
-        margin-top: 5px;
-        padding-left: 10px;
+        margin-top: 10px !important;
+        padding: 15px !important;
+        background: #f8f9fa !important;
+        border-radius: 8px !important;
+        border: 1px solid #dee2e6 !important;
     }
 
     .password-requirements .requirement {
-        margin: 2px 0;
-        transition: color 0.3s ease;
+        margin: 5px 0 !important;
+        font-size: 12px !important;
+        transition: color 0.3s ease !important;
     }
 
     .password-requirements .requirement.valid {
         color: #28a745 !important;
-        font-weight: bold;
+        font-weight: 600 !important;
     }
 
     .password-requirements .requirement.invalid {
         color: #dc3545 !important;
     }
 
-    #image-preview {
-        width: 450px;
-        height: 250px;
-        border: 1px solid #ccc;
-        margin: auto;
-        overflow: hidden;
-    }
-
-    #image-preview img {
-        width: 450px;
-        height: 250px;
-        object-fit: contain;
-    }
-
-    /* Small devices (portrait tablets and large phones, 600px and up) */
-    @media only screen and (min-width: 600px) {
-        body {
-            background-image: none;
-        }
-    }
-
-    /* Enhanced Form Styling */
-    .card-body {
-        background: #fff;
-        border-radius: 0.5rem;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    }
-
-    .col-xl-8 {
-        max-width: 720px;
-    }
-
-    /* Simple Form Input Styling */
-    .form-control, .form-select {
-        border: 1px solid #ced4da;
-        border-radius: 6px;
-        padding: 10px 12px;
-        font-size: 14px;
-        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        background-color: #fff;
-    }
-
-    .form-control:focus, .form-select:focus {
-        border-color: #667eea;
-        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
-        outline: none;
-    }
-
-    .form-control-lg, .form-select.form-control-lg {
-        height: 45px;
-        font-size: 16px;
-        padding: 12px 16px;
-    }
-
-    .form-label {
-        font-weight: 500;
-        color: #495057;
-        margin-bottom: 8px;
-        display: block;
-    }
-
-    /* Fieldset Styling */
-    fieldset {
-        border: 1px solid #dee2e6;
-        border-radius: 8px;
-        padding: 20px;
-        margin-bottom: 25px;
-        background: #f8f9fa;
-    }
-
-    legend {
-        font-size: 16px;
-        font-weight: 600;
-        color: #495057;
-        padding: 0 10px;
-        margin-bottom: 15px;
-        width: auto;
-    }
-
-    /* Row and Column Spacing */
-    .row {
-        margin-left: -8px;
-        margin-right: -8px;
-    }
-
-    .col-md-4, .col-md-6 {
-        padding-left: 8px;
-        padding-right: 8px;
-    }
-
-    /* Form Group Spacing */
-    .form-outline {
-        margin-bottom: 20px;
-    }
-
-    /* Button Styling */
-    .btn {
-        border-radius: 6px;
-        font-weight: 600;
-        padding: 12px 24px;
-        transition: all 0.3s ease;
-    }
-
-    .btn-success {
-        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-        border: none;
-        box-shadow: 0 2px 10px rgba(40, 167, 69, 0.3);
-    }
-
-    .btn-success:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
-    }
-
-    /* Card Styling */
-    .card {
-        border: none;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        border-radius: 15px;
-    }
-
-    /* Progress Bar Styling */
+    /* Progress bar */
     .progress {
-        height: 6px;
-        border-radius: 3px;
-        background-color: #e9ecef;
+        height: 6px !important;
+        border-radius: 3px !important;
+        background-color: #e9ecef !important;
+        margin: 10px 0 !important;
     }
 
     .progress-bar {
-        border-radius: 3px;
-        transition: width 0.3s ease;
+        border-radius: 3px !important;
+        transition: width 0.3s ease !important;
     }
 
     /* Password match indicator */
     #match-text {
-        font-size: 12px;
-        font-weight: 500;
-        margin-top: 5px;
-        display: block;
+        font-size: 12px !important;
+        font-weight: 500 !important;
+        margin-top: 5px !important;
+        display: block !important;
     }
 
     /* Responsive adjustments */
@@ -213,15 +193,11 @@ if (isset($_SESSION['UserID'])) {
         }
 
         fieldset {
-            padding: 15px;
-        }
-
-        .form-control-lg, .form-select.form-control-lg {
-            height: 45px;
+            padding: 20px !important;
         }
 
         .col-md-4, .col-md-6 {
-            margin-bottom: 10px;
+            margin-bottom: 15px !important;
         }
     }
     </style>

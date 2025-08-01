@@ -114,10 +114,6 @@ if (isset($_SESSION['UserID'])) {
                             <div class="col-md-12 col-lg-12 d-flex align-items-center">
                                 <div class="card-body p-4 p-lg-5 text-black">
                                     <form method="post" autocomplete="off">
-                                        <!-- <div class="align-items-center mb-3 pb-1 text-center">
-                                            <img src="img/DMW_LOGO.png" alt="login form" class="img-fluid"
-                                                style="border-radius: 25px; width:40%;" />
-                                        </div> -->
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="align-items-center mb-2 pb-1 text-center">
@@ -152,7 +148,6 @@ if (isset($_SESSION['UserID'])) {
                                                         name="btnLogin" id="btnLogin">Login</button>
                                                 </div>
 
-
                                                 <a href="index.php">Go to Website</a>
                                                 <br>
                                                 <a href="register.php">Register here!</a>
@@ -160,9 +155,6 @@ if (isset($_SESSION['UserID'])) {
                                         </div>
 
                                         <hr>
-                                        <!-- <a class="fw-bold text-primary text-end" href="verification.php">Verify your
-                                            account
-                                            here!</a><br> -->
                                         <a class="fw-bold text-start link-primary" href="forgotpassword.php">Forgot your
                                             Password?</a>
                                     </form>
