@@ -16,7 +16,7 @@ if (isset($_SESSION['UserID'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="icon" type="image/x-icon" href="IMG/baranggay-victoria.jpg">
+    <link rel="icon" type="image/x-icon" href="IMG/baranggay-victoria.png">
     <!-- Font Awesome -->
     <!-- bootstrap 5 css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -117,7 +117,7 @@ if (isset($_SESSION['UserID'])) {
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="align-items-center mb-2 pb-1 text-center">
-                                                    <img src="IMG/baranggay-victoria.jpg" alt="login form" class="img-fluid"
+                                                    <img src="IMG/baranggay-victoria.png" alt="login form" class="img-fluid"
                                                         style="border-radius: 1rem 0 0 1rem; width:250px;" />
                                                 </div>
                                                 <h5 class="text-center">Barangay Victoria Tayo

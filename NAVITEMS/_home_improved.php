@@ -141,7 +141,7 @@ $UserID=$_SESSION['UserID'];
                     </div>
                 </div>
                 <div class="col-lg-6" data-aos="fade-left" data-aos-duration="1000">
-                    <img src="IMG/baranggay-victoria.jpg" alt="AppointMate Logo" class="img-fluid" style="max-height: 300px;">
+                    <img src="IMG/baranggay-victoria.png" alt="AppointMate Logo" class="img-fluid" style="max-height: 300px;">
                 </div>
             </div>
         </div>

@@ -25,7 +25,7 @@ if (isset($_GET['user'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>APPOINTMATE - MESSAGES</title>
-    <link rel="icon" type="image/x-icon" href="IMG/baranggay-victoria.jpg">
+    <link rel="icon" type="image/x-icon" href="IMG/baranggay-victoria.png">
     <link href="style.css" rel="stylesheet">
 
 </head>
