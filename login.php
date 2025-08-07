@@ -191,7 +191,7 @@ if (isset($_SESSION['UserID'])) {
 
 <?php
 
-if (isset($_POST['btnc'])) {
+if (isset($_POST['btnLogin'])) {
   $email = trim($_POST['Email']);
   $upass  = trim($_POST['Password']);
   $h_upass = sha1($upass);
@@ -203,7 +203,6 @@ if (isset($_POST['btnc'])) {
     //make use of the static function, and we passed to parameters
     $res = $Users::UserAuthentication($email, $h_upass);
     if ($res == true) {
-        session_start();
       $_SESSION['attempts'] = 3;
 
       redirect("index.php?view=home");
