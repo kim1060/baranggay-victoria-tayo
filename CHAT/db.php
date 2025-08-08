@@ -7,7 +7,7 @@ $username = getenv('MYSQLUSER') ?: "appointmate_user";
 $password = getenv('MYSQLPASSWORD') ?: "appointmate_password";
 $dbname = getenv('MYSQLDATABASE') ?: "appointmate";
 
-$conn = new mysqli($servername, $username, $password, $dbname);/ Database connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 // Use Railway MySQL env vars first, fallback to Docker/local
 $servername = getenv('MYSQLHOST') ?: getenv('DATABASE_HOST') ?: "db";
 $username = getenv('MYSQL_USER') ?: getenv('DATABASE_USER') ?: "appointmate_user";
