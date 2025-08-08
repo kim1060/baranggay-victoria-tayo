@@ -98,13 +98,18 @@ if (isset($_POST['btnSubmit'])) {
   $row = $mydb->executeQuery();
   $maxrow = $mydb->num_rows($row);
 
+  // Initialize variables
+  $LNAME = '';
+  $FNAME = '';
+  $ADD = '';
+
   $sql = "SELECT REPLACE(Firstname,'-','') as Firstname,REPLACE(Lastname,'-','') as Lastname,REPLACE(REPLACE(REPLACE(Address, '\r', ''), '\n', ''),'-','') as Address1 from user_account WHERE 1=1 and VerCode ='$VerCode'";
   $mydb->setQuery($sql);
   $cur = $mydb->loadResultList();
   foreach ($cur as $result) {
-  $LNAME=$result->Lastname;
-  $FNAME=$result->Firstname;
-  $ADD=$result->Address1;
+    $LNAME = $result->Lastname;
+    $FNAME = $result->Firstname;
+    $ADD = $result->Address1;
   }
 
 
@@ -129,19 +134,22 @@ if (isset($_POST['btnSubmit'])) {
     $mydb->executeQuery();
 
 
-  $sql = "SELECT 1 as FVAL from user_account WHERE 1=1 and Laman like '%$FNAME%' AND VerCode ='$VerCode'";
+  // Initialize variables
+  $FNAMEVAL = 0;
+  $LNAMEVAL = 0;
 
+  $sql = "SELECT 1 as FVAL from user_account WHERE 1=1 and Laman like '%$FNAME%' AND VerCode ='$VerCode'";
   $mydb->setQuery($sql);
   $cur = $mydb->loadResultList();
   foreach ($cur as $result) {
-  $FNAMEVAL=$result->FVAL;
+    $FNAMEVAL = $result->FVAL;
   }
 
   $sql = "SELECT 1 as LVAL from user_account WHERE 1=1 and Laman like '%$LNAME%' AND VerCode ='$VerCode'";
   $mydb->setQuery($sql);
   $cur = $mydb->loadResultList();
   foreach ($cur as $result) {
-  $LNAMEVAL=$result->LVAL;
+    $LNAMEVAL = $result->LVAL;
   }
 
 //   $sql = "SELECT 1 as ADDVAL from user_account WHERE 1=1 and REPLACE(REPLACE(Laman, '\r', ''), '\n', '') like '%$ADD%'";
@@ -155,8 +163,6 @@ if (isset($_POST['btnSubmit'])) {
   {
     if($LNAMEVAL==1)
     {
-
-
             $sql = "UPDATE user_account SET IsVerified='1',`Filename`='$file_name' WHERE VerCode ='$VerCode'";
             $mydb->setQuery($sql);
             $mydb->executeQuery();
