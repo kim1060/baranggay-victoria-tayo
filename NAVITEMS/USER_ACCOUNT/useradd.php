@@ -3,6 +3,12 @@ require_once("INCLUDE/initialize.php");
 ?>
 
 <div class="container">
+    <style>
+        h4 { border-bottom: 2px solid #fbc02d; padding-bottom: .25rem; display: inline-block; }
+        .btn-outline-success { color: #1b5e20; border-color: #1b5e20; }
+        .btn-outline-success:hover { background-color: #1b5e20; color: #ffffff; }
+        .form-control:focus, .form-select:focus { border-color: #66bb6a; box-shadow: 0 0 0 .2rem rgba(102,187,106,.25); }
+    </style>
     <form method="post" class="text-center">
         <div class="row mt-3">
             <h4><span class="bi-person-plus"></span> <?php echo $title;?></h4>

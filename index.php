@@ -97,6 +97,7 @@ switch ($view) {
     case 'admin_dashboard':
         $title = "Admin Dashboard";
         $content = 'NAVITEMS/admin_dashboard.php';
+        $bodyClass = 'admin-dashboard-leftnav';
     break;
 
     //USER ACCOUNT

@@ -1,7 +1,14 @@
 <div class="container">
+    <style>
+        /* Green/Yellow theme accents for user accounts */
+        h4 { border-bottom: 2px solid #fbc02d; padding-bottom: .25rem; display: inline-block; }
+        .btn-outline-success { color: #1b5e20; border-color: #1b5e20; }
+        .btn-outline-success:hover { background-color: #1b5e20; color: #ffffff; }
+        .table thead.bg-success th { border-color: #1b5e20; }
+    </style>
     <h4 class="mt-3"><span class="bi-person-lock"></span> <?php echo $title;?></h4>
     <hr>
-    <div class="rowmb-2">
+    <div class="row mb-2">
         <div class="col-md-2">
             <a href="index.php?view=useradd" class="btn btn-sm btn-outline-success"><i class="bi-file-earmark-plus"></i>
                 Add</a>
@@ -11,7 +18,7 @@
     <div class="row">
         <div class="table-responsive">
             <table id="userlist-table" class="table table-bordered table-sm table-hover datatable-auto">
-                <thead class="table-dark">
+                <thead class="bg-success text-white">
                     <th class="text-center">#</th>
                     <th>Reference</th>
                     <th>Fullname</th>
@@ -37,8 +44,8 @@
 						echo '<td>'.$result->Fullname.'</td>';
 						echo '<td>'.$result->Username.'</td>';
 						echo '<td>'.$result->UserType.'</td>';
-						echo '<td class="text-center">
-						<a href="index.php?view=useredit&id='.$result->UserID.'" class="btn btn-sm btn-outline-primary"><i class="bi-pencil"></i></a>
+                        echo '<td class="text-center">
+                        <a href="index.php?view=useredit&id='.$result->UserID.'" class="btn btn-sm btn-outline-success"><i class="bi-pencil"></i></a>
 						<!--<a data-id="'.$result->UserID.'" class="btn btn-sm btn-outline-danger delete_user"><i class="bi-trash"></i></a>-->
 						</td>';
 						echo '</tr>';

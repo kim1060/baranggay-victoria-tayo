@@ -48,14 +48,14 @@ if (isset($_SESSION['UserID'])) {
 
     /* Custom button styling */
     .btn-gradient {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background-color: #1b5e20; /* solid green */
         border: none;
         color: white;
         transition: all 0.3s ease;
     }
 
     .btn-gradient:hover {
-        background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        background-color: #2e7d32;
         color: white;
         transform: translateY(-2px);
         box-shadow: 0 4px 8px rgba(0,0,0,0.2);
@@ -68,21 +68,21 @@ if (isset($_SESSION['UserID'])) {
 
     /* Link styling */
     .link-primary {
-        color: #667eea !important;
+        color: #2e7d32 !important; /* green link */
         transition: color 0.3s ease;
     }
 
     .link-primary:hover {
-        color: #5a6fd8 !important;
+        color: #1b5e20 !important;
     }
 
     .link-secondary {
-        color: #764ba2 !important;
+        color: #f9a825 !important; /* yellow accent link */
         transition: color 0.3s ease;
     }
 
     .link-secondary:hover {
-        color: #6a4190 !important;
+        color: #f57f17 !important;
     }
 
     /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -105,7 +105,7 @@ if (isset($_SESSION['UserID'])) {
 
 <body>
     <!-- Section: Design Block -->
-    <section class="vh-100" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <section class="vh-100" style="background-color: #1b5e20;">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col col-xl-6">
@@ -205,7 +205,11 @@ if (isset($_POST['btnLogin'])) {
     if ($res == true) {
       $_SESSION['attempts'] = 3;
 
-      redirect("index.php?view=home");
+      if (isset($_SESSION['UserType']) && $_SESSION['UserType'] === 'ADMIN') {
+        redirect("index.php?view=admin_dashboard");
+      } else {
+        redirect("index.php?view=home");
+      }
       echo $_SESSION['UserID'];
       }
       else {

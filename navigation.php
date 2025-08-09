@@ -47,92 +47,9 @@
         <!-- Desktop Navigation -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto align-items-center">
-                <!-- Home -->
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?view=home">
-                        <i class="bi bi-house me-1"></i>
-                        <span>Home</span>
-                    </a>
-                </li>
-
-                <!-- Announcements -->
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?view=announcement">
-                        <i class="bi bi-megaphone me-1"></i>
-                        <span>Announcements</span>
-                    </a>
-                </li>
-
-                <?php if(isset($_SESSION['UserID'])): ?>
-
-                    <?php if($_SESSION['UserType']=='USER'): ?>
-                        <!-- Services for Users -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.php?view=services">
-                                <i class="bi bi-list-check me-1"></i>
-                                <span>Services</span>
-                            </a>
-                        </li>
-
-                        <!-- My Applications Dropdown -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-file-earmark-text me-1"></i>
-                                <span>My Applications</span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="index.php?view=myclearancelist">
-                                    <i class="bi bi-file-earmark-check me-2"></i>Barangay Clearance</a></li>
-                                <li><a class="dropdown-item" href="index.php?view=mycedulalist">
-                                    <i class="bi bi-card-text me-2"></i>Cedula</a></li>
-                                <li><a class="dropdown-item" href="index.php?view=myindigencylist">
-                                    <i class="bi bi-file-medical me-2"></i>Certificate of Indigency</a></li>
-                                <li><a class="dropdown-item" href="index.php?view=mypermitlist">
-                                    <i class="bi bi-briefcase me-2"></i>Business Permit</a></li>
-                                <li><a class="dropdown-item" href="index.php?view=mycourtlist">
-                                    <i class="bi bi-building me-2"></i>Court Booking</a></li>
-                            </ul>
-                        </li>
-
-                    <?php elseif($_SESSION['UserType']=='ADMIN'): ?>
-                        <!-- Admin Dashboard -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.php?view=admin_dashboard">
-                                <i class="bi bi-speedometer2 me-1"></i>
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
-
-                        <!-- Admin Settings Dropdown -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-gear me-1"></i>
-                                <span>Admin Panel</span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><h6 class="dropdown-header">Services Management</h6></li>
-                                <li><a class="dropdown-item" href="index.php?view=clearancelist">
-                                    <i class="bi bi-file-earmark-check me-2"></i>Barangay Clearance</a></li>
-                                <li><a class="dropdown-item" href="index.php?view=cedulalist">
-                                    <i class="bi bi-card-text me-2"></i>Cedula</a></li>
-                                <li><a class="dropdown-item" href="index.php?view=indigencylist">
-                                    <i class="bi bi-file-medical me-2"></i>Certificate of Indigency</a></li>
-                                <li><a class="dropdown-item" href="index.php?view=permitlist">
-                                    <i class="bi bi-briefcase me-2"></i>Business Permit</a></li>
-                                <li><a class="dropdown-item" href="index.php?view=courtlist">
-                                    <i class="bi bi-building me-2"></i>Court Booking</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><h6 class="dropdown-header">System Management</h6></li>
-                                <li><a class="dropdown-item" href="index.php?view=announcementlist">
-                                    <i class="bi bi-megaphone me-2"></i>Announcements</a></li>
-                                <li><a class="dropdown-item" href="index.php?view=consolidatedlist">
-                                    <i class="bi bi-graph-up me-2"></i>Reports</a></li>
-                            </ul>
-                        </li>
-                    <?php endif; ?>
-
-                    <!-- User Account Dropdown -->
-                    <li class="nav-item dropdown">
+            <?php if(isset($_SESSION['UserID'])): ?>
+               <!-- User Account Dropdown -->
+               <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                             <i class="bi bi-person-circle me-1"></i>
                             <span>Account</span>
@@ -152,15 +69,83 @@
                         </ul>
                     </li>
 
-                <?php else: ?>
-                    <!-- Sign In for Guests -->
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-outline-secondary ms-2" href="login.php">
-                            <i class="bi bi-box-arrow-in-right me-1"></i>
-                            <span>Sign In</span>
-                        </a>
-                    </li>
-                <?php endif; ?>
+<?php if($_SESSION['UserType']=='USER'): ?>
+    <!-- Services for Users -->
+    <li class="nav-item">
+        <a class="nav-link" href="index.php?view=services">
+            <i class="bi bi-list-check me-1"></i>
+            <span>Services</span>
+        </a>
+    </li>
+
+    <!-- My Applications Dropdown -->
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+            <i class="bi bi-file-earmark-text me-1"></i>
+            <span>My Applications</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="index.php?view=myclearancelist">
+                <i class="bi bi-file-earmark-check me-2"></i>Barangay Clearance</a></li>
+            <li><a class="dropdown-item" href="index.php?view=mycedulalist">
+                <i class="bi bi-card-text me-2"></i>Cedula</a></li>
+            <li><a class="dropdown-item" href="index.php?view=myindigencylist">
+                <i class="bi bi-file-medical me-2"></i>Certificate of Indigency</a></li>
+            <li><a class="dropdown-item" href="index.php?view=mypermitlist">
+                <i class="bi bi-briefcase me-2"></i>Business Permit</a></li>
+            <li><a class="dropdown-item" href="index.php?view=mycourtlist">
+                <i class="bi bi-building me-2"></i>Court Booking</a></li>
+        </ul>
+    </li>
+
+<?php elseif($_SESSION['UserType']=='ADMIN'): ?>
+
+
+    <!-- Admin Settings Dropdown -->
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+            <i class="bi bi-gear me-1"></i>
+            <span>Admin Panel</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+            <li><h6 class="dropdown-header">Services Management</h6></li>
+            <li><a class="dropdown-item" href="index.php?view=clearancelist">
+                <i class="bi bi-file-earmark-check me-2"></i>Barangay Clearance</a></li>
+            <li><a class="dropdown-item" href="index.php?view=cedulalist">
+                <i class="bi bi-card-text me-2"></i>Cedula</a></li>
+            <li><a class="dropdown-item" href="index.php?view=indigencylist">
+                <i class="bi bi-file-medical me-2"></i>Certificate of Indigency</a></li>
+            <li><a class="dropdown-item" href="index.php?view=permitlist">
+                <i class="bi bi-briefcase me-2"></i>Business Permit</a></li>
+            <li><a class="dropdown-item" href="index.php?view=courtlist">
+                <i class="bi bi-building me-2"></i>Court Booking</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><h6 class="dropdown-header">System Management</h6></li>
+            <li><a class="dropdown-item" href="index.php?view=announcementlist">
+                <i class="bi bi-megaphone me-2"></i>Announcements</a></li>
+            <li><a class="dropdown-item" href="index.php?view=consolidatedlist">
+                <i class="bi bi-graph-up me-2"></i>Reports</a></li>
+        </ul>
+    </li>
+<?php endif; ?>
+
+
+
+<?php else: ?>
+<!-- Sign In for Guests -->
+<li class="nav-item">
+    <a class="nav-link btn btn-outline-secondary ms-2" href="login.php">
+        <i class="bi bi-box-arrow-in-right me-1"></i>
+        <span>Sign In</span>
+    </a>
+</li>
+<?php endif; ?>
+
+
+
+
+
+
             </ul>
         </div>
     </div>

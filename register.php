@@ -54,8 +54,8 @@ if (isset($_SESSION['UserID'])) {
 
     .form-control:focus, .form-select:focus {
         outline: none !important;
-        border-color: #667eea !important;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+        border-color: #66bb6a !important; /* green */
+        box-shadow: 0 0 0 3px rgba(102, 187, 106, 0.2) !important; /* soft green glow */
     }
 
     .form-control-lg, .form-select.form-control-lg {
@@ -73,7 +73,7 @@ if (isset($_SESSION['UserID'])) {
 
     .form-label i {
         margin-right: 5px;
-        color: #667eea;
+        color: #2e7d32; /* deep green */
     }
 
     /* Fieldset styling */
@@ -92,7 +92,7 @@ if (isset($_SESSION['UserID'])) {
         padding: 0 10px !important;
         margin-bottom: 15px !important;
         width: auto !important;
-        border-bottom: 2px solid #667eea !important;
+        border-bottom: 2px solid #fbc02d !important; /* yellow accent */
         padding-bottom: 5px !important;
     }
 
@@ -118,15 +118,15 @@ if (isset($_SESSION['UserID'])) {
     }
 
     .btn-success {
-        background: linear-gradient(135deg, #28a745 0%, #20c997 100%) !important;
+        background-color: #1b5e20 !important; /* solid green */
         color: white !important;
-        box-shadow: 0 2px 10px rgba(40, 167, 69, 0.3) !important;
+        box-shadow: 0 2px 10px rgba(27, 94, 32, 0.3) !important;
     }
 
     .btn-success:hover {
-        background: linear-gradient(135deg, #218838 0%, #1ea085 100%) !important;
+        background-color: #2e7d32 !important; /* darker green */
         transform: translateY(-2px) !important;
-        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4) !important;
+        box-shadow: 0 4px 15px rgba(46, 125, 50, 0.4) !important;
         color: white !important;
     }
 
@@ -157,7 +157,7 @@ if (isset($_SESSION['UserID'])) {
     }
 
     .password-requirements .requirement.valid {
-        color: #28a745 !important;
+        color: #2e7d32 !important; /* green */
         font-weight: 600 !important;
     }
 
@@ -176,6 +176,7 @@ if (isset($_SESSION['UserID'])) {
     .progress-bar {
         border-radius: 3px !important;
         transition: width 0.3s ease !important;
+        background-color: #c0ca33; /* default lime-yellow */
     }
 
     /* Password match indicator */
@@ -184,6 +185,7 @@ if (isset($_SESSION['UserID'])) {
         font-weight: 500 !important;
         margin-top: 5px !important;
         display: block !important;
+        color: #2e7d32 !important;
     }
 
     /* Responsive adjustments */
@@ -206,7 +208,7 @@ if (isset($_SESSION['UserID'])) {
 <body>
     <!-- Section: Design Block -->
     <!-- Registration Form -->
-    <section class="vh-100" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <section style="background-color: #1b5e20;">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col col-xl-8">
@@ -409,8 +411,7 @@ if (isset($_SESSION['UserID'])) {
                                             </button>
                                         </div>
 
-                                        <a class="fw-bold text-success mt-3 d-block text-center" href="login.php">Log in
-                                            here!</a>
+    <a class="fw-bold mt-3 d-block text-center" href="login.php" style="color:#1b5e20;">Log in here!</a>
                                     </form>
 
                                 </div>

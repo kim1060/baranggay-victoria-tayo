@@ -15,10 +15,99 @@ $result = $mydb->loadSingleResult();
 $totalUsers = $result->count ?? 0;
 ?>
 
+    <style>
+        /* Page-scoped left navbar for admin dashboard only */
+        body.admin-dashboard-leftnav .navbar.navbar-custom {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 260px;
+            z-index: 1030;
+            border-right: 1px solid rgba(0,0,0,0.08);
+            background-color: #1b5e20 !important; /* deep green */
+        }
+        body.admin-dashboard-leftnav .navbar.navbar-custom .container-fluid {
+            flex-direction: column;
+            align-items: stretch;
+            height: 100%;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        body.admin-dashboard-leftnav .navbar.navbar-custom .navbar-brand {
+            margin-bottom: 1rem;
+            color: #ffffff !important;
+        }
+        body.admin-dashboard-leftnav .navbar.navbar-custom .navbar-collapse {
+            display: block !important;
+        }
+        body.admin-dashboard-leftnav .navbar.navbar-custom .navbar-nav {
+            flex-direction: column;
+            gap: .25rem;
+        }
+        body.admin-dashboard-leftnav .navbar.navbar-custom .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+        }
+        body.admin-dashboard-leftnav .navbar.navbar-custom .nav-link:hover,
+        body.admin-dashboard-leftnav .navbar.navbar-custom .nav-link:focus {
+            background-color: rgba(255, 235, 59, 0.18) !important; /* soft yellow */
+            color: #ffffff !important;
+        }
+        body.admin-dashboard-leftnav .navbar.navbar-custom .dropdown-menu {
+            background: #ffffff !important;
+            border-color: #c8e6c9 !important;
+        }
+        body.admin-dashboard-leftnav .forcontent {
+            margin-left: 260px;
+        }
+        @media (max-width: 991.98px) {
+            body.admin-dashboard-leftnav .navbar.navbar-custom {
+                width: 220px;
+            }
+            body.admin-dashboard-leftnav .forcontent {
+                margin-left: 220px;
+            }
+        }
+
+        /* Page background and hint colors */
+        body.admin-dashboard-leftnav {
+            background-color: #f5fbe6; /* soft green tint */
+        }
+        body.admin-dashboard-leftnav .card-header {
+            background-color: #fffbe6 !important; /* light yellow hint */
+        }
+        body.admin-dashboard-leftnav .btn-outline-primary {
+            color: #1b5e20 !important;
+            border-color: #1b5e20 !important;
+        }
+        body.admin-dashboard-leftnav .btn-outline-primary:hover {
+            background-color: #1b5e20 !important;
+            color: #ffffff !important;
+        }
+        body.admin-dashboard-leftnav .form-select {
+            border-color: #c8e6c9;
+        }
+        body.admin-dashboard-leftnav .form-select:focus {
+            border-color: #66bb6a;
+            box-shadow: 0 0 0 .2rem rgba(102, 187, 106, 0.25);
+        }
+    </style>
+
     <!-- Charts Section -->
-    <div class="row mb-4">
-        <div class="col-lg-8 mb-4">
-            <div class="card border-0 shadow-sm mb-4">
+    <div class="row mb-2 container-fluid" style="max-width: 1280px; margin: 0 auto;">
+        <div class="col-12 d-flex justify-content-start align-items-center gap-2 mb-5">
+            <label for="chartFilter" class="mb-0 text-muted">Show:</label>
+            <select id="chartFilter" class="form-select" style="min-width: 220px;">
+                <option value="monthly" selected>Monthly</option>
+                <option value="weekly">Weekly</option>
+                <option value="daily">Daily</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-4 container-fluid" style="max-width: 1280px; margin: 0 auto;">
+        <div class="col-lg-8 mb-4" id="chartsMainCol">
+            <div class="card border-0 shadow-sm mb-4" id="monthlyChartCard">
                 <div class="card-header bg-white border-0 pb-0">
                     <h5 class="card-title mb-0"><i class="bi bi-graph-up"></i> Monthly Appointment Trends</h5>
                 </div>
@@ -26,7 +115,7 @@ $totalUsers = $result->count ?? 0;
                     <canvas id="appointmentChart" height="100"></canvas>
                 </div>
             </div>
-            <div class="card border-0 shadow-sm mb-4">
+            <div class="card border-0 shadow-sm mb-4" id="weeklyChartCard">
                 <div class="card-header bg-white border-0 pb-0">
                     <h5 class="card-title mb-0"><i class="bi bi-graph-up"></i> Weekly Appointment Trends</h5>
                 </div>
@@ -34,7 +123,7 @@ $totalUsers = $result->count ?? 0;
                     <canvas id="weeklyAppointmentChart" height="100"></canvas>
                 </div>
             </div>
-            <div class="card border-0 shadow-sm">
+            <div class="card border-0 shadow-sm" id="dailyChartCard">
                 <div class="card-header bg-white border-0 pb-0">
                     <h5 class="card-title mb-0"><i class="bi bi-graph-up"></i> Daily Appointment Trends</h5>
                 </div>
@@ -43,8 +132,8 @@ $totalUsers = $result->count ?? 0;
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
-            <div class="card border-0 shadow-sm">
+        <div class="col-lg-4" id="chartsSideCol">
+            <div class="card border-0 shadow-sm" id="serviceChartCard">
                 <div class="card-header bg-white border-0 pb-0">
                     <h5 class="card-title mb-0"><i class="bi bi-pie-chart"></i> Service Distribution</h5>
                 </div>
@@ -56,7 +145,7 @@ $totalUsers = $result->count ?? 0;
     </div>
 
     <!-- Recent Activity -->
-    <div class="row mb-4">
+    <div class="row mb-4 container-fluid" style="max-width: 1280px; margin: 0 auto;">
         <div class="col-12">
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-white border-0 pb-0">
@@ -239,14 +328,13 @@ for ($i = 6; $i >= 0; $i--) {
 }
 ?>
 
-<div class="container-fluid">
+<div class="container-fluid" style="max-width: 1280px; margin: 0 auto;">
     <!-- Dashboard Header -->
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <h2><i class="bi bi-speedometer2"></i> Admin Dashboard</h2>
-                    <p class="text-muted">Welcome back! Here's what's happening with your appointment system.</p>
                 </div>
                 <div class="text-end">
                     <small class="text-muted">Last updated: <?php echo date('M d, Y h:i A'); ?></small>
@@ -589,8 +677,8 @@ const appointmentChart = new Chart(appointmentCtx, {
         datasets: [{
             label: 'Total Appointments (Monthly)',
             data: [<?php echo implode(',', $monthlyData); ?>],
-            borderColor: 'rgb(13, 110, 253)',
-            backgroundColor: 'rgba(13, 110, 253, 0.1)',
+            borderColor: 'rgb(27, 94, 32)',
+            backgroundColor: 'rgba(76, 175, 80, 0.15)',
             tension: 0.4,
             fill: true
         }]
@@ -627,8 +715,8 @@ const weeklyAppointmentChart = new Chart(weeklyAppointmentCtx, {
         datasets: [{
             label: 'Total Appointments (Weekly)',
             data: [<?php echo implode(',', $weeklyData); ?>],
-            borderColor: 'rgb(253, 110, 13)',
-            backgroundColor: 'rgba(253, 110, 13, 0.1)',
+            borderColor: 'rgb(46, 125, 50)',
+            backgroundColor: 'rgba(139, 195, 74, 0.15)',
             tension: 0.4,
             fill: true
         }]
@@ -665,8 +753,8 @@ const dailyAppointmentChart = new Chart(dailyAppointmentCtx, {
         datasets: [{
             label: 'Total Appointments (Daily)',
             data: [<?php echo implode(',', $dailyData); ?>],
-            borderColor: 'rgb(13, 253, 110)',
-            backgroundColor: 'rgba(13, 253, 110, 0.1)',
+            borderColor: 'rgb(56, 142, 60)',
+            backgroundColor: 'rgba(205, 220, 57, 0.20)',
             tension: 0.4,
             fill: true
         }]
@@ -703,18 +791,18 @@ const serviceChart = new Chart(serviceCtx, {
         datasets: [{
             data: [<?php echo $clearanceStats['total']; ?>, <?php echo $cedulaStats['total']; ?>, <?php echo $indigencyStats['total']; ?>, <?php echo $permitStats['total']; ?>, <?php echo $courtStats['total']; ?>],
             backgroundColor: [
-                'rgba(54, 162, 235, 0.8)',
-                'rgba(75, 192, 192, 0.8)',
-                'rgba(255, 99, 132, 0.8)',
-                'rgba(255, 206, 86, 0.8)',
-                'rgba(153, 102, 255, 0.8)'
+                'rgba(76, 175, 80, 0.85)',   // green
+                'rgba(139, 195, 74, 0.85)',  // light green
+                'rgba(205, 220, 57, 0.85)',  // lime/yellow-green
+                'rgba(255, 235, 59, 0.85)',  // yellow
+                'rgba(27, 94, 32, 0.85)'     // dark green
             ],
             borderColor: [
-                'rgba(54, 162, 235, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(255, 99, 132, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(153, 102, 255, 1)'
+                'rgba(56, 142, 60, 1)',
+                'rgba(124, 179, 66, 1)',
+                'rgba(175, 180, 43, 1)',
+                'rgba(253, 216, 53, 1)',
+                'rgba(27, 94, 32, 1)'
             ],
             borderWidth: 2
         }]
@@ -733,8 +821,46 @@ const serviceChart = new Chart(serviceCtx, {
     }
 });
 
-// Auto-refresh dashboard every 5 minutes
-setTimeout(function() {
-    location.reload();
-}, 300000);
+// Conditional chart visibility via dropdown
+function setElementVisibility(element, shouldShow) {
+    if (!element) return;
+    if (shouldShow) {
+        element.classList.remove('d-none');
+    } else {
+        element.classList.add('d-none');
+    }
+}
+
+function applyChartFilter(value) {
+    var monthlyCard = document.getElementById('monthlyChartCard');
+    var weeklyCard = document.getElementById('weeklyChartCard');
+    var dailyCard = document.getElementById('dailyChartCard');
+    var serviceCard = document.getElementById('serviceChartCard');
+    var mainCol = document.getElementById('chartsMainCol');
+    var sideCol = document.getElementById('chartsSideCol');
+
+    var showMonthly = (value === 'monthly');
+    var showWeekly = (value === 'weekly');
+    var showDaily = (value === 'daily');
+    var showService = true; // Always show service distribution
+
+    setElementVisibility(monthlyCard, showMonthly);
+    setElementVisibility(weeklyCard, showWeekly);
+    setElementVisibility(dailyCard, showDaily);
+    setElementVisibility(serviceCard, showService);
+
+    var anyMainVisible = showMonthly || showWeekly || showDaily;
+    setElementVisibility(mainCol, anyMainVisible);
+    setElementVisibility(sideCol, true);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    var chartFilterEl = document.getElementById('chartFilter');
+    if (chartFilterEl) {
+        applyChartFilter(chartFilterEl.value || 'monthly');
+        chartFilterEl.addEventListener('change', function (e) {
+            applyChartFilter(e.target.value);
+        });
+    }
+});
 </script>

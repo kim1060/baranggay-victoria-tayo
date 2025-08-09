@@ -8,7 +8,7 @@ $UserID=$_SESSION['UserID'];
 <style>
 /* Custom styles for improved home page */
 .hero-section {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-color: #1b5e20;
     color: white;
     padding: 4rem 0;
     margin-bottom: 2rem;
@@ -95,15 +95,12 @@ $UserID=$_SESSION['UserID'];
     left: 0;
     width: 50px;
     height: 3px;
-    background: linear-gradient(45deg, #667eea, #764ba2);
+    background: #fbc02d; /* yellow accent */
     border-radius: 2px;
 }
 
 .welcome-user {
-    background: linear-gradient(45deg, #667eea, #764ba2);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #2e7d32; /* green text */
     font-weight: bold;
 }
     background: rgba(255,255,255,0.1);
